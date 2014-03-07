@@ -1,13 +1,23 @@
 package com.example.team04project;
 
-public class User
-{	
-	private String username=null;
-	public void setUser(String string){
-		this.username=string;
-	}
-	public String getUser(){
-		return username;
-	}
+import android.location.Location;
+import android.os.Parcelable;
 
+
+/**
+* @author Guillermo Ramirez
+*
+*/
+public abstract class User implements Parcelable{
+
+protected Location userLocation;
+
+public User(Location userLocation)
+{
+this.userLocation = userLocation;
+}
+public User()
+{
+
+}
 }

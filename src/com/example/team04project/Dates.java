@@ -7,12 +7,13 @@ import java.util.Calendar;
 public class Dates
 {
 	//Gets the current date in the format of Month day, Year-Hour:Minute
-	Calendar date = Calendar.getInstance();
+	static Calendar date = Calendar.getInstance();
 	@SuppressLint("SimpleDateFormat")
+	static
 	SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy-HH:mm");
-	String strDate = sdf.format(date.getTime());
+	static String strDate = sdf.format(date.getTime());
 	//Returns a string of date
-	public String getDate(){
+	public static String getDate(){
 		return strDate;
 	}
 }

@@ -1,112 +1,80 @@
 package com.example.team04project;
 
-import java.util.Collection;
+import android.graphics.Bitmap;
+import android.os.Parcelable;
+
+/**
+* This class gather al the information need it for a comment.
+*
+*
+*/
+public abstract class Comments implements Parcelable{
 
 
+protected String aUser;
+protected String textComment;
+protected Bitmap aPicture;
+protected String timeStamp;
 
-public class Comments
+public Comments(String textComment, String aUser, Bitmap aPicture,String timeStamp) {
+
+this.textComment = textComment;
+this.aUser=aUser;
+this.aPicture=aPicture;
+this.timeStamp=timeStamp;
+}
+public Comments()
 {
-	public String comment;
-	public String date;
-	public String user;
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	public String getCommentDate()
-	{
-		return date;
-	}
-	public void setCommentDate(String date)
-	{
-		this.date = date;
-	}
-	public String getCommentUser()
-	{
-		return user;
-	}
-	public void setCommentUser(String user)
-	{
-		this.user = user;
-	}
-	public Comments(String comment, String date, String user) {//Add More Parameters later
-		super();
-		this.comment = comment;
-		this.date = date;
-		this.user = user;
-	}
 
-	
-	
-	
-	private Collection<Picture> picture;
+}
 
-	
-	public Collection<Picture> getPicture()
-	{
-		return picture;
-	}
+/**
+* @return the aUser
+*/
+public String getUserName() {
+return aUser;
+}
 
+/**
+* @return the textComment
+*/
+public String getTextComment() {
+return textComment;
+}
 
+/**
+* @param textComment the textComment to set
+*/
+public void setTextComment(String textComment) {
+this.textComment = textComment;
+}
+/**
+* @return the aPicture
+*/
+public Bitmap getaPicture() {
+return aPicture;
+}
+/**
+* @param aPicture the aPicture to set
+*/
+public void setaPicture(Bitmap aPicture) {
+this.aPicture = aPicture;
+}
+/**
+* @param aUser the aUser to set
+*/
+public void setUsername(String username) {
+this.aUser= username;
+}	
 
-	private Collection<Location> location;
+public void setTimeStamp (String timeStamp)
+{
+this.timeStamp=timeStamp;
+}
 
-	
-	public Collection<Location> getLocation()
-	{
-		return location;
-	}
+public String getDate()
+{
+return timeStamp;
+}
 
-	private Collection<Favourites> favourites;
-
-	public Collection<Favourites> getFavourites()
-	{
-		return favourites;
-	}
-
-	public void sort(){
-	
-	}
-	public void  sortByProximaty(){
-		
-	}
-	public void attachPicture(){
-		
-	}
-	public void sortByDate(){
-		
-	}
-	public void cacheComments(){
-		
-	}
-	public void shareComments(){
-		
-	}
-	public void changeGeoLocation(){
-	}
-	public void edit(){
-		
-	}
-	public void sortByPicture(){
-		
-	}
-	
-	public void setFavourites(Collection<Favourites> favourites)
-	{
-		this.favourites = favourites;
-	}
-
-	
-	public void setPicture(Collection<Picture> picture)
-	{
-		this.picture = picture;
-	}
-
-	
-	public void setLocation(Collection<Location> location)
-	{
-		this.location = location;
-	}
 }
