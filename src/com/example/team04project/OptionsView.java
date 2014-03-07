@@ -74,6 +74,7 @@ then retrieves it and sets the username for the username class
 		author.setUserName(username);
 		saveUser(username,author.getID());
 		Toast.makeText(OptionsView.this, "New Username made", Toast.LENGTH_SHORT).show();
+		finish();
 	}
 
 	/*
