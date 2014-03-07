@@ -31,7 +31,9 @@ then retrieves it and sets the username for the username class
 			FileInputStream fis;
 			fis = openFileInput(saveFile);
 			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-			author.setUserName(in.readLine());
+			String authorInfo = in.readLine();
+			String split[] = authorInfo.split(",");
+			author.setUserName(split[0]);
 			fis.close();
 		}catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -48,12 +50,12 @@ then retrieves it and sets the username for the username class
 	/*
 	 * Saves the username to internal storage so it can be retrieved for future uses
 	 */
-	public void saveUser(String username){
+	public void saveUser(String username, String id){
 		FileOutputStream fos;
 
 		try {
 			fos = openFileOutput(saveFile, Context.MODE_PRIVATE);
-			String string = username+"\n";
+			String string = username+","+id+"\n";
 			fos.write(string.getBytes());
 			fos.close();
 
@@ -70,7 +72,7 @@ then retrieves it and sets the username for the username class
 		EditText text = (EditText) findViewById(R.id.editText1);
 		String username = text.getText().toString();
 		author.setUserName(username);
-		saveUser(username);
+		saveUser(username,author.getID());
 		Toast.makeText(OptionsView.this, "New Username made", Toast.LENGTH_SHORT).show();
 	}
 

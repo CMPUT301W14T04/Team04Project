@@ -114,6 +114,7 @@ public class MainActivity extends Activity implements OnItemClickListener
 		Intent intent = new Intent(MainActivity.this,
 				CreateCommentView.class);
 		intent.putExtra(CREATE_NEW_COMMENT, author);
+		intent.putExtra("TYPE", "TOP_LEVEL");
 		startActivityForResult(intent, SUCCESS_CREATE_COMMENT);
 
 	}

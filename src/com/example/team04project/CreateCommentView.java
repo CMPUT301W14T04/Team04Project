@@ -31,13 +31,15 @@ then retrieves it and sets the username for the username class
 			FileInputStream fis;
 			fis = openFileInput(saveFile);
 			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-			String u = in.readLine();
-			author.setUserName(u);
+			String authorInfo = in.readLine();
+			String split[] = authorInfo.split(",");
+			author.setUserName(split[0]);
 			fis.close();
 		}catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -46,6 +48,8 @@ then retrieves it and sets the username for the username class
 
 	public void postComment(View view){
 		//Gets the date,user and other things from their classes and changes them to strings and makes a new comment
+		Intent i =getIntent();
+		String type=i.getExtras().getString("TYPE");
 		String uniqueKey = UUID.randomUUID().toString();
 		EditText text = (EditText) findViewById(R.id.comment);
 		String commentText = text.getText().toString();
@@ -65,16 +69,24 @@ then retrieves it and sets the username for the username class
 		}
 		else{
 			String theUser=author.getUserName();
-			TopLevel newComment = new TopLevel(commentText, theUser, null, currDate);
+			if(type.equals("TOP_LEVEL")){
+				TopLevel newComment = new TopLevel(commentText, theUser, null, currDate);
+				Gson gson = new Gson();
+				Intent intent = new Intent();
+				String json= gson.toJson(newComment);
+				intent.putExtra("Class", json);
+				setResult(RESULT_OK, intent);
+				finish();
+			}
 			//CommentList.addComment(newComment);//Problems here
 
-			Gson gson = new Gson();
+			/*Gson gson = new Gson();
 			Intent intent = new Intent();
 			String json= gson.toJson(newComment);
 			intent.putExtra("Class", json);
 			setResult(RESULT_OK, intent);
 			finish();
-		}
+*/		}
 	}
 
 
