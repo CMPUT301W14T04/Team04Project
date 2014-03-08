@@ -70,7 +70,7 @@ then retrieves it and sets the username for the username class
 		else{
 			String theUser=author.getUserName();
 			if(type.equals("TOP_LEVEL")){
-				TopLevel newComment = new TopLevel(commentText, theUser, null, currDate);
+				TopLevel newComment = new TopLevel(commentText, theUser, null, currDate, "TopLevel");//CHANGES HERE
 				Gson gson = new Gson();
 				Intent intent = new Intent();
 				String json= gson.toJson(newComment);

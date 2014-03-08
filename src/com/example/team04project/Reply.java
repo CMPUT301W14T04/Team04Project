@@ -10,7 +10,7 @@ public class Reply extends Comments
 	public Reply(String comment, String date,Bitmap aPicture, String user)
 	{
 
-		super(comment, date, aPicture, user);
+		super(comment, date, aPicture, user, type);//Changes
 		// TODO Auto-generated constructor stub
 	}
 

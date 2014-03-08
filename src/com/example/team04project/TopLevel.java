@@ -13,10 +13,10 @@ public class TopLevel extends Comments
 	private final String ID = UUID.randomUUID().toString();
 
 	public TopLevel(String textComment, String aUser, Bitmap aPicture,
-			String timeStamp)
+			String timeStamp, String type)
 	{
 
-		super(textComment, aUser, aPicture, timeStamp);
+		super(textComment, aUser, aPicture, timeStamp, type);
 	}
 
 	public TopLevel()
@@ -27,6 +27,7 @@ public class TopLevel extends Comments
 		this.textComment = null;
 		this.aUser = null;
 		this.timeStamp = null;
+		this.type= null;
 	}
 
 	private TopLevel(Parcel source)
