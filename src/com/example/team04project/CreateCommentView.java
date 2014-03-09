@@ -1,11 +1,11 @@
 package com.example.team04project;
 
 import java.io.BufferedReader;
-import java.util.UUID;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import com.example.team04project.Author;
 
 public class CreateCommentView extends Activity {
 	Author author = new Author();
@@ -70,7 +68,7 @@ then retrieves it and sets the username for the username class
 		else{
 			String theUser=author.getUserName();
 			if(type.equals("TOP_LEVEL")){
-				TopLevel newComment = new TopLevel(commentText, theUser, null, currDate, "TopLevel");//CHANGES HERE
+				TopLevel newComment = new TopLevel(commentText, theUser, null, currDate);
 				Gson gson = new Gson();
 				Intent intent = new Intent();
 				String json= gson.toJson(newComment);

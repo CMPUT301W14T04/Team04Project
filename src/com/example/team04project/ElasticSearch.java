@@ -8,7 +8,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,7 +20,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,12 +32,12 @@ public class ElasticSearch {
 	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t04/TestArea/Test-+-";
 	public static final String LOG_TAG = "ElasticSearch";
 	static HttpClient client = new DefaultHttpClient();
-	static Gson GSON = new Gson();
 	
 	private static ArrayList<TopLevel> list;
 
 	public static void pushComment(final TopLevel comment) {
 		Thread thread = new Thread() {
+			Gson GSON = new Gson();
 
 			@Override
 			public void run() {
@@ -76,6 +74,7 @@ public class ElasticSearch {
 	
 	public static void updateComment(final TopLevel comment){
 		Thread thread = new Thread() {
+			Gson GSON = new Gson();
 			@Override
 			public void run() {
 				HttpPost updateRequest = new HttpPost(SERVER_URL+comment.getDate());
@@ -106,14 +105,26 @@ public class ElasticSearch {
 	
 	public static void retrieveComments(){
 		Thread thread = new Thread() {
+			Gson GSON = new Gson();
+
 			@Override
 			public void run() {
-				HttpGet getRequest = new HttpGet("http://cmput301.softwareprocess.es:8080/cmput301w14t04/TestArea/_search?q=textComment:1");
-			
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + "_search");
+				String searchTerm = "1";
+				String query = 	"{\"query\": {\"query_string\": {\"default_field\": \"textComment\",\"query\": \"" + searchTerm + "\"}}}";
 				String responseJson = "";
 
 				try {
-					HttpResponse response = client.execute(getRequest);
+					request.setEntity(new StringEntity(query));
+				}
+				catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG, "Error encoding search query: " + exception.getMessage());
+					return;
+				}
+
+				try {
+					HttpResponse response = client.execute(request);
 					Log.i(LOG_TAG, "Response: " + response.getStatusLine().toString());
 
 					HttpEntity entity = response.getEntity();
@@ -132,12 +143,13 @@ public class ElasticSearch {
 
 				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopLevel>>(){}.getType();
 				final ElasticSearchSearchResponse<TopLevel> returnedData = GSON.fromJson(responseJson, elasticSearchSearchResponseType);
-
-
+				for (ElasticSearchResponse<TopLevel> r : returnedData.getHits()) {
+					list.add(r.getSource());
+				}
 			}
 		};
 
-		thread.start();
+		thread.start();	
 	}
 		
 		
@@ -174,7 +186,6 @@ public class ElasticSearch {
 	public static ArrayList<TopLevel> getList() {
 		return (ArrayList<TopLevel>) Collections.unmodifiableList(list);
 	}
-	
 }
 
 	

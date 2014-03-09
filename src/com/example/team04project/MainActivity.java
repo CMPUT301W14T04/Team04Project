@@ -52,26 +52,7 @@ public class MainActivity extends Activity implements OnItemClickListener
 				android.R.layout.simple_list_item_1, commentList));
 
 		commentListView.setOnItemClickListener(this);
-		ElasticSearch.retrieveComments();
-		//commentList = ElasticSearch.getList();
-		//THIS IS TEST STUFF DELETE THIS SHIZNITZ LATER
-		/*commentList.add(new TopLevel("1","1",null,"1","TopLevel"));
-		commentList.add(new TopLevel("1","2",null,"2","TopLevel"));
-		commentList.add(new TopLevel("1","3",null,"3","TopLevel"));
-		commentList.add(new TopLevel("1","4",null,"4","TopLevel"));
-		commentList.add(new TopLevel("1","5",null,"5","TopLevel"));
-		commentList.add(new TopLevel("1","6",null,"6","TopLevel"));
-		commentList.add(new TopLevel("1","7",null,"7","TopLevel"));
-		commentList.add(new TopLevel("1","8",null,"8","TopLevel"));
-		commentList.add(new TopLevel("1","9",null,"9","TopLevel"));
-		commentList.add(new TopLevel("1","10",null,"10","TopLevel"));
-		commentList.add(new TopLevel("1","11",null,"11","TopLevel"));
-		commentList.add(new TopLevel("1","12",null,"12","TopLevel"));
-		for (TopLevel c : commentList){
-			ElasticSearch.pushComment(c);
-		}*/
-		//ElasticSearch.pushComment(commentList);
-		//REMOVE
+		
 
 	}
 

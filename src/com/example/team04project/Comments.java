@@ -15,15 +15,13 @@ protected String aUser;
 protected String textComment;
 protected Bitmap aPicture;
 protected String timeStamp;
-protected static String type;//Changes Here
 
-public Comments(String textComment, String aUser, Bitmap aPicture,String timeStamp,String type) {
+public Comments(String textComment, String aUser, Bitmap aPicture,String timeStamp) {
 
 this.textComment = textComment;
 this.aUser=aUser;
 this.aPicture=aPicture;
 this.timeStamp=timeStamp;
-this.type=type;//Changes here
 }
 public Comments()
 {
