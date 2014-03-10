@@ -20,6 +20,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,12 +30,16 @@ import com.google.gson.reflect.TypeToken;
  /* Adds the comment to elasticsearch*/
  
 public class ElasticSearch {
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t04/TestArea/Test-+-";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t04/TestArea/";//URL CHANGED FOR RETRIEVING
 	public static final String LOG_TAG = "ElasticSearch";
 	static HttpClient client = new DefaultHttpClient();
 	
-	private static ArrayList<TopLevel> list;
-
+	private static ArrayList<TopLevel> list= new ArrayList<TopLevel>();
+	static String test =null;
+	
+	/*
+	 * If you want to run push comment add an id field to the server url ex.TestArea/Test-+-
+	 */
 	public static void pushComment(final TopLevel comment) {
 		Thread thread = new Thread() {
 			Gson GSON = new Gson();
@@ -71,7 +76,9 @@ public class ElasticSearch {
 	
 	 /* The comment will be updated on elastic search*/
 	 
-	
+	/*
+	 * If you want to run update comment add an id field to the server url ex.TestArea/Test-+-
+	 */
 	public static void updateComment(final TopLevel comment){
 		Thread thread = new Thread() {
 			Gson GSON = new Gson();
@@ -101,68 +108,77 @@ public class ElasticSearch {
 	}
 
 	
-	
+	/*
+	 * Decides to work or not. If it does want to work then it takes a few seconds to retrieve results. 
+	 * Ultimately I want it to search for things with a comment
+	 * tag such as TopLevel or Reply
+	 */
 	
 	public static void retrieveComments(){
+		
 		Thread thread = new Thread() {
 			Gson GSON = new Gson();
+			String searchTerm= "11";
+				@Override
+				public void run() {
+					HttpClient client = new DefaultHttpClient();
+					HttpPost request = new HttpPost(SERVER_URL + "_search");
+					String query = 	"{\"query\": {\"query_string\": {\"default_field\": \"textComment\",\"query\": \"*" + searchTerm + "*\"}}}";					
+					String responseJson = "";
 
-			@Override
-			public void run() {
-				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search");
-				String searchTerm = "1";
-				String query = 	"{\"query\": {\"query_string\": {\"default_field\": \"textComment\",\"query\": \"" + searchTerm + "\"}}}";
-				String responseJson = "";
-
-				try {
-					request.setEntity(new StringEntity(query));
-				}
-				catch (UnsupportedEncodingException exception) {
-					Log.w(LOG_TAG, "Error encoding search query: " + exception.getMessage());
-					return;
-				}
-
-				try {
-					HttpResponse response = client.execute(request);
-					Log.i(LOG_TAG, "Response: " + response.getStatusLine().toString());
-
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-
-					String output = reader.readLine();
-					while (output != null) {
-						responseJson+= output;
-						output = reader.readLine();
+					try {
+						request.setEntity(new StringEntity(query));
 					}
-				}
-				catch (IOException exception) {
-					Log.w(LOG_TAG, "Error receiving search query response: " + exception.getMessage());
-					return;
-				}
+					catch (UnsupportedEncodingException exception) {
+						Log.w(LOG_TAG, "Error encoding search query: " + exception.getMessage());
+						return;
+					}
 
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopLevel>>(){}.getType();
-				final ElasticSearchSearchResponse<TopLevel> returnedData = GSON.fromJson(responseJson, elasticSearchSearchResponseType);
-				for (ElasticSearchResponse<TopLevel> r : returnedData.getHits()) {
-					list.add(r.getSource());
-				}
+					try {
+						HttpResponse response = client.execute(request);
+						Log.i(LOG_TAG, "Response: " + response.getStatusLine().toString());
+
+						HttpEntity entity = response.getEntity();
+						BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+
+						String output = reader.readLine();
+						while (output != null) {
+							responseJson+= output;
+							output = reader.readLine();
+						}
+					}
+					catch (IOException exception) {
+						Log.w(LOG_TAG, "Error receiving search query response: " + exception.getMessage());
+						return;
+					}
+
+					Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopLevel>>(){}.getType();
+					final ElasticSearchSearchResponse<TopLevel> returnedData = GSON.fromJson(responseJson, elasticSearchSearchResponseType);				//for (ElasticSearchResponse<TopLevel> r : returnedData.getHits()) {
+					
+					for (ElasticSearchResponse<TopLevel> r : returnedData.getHits()) {
+						TopLevel level = r.getSource();
+						list.add(level);
+					}
 			}
 		};
 
 		thread.start();	
 	}
 		
-		
+	public static String returnTest(){
+		return test;
+	}
 	
 	
-	public static void deleteComment(final Comments comment){
+	public static void deleteComment(final String date){
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				HttpDelete httpDelete = new HttpDelete(SERVER_URL );
-				HttpResponse response;
+				HttpDelete httpDelete = new HttpDelete(SERVER_URL+date);
 				try {
-					response = client.execute(httpDelete);
+					HttpResponse response = client.execute(httpDelete);
+					String status = response.getStatusLine().toString();
+					System.out.println(status);
 
 				} catch (ClientProtocolException e) {
 					e.printStackTrace();
@@ -184,7 +200,7 @@ public class ElasticSearch {
 	}
 	
 	public static ArrayList<TopLevel> getList() {
-		return (ArrayList<TopLevel>) Collections.unmodifiableList(list);
+		return list;
 	}
 }
 

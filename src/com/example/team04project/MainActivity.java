@@ -52,8 +52,6 @@ public class MainActivity extends Activity implements OnItemClickListener
 				android.R.layout.simple_list_item_1, commentList));
 
 		commentListView.setOnItemClickListener(this);
-		
-
 	}
 
 	protected void onResume()
