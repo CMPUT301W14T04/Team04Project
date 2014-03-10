@@ -22,24 +22,26 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_action_new=0x7f020000;
-        public static final int ic_action_search=0x7f020001;
-        public static final int ic_action_view_as_list=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
+        public static final int ic_action_new_picture=0x7f020001;
+        public static final int ic_action_search=0x7f020002;
+        public static final int ic_action_view_as_list=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
     }
     public static final class id {
+        public static final int action_new_picture=0x7f080008;
         public static final int action_settings=0x7f080007;
         public static final int button1=0x7f080001;
         public static final int button2=0x7f080006;
         public static final int comment=0x7f080000;
         public static final int commentListView=0x7f080002;
-        public static final int creat_comment=0x7f08000a;
-        public static final int createComment=0x7f080008;
+        public static final int creat_comment=0x7f08000b;
+        public static final int createComment=0x7f080009;
         public static final int editText1=0x7f080004;
-        public static final int favourite_comment=0x7f08000b;
+        public static final int favourite_comment=0x7f08000c;
         public static final int optionId=0x7f080003;
-        public static final int options=0x7f08000d;
-        public static final int search_comment=0x7f080009;
-        public static final int setting=0x7f08000c;
+        public static final int options=0x7f08000e;
+        public static final int search_comment=0x7f08000a;
+        public static final int setting=0x7f08000d;
         public static final int textView1=0x7f080005;
     }
     public static final class layout {
