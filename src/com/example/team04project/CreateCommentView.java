@@ -8,9 +8,14 @@ import java.io.InputStreamReader;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,6 +23,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 public class CreateCommentView extends Activity {
+	protected static final int CAMERA_REQUEST = 0;
+	protected static final int GALLARY_REQUEST = 0;
 	Author author = new Author();
 	private static String saveFile = "username.sav";
 	/*
@@ -84,7 +91,7 @@ then retrieves it and sets the username for the username class
 			intent.putExtra("Class", json);
 			setResult(RESULT_OK, intent);
 			finish();
-*/		}
+			 */		}
 	}
 
 
@@ -104,6 +111,40 @@ then retrieves it and sets the username for the username class
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.create_comment_view, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_new_picture:
+			dialog();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public void dialog() {
+		AlertDialog.Builder builder = new Builder(CreateCommentView.this);
+		builder.setTitle("Attach a picture from:");
+		builder.setPositiveButton("Camera", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
+				startActivityForResult(cameraIntent, CAMERA_REQUEST); 
+			}
+		});
+		
+		builder.setNeutralButton("Gallary", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, GALLARY_REQUEST);
+			}
+		});
+
+		builder.create().show();
 	}
 
 }
