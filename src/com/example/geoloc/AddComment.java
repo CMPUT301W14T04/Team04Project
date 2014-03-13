@@ -1,3 +1,9 @@
+/*
+ * Cmput 301
+ * Team 04
+ * Winter 2014
+ */
+
 package com.example.geoloc;
 
 import java.util.HashMap;
