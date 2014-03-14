@@ -1,24 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-  <item
-        android:id="@+id/search_comment"
-        android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom">
-    </item>
     <item
-        android:id="@+id/creat_comment"
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/action_user"
+        android:icon="@drawable/ic_action_add_person"
+        android:showAsAction="always"
+        android:title="@string/action_user"/>
+    <item
+        android:id="@+id/action_add"
         android:icon="@drawable/ic_action_new"
-        android:showAsAction="ifRoom">
-    </item>
-        <item
-        android:id="@+id/favourite_comment"
-        android:showAsAction="never"
-        android:title="Favourites">
-    </item>
-    <item
-        android:id="@+id/setting"
-        android:showAsAction="never"
-        android:title="Setting">
-    </item>
+        android:showAsAction="always"
+        android:title="@string/action_add"/>
 
 </menu>

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-     <string name="title_activity_options">Options</string>
+    <string name="action_user">Add User</string>
+    <string name="action_add">Add Comment</string>
+    <string name="action_submit">Submit</string>
+    
+    <string name="title_activity_options">Options</string>
     <string name="title_activity_create_comment">CreateComment</string>
     <string name="title_activity_browse_comment">BrowseComment</string>
     <string name="app_name">TestGroupProject</string>
