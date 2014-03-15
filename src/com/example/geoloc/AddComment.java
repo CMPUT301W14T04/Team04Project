@@ -1,24 +1,43 @@
 package com.example.geoloc;
 
 import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.example.utils.JSONParser;
 
 public class AddComment extends Activity {
+	protected static final int CAMERA_REQUEST = 0;
+	protected static final int GALLARY_REQUEST = 1;
 	HashMap<String, String> commentMap = new HashMap<String, String>();
+	private ImageView imageView = null;
+	private Bitmap photo = null;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +45,8 @@ public class AddComment extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_comment);
 		Button submit_comment = (Button) findViewById(R.id.submit_comment);
+		imageView = (ImageView)findViewById(R.id.imageView1);
+		imageView.setImageBitmap(null);
 		submit_comment.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -102,7 +123,7 @@ public class AddComment extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.add_comment, menu);
 		return true;
 	}
 
@@ -116,9 +137,52 @@ public class AddComment extends Activity {
 		}
 		if (item.getItemId() == R.id.action_user) {
 			Toast.makeText(getApplicationContext(), "User!", Toast.LENGTH_LONG)
-					.show();
+			.show();
+		}
+		if (item.getItemId() == R.id.action_new_picture) {
+			dialog();
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	public void dialog() {
+		AlertDialog.Builder builder = new Builder(AddComment.this);
+		builder.setTitle("Attach a picture from:");
+		builder.setPositiveButton("Camera", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
+				startActivityForResult(cameraIntent, CAMERA_REQUEST); 
+			}
+		});
+
+		builder.setNeutralButton("Gallary", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, GALLARY_REQUEST);
+			}
+		});
+
+		builder.create().show();
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+			photo = (Bitmap)data.getExtras().get("data");
+			imageView.setImageBitmap(photo);
+		}
+		if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK) {  
+			Uri selectedImage = data.getData();
+			String[] filePathColumn = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getContentResolver().query(selectedImage,
+					filePathColumn, null, null, null);
+			cursor.moveToFirst();
+			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+			String picturePath = cursor.getString(columnIndex);
+			cursor.close();
+			imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+		}  
+	}	
 
 }

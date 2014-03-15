@@ -4,7 +4,6 @@
     <string name="action_user">Add User</string>
     <string name="action_add">Add Comment</string>
     <string name="action_submit">Submit</string>
-    
     <string name="title_activity_options">Options</string>
     <string name="title_activity_create_comment">CreateComment</string>
     <string name="title_activity_browse_comment">BrowseComment</string>
@@ -16,8 +15,9 @@
     <string name="Create">Create</string>
     <string name="options">Options</string>
     <string name="set">Set</string>
-   <string name="newUsername">Enter the New Username</string>
-   <string name="Change">Change</string>
-   <string name="yourUser">Your Username is:</string>
+    <string name="newUsername">Enter the New Username</string>
+    <string name="Change">Change</string>
+    <string name="yourUser">Your Username is:</string>
+    <string name="new_picture">New Picture</string>
 
 </resources>
