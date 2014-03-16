@@ -1,11 +1,9 @@
 package com.example.geocomment.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -15,7 +13,7 @@ public class TopLevel extends Comment {
 	private String ID;
 	private List <Reply> replies;
 
-	public TopLevel(User aUser, Calendar timeStamp, Bitmap aPicture,
+	public TopLevel(User aUser, Calendar timeStamp, String aPicture,
 			String textComment, double[] aLocation,String ID)
 	{
 
@@ -43,7 +41,7 @@ public class TopLevel extends Comment {
 				"ParcelData(Parcel source): time to put back parcel data");
 		textComment = source.readString();
 		aUser = (User) source.readValue(getClass().getClassLoader());
-		aPicture = (Bitmap) source.readValue(getClass().getClassLoader());
+		aPicture = (String) source.readValue(getClass().getClassLoader());
 		timeStamp = (Calendar) source.readSerializable();
 		ID = source.readString();
 		replies = (ArrayList<Reply>) source.readArrayList(getClass().getClassLoader());

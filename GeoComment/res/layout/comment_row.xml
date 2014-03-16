@@ -4,12 +4,11 @@
     android:layout_height="wrap_content" >
 
     <ImageView
-        android:id="@+id/picture"
+        android:id="@+id/pic_image_view"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerVertical="true"
         android:layout_margin="5dp"
-        android:background="@drawable/ic_launcher"
         android:padding="3dp"
         android:contentDescription="@string/picture_comment_row" />
 
@@ -19,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
         android:layout_toLeftOf="@+id/date_added"
-        android:layout_toRightOf="@+id/picture"
+        android:layout_toRightOf="@+id/pic_image_view"
         android:maxLines="1"
         android:text="@string/user_comment_row"
         android:textColor="@android:color/black"
@@ -31,7 +30,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvtitle"
-        android:layout_toRightOf="@+id/picture"
+        android:layout_toRightOf="@+id/pic_image_view"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="@string/text_comment_row"

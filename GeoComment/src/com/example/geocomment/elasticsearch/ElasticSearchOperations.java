@@ -26,7 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04test4/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04test5/";
 	public static final String LOG_TAG = "ElasticSearch";
 
 	private static Gson GSON;
