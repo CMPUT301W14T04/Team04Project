@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comment_by_main_activity">Comment by:</string>
+    <string name="create_comment_button_main_activity">Create Comment</string>
+    
+</resources>
