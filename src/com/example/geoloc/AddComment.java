@@ -1,5 +1,6 @@
 package com.example.geoloc;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +39,8 @@ public class AddComment extends Activity {
 	HashMap<String, String> commentMap = new HashMap<String, String>();
 	private ImageView imageView = null;
 	private Bitmap photo = null;
+	private String encodedImage = null;
+	Author author = new Author();
 
 
 	@Override
@@ -104,6 +108,7 @@ public class AddComment extends Activity {
 					commentMap.put("comment", curr_comment);
 					commentMap.put("date_added", GetDate.getDate());
 					commentMap.put("username", "Gu");
+					commentMap.put("photo", encodedImage);
 					JSONObject commentObj = new JSONObject(commentMap);
 					ElasticSearchOperations.pushComment(comments
 							.put(commentObj));
@@ -171,6 +176,7 @@ public class AddComment extends Activity {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap)data.getExtras().get("data");
 			imageView.setImageBitmap(photo);
+			getStringFromBitmap(photo);
 		}
 		if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK) {  
 			Uri selectedImage = data.getData();
@@ -181,8 +187,19 @@ public class AddComment extends Activity {
 			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 			String picturePath = cursor.getString(columnIndex);
 			cursor.close();
-			imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+			photo = (BitmapFactory.decodeFile(picturePath));
+			imageView.setImageBitmap(photo);
+			getStringFromBitmap(photo);
 		}  
-	}	
+	}
 
+	private String getStringFromBitmap(Bitmap photo) {
+		final int COMPRESSION_QUALITY = 100;
+		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+		photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
+		byte[] b = byteArrayBitmapStream.toByteArray();
+		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+		return encodedImage;
+	}
+	
 }

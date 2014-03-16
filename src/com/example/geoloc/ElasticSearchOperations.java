@@ -15,15 +15,15 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class ElasticSearchOperations {
-	
+
 	public static void pushComment(final JSONArray commentArr) {
 		Thread thread = new Thread() {
-			
+
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301w14t04/testcomments/comments");
-				
+
 				try {
 					JSONObject commentObj = null;
 					if (commentArr != null){
@@ -38,25 +38,25 @@ public class ElasticSearchOperations {
 					request.setEntity(new StringEntity(jsonString));
 					HttpResponse response = client.execute(request);
 					Log.w("ElasticSearch", response.getStatusLine().toString());
-					
+
 					response.getStatusLine().toString();
 					HttpEntity entity = response.getEntity();
-					
+
 					BufferedReader reader = new BufferedReader (new InputStreamReader(entity.getContent()));
 					String output = reader.readLine();
 					while (output != null) {
 						Log.w("ElasticSearch", output);
 						output = reader.readLine();
 					}
-					
+
 				}
 				catch (Exception e) {
 					e.printStackTrace();
-				
+
 				}
 			}
 		};
-		
+
 		thread.start();
 	}
 

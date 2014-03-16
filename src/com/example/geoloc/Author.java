@@ -19,7 +19,7 @@ import android.os.Parcelable;
 public class Author extends User
 {
 
-	private String userName;
+	private String userName = null;
 	private final String ID;
 
 	public Author()

@@ -4,14 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Bitmap;
-
 public class CommentMetaData {
 
 	protected String comment;
 	protected String date;
 	protected String aUser;
-	protected Bitmap aPicture;
+	protected String aPicture;
 
 	protected CommentMetaData(JSONArray comments) {
 		if (comments.length() > 0) {
@@ -27,6 +25,9 @@ public class CommentMetaData {
 					}
 					if (comment_obj.has("username")) {
 						comment = comment_obj.getString("username");
+					}
+					if (comment_obj.has("photo")) {
+						comment = comment_obj.getString("photo");
 					}
 				}
 			} catch (JSONException e) {
@@ -60,6 +61,13 @@ public class CommentMetaData {
 				e.printStackTrace();
 			}
 		}
+		if (comment.has("photo")) {
+			try {
+				this.aPicture = comment.getString("photo");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public String getComment() {
@@ -86,11 +94,11 @@ public class CommentMetaData {
 		this.aUser = username;
 	}
 	
-	public Bitmap getaPicture() {
+	public String getaPicture() {
 		return aPicture;
 	}
 	
-	public void setaPicture(Bitmap aPicture) {
+	public void setaPicture(String aPicture) {
 		this.aPicture = aPicture;
 	}
 
