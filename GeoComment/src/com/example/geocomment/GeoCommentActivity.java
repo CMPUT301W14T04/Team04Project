@@ -74,6 +74,7 @@ public class GeoCommentActivity extends Activity {
 		
 		commentListView.setAdapter(adapter);
 		commentList.setAdapter(adapter);
+		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 	}
 
 	@Override
