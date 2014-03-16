@@ -30,7 +30,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvtitle"
-        android:layout_toLeftOf="@+id/imageView1"
+        android:layout_toLeftOf="@+id/pic_image_view"
         android:layout_toRightOf="@+id/image"
         android:ellipsize="end"
         android:maxLines="3"
@@ -50,7 +50,7 @@
         android:textSize="12dip" />
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/pic_image_view"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignRight="@+id/date_added"

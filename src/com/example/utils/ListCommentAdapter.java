@@ -3,16 +3,25 @@ package com.example.utils;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.geoloc.AddComment;
 import com.example.geoloc.CommentMetaData;
 import com.example.geoloc.R;
 
 public class ListCommentAdapter extends ArrayAdapter<CommentMetaData> {
+	private ImageView picImageView = null;
+	private byte[] decodedString = null;
+	private Bitmap decodedByte = null;
+	AddComment addComment = new AddComment();
 
 	public ListCommentAdapter(Context context, int resourse,
 			List<CommentMetaData> model) {
@@ -31,10 +40,13 @@ public class ListCommentAdapter extends ArrayAdapter<CommentMetaData> {
 		CommentMetaData comment_meta = this.getItem(position);
 		if (comment_meta != null) {
 
-			// ImageView picImageView =
-			// (ImageView)convertView.findViewById(R.id.pic_image_view);
-			// if (picImageView != null)
-			// picImageView.setImageBitmap(picPostModel.getPicture());
+			picImageView = (ImageView) convertView.findViewById(R.id.pic_image_view);
+			if (comment_meta.getaPicture() != null) {
+				decodedString = Base64.decode(comment_meta.getaPicture(), Base64.DEFAULT);
+				decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+				picImageView.setImageBitmap(decodedByte);
+			}
+				
 
 			TextView comment = (TextView) convertView
 					.findViewById(R.id.comment);
@@ -49,6 +61,7 @@ public class ListCommentAdapter extends ArrayAdapter<CommentMetaData> {
 					.findViewById(R.id.tvtitle);
 			if (username != null)
 				username.setText(comment_meta.getUserName());
+
 		}
 
 		return convertView;

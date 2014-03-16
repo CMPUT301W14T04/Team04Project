@@ -39,9 +39,8 @@ public class AddComment extends Activity {
 	HashMap<String, String> commentMap = new HashMap<String, String>();
 	private ImageView imageView = null;
 	private Bitmap photo = null;
-	private String encodedImage = null;
+	public String encodedImage = null;
 	Author author = new Author();
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +192,7 @@ public class AddComment extends Activity {
 		}  
 	}
 
-	private String getStringFromBitmap(Bitmap photo) {
+	public String getStringFromBitmap(Bitmap photo) {
 		final int COMPRESSION_QUALITY = 100;
 		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
 		photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
@@ -201,5 +200,6 @@ public class AddComment extends Activity {
 		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 		return encodedImage;
 	}
+	
 	
 }

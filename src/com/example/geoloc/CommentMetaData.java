@@ -4,12 +4,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 public class CommentMetaData {
 
 	protected String comment;
 	protected String date;
 	protected String aUser;
-	protected String aPicture;
+	public String aPicture;
 
 	protected CommentMetaData(JSONArray comments) {
 		if (comments.length() > 0) {
@@ -85,19 +89,19 @@ public class CommentMetaData {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 	public String getUserName() {
 		return aUser;
 	}
-	
+
 	public void setUsername(String username) {
 		this.aUser = username;
 	}
-	
+
 	public String getaPicture() {
 		return aPicture;
 	}
-	
+
 	public void setaPicture(String aPicture) {
 		this.aPicture = aPicture;
 	}
