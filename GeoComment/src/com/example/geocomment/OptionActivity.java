@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Option Activity method opens up the options menu in the 
+ * application. It gets the username and stores that username 
+ * on your phone so the user does not have to enter a 
+ * username everytime said user wants to makes either a top
+ * level comment or a reply comment.
+ */
 public class OptionActivity extends Activity {
 
 	String username;
@@ -44,21 +51,23 @@ public class OptionActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
+			/**
+			 * This ID represents the Home or Up button. In the case of this
+			 * activity, the Up button is shown. Use NavUtils to allow users
+			 * to navigate up one level in the application structure. For
+			 * more details, see the Navigation pattern on Android Design:
+			 * http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			 */
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	/*
-	 * Button that takes the Users new user name and sets it
+	/**
+	 * Button that takes the Users new user name and sets it in the
+	 * users phone so the user does not have to enter in a username
+	 * every time said user wants to make a comment
 	 */
 	public void setUsername(View view){
 		EditText text = (EditText) findViewById(R.id.editText1);
@@ -71,11 +80,10 @@ public class OptionActivity extends Activity {
 		finish();
 	}
 
-	/*
+	/**
 	 * pressing this button makes the edit text visible for the user to
 	 * make a new user name.
 	 */
-
 	public void changeUser(View view){
 		View edit = findViewById(R.id.editText1);
 		edit.setVisibility(View.VISIBLE);
