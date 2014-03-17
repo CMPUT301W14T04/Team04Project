@@ -32,7 +32,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * 
- * 
+ * This is the main activity for the application
  * @author CMPUT 301 Team 04
  * 
  */
@@ -84,6 +84,9 @@ public class GeoCommentActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Before the user can make a comment, they must enter in a username
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.create_new_comment:
@@ -103,6 +106,11 @@ public class GeoCommentActivity extends Activity {
 		}
 	}
 
+	/**
+	 * When starting, the application will get the user location, which will 
+	 * be the users default location when posting comments.
+	 * If the user enters no username, the default username is Guillermo
+	 */
 	protected void onStart() {
 		super.onStart();
 		double [] locations={location.getLatitude(),location.getLongitude()};
@@ -134,6 +142,11 @@ public class GeoCommentActivity extends Activity {
 		super.onResume();
 	}
 
+	/**
+	 * This loads
+	 * @param type
+	 * @return
+	 */
 	public String load(int type) {
 		switch (type) {
 		case Resource.GENERAL_INFO_LOAD:
@@ -205,6 +218,11 @@ public class GeoCommentActivity extends Activity {
 		}
 	}
 
+	/**
+	 * This pases all the data from one activity to another
+	 * This includes the username, the ID, and the location
+	 * of the comment
+	 */
 	public void creatNewComment() {
 		Intent intent = new Intent(GeoCommentActivity.this,
 				CreateCommentActivity.class);
@@ -216,12 +234,21 @@ public class GeoCommentActivity extends Activity {
 		startActivityForResult(intent, Resource.RESQUEST_NEW_TOP_LEVEL);
 	}
 
+	/**
+	 * This opens up the settings and the user can either make a new
+	 * username or change their current username
+	 */
 	public void openSettings() {
 		Intent intent = new Intent(GeoCommentActivity.this , OptionActivity.class);
 		intent.putExtra("Uusername", user.getUserName());
 		startActivityForResult(intent, 90);
 	}
 
+	/**
+	 * Sets username, and adds all the information about the top level
+	 * comment (such as ID, location, username, the comment itself and 
+	 * possibly a picture) to a list of all the comments.
+	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
 		switch(requestCode)
