@@ -35,6 +35,11 @@ import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.User;
 import com.example.geocomment.util.Resource;
 
+/**
+ * This class creates the comment activity for the application.
+ * Each comment has text, username, reply, possibly a picture, and 
+ * the location associated with it.
+ */
 public class CreateCommentActivity extends Activity {
 
 	Button pushButton;
@@ -58,7 +63,9 @@ public class CreateCommentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_comment);
-		// Show the Up button in the action bar.
+		/**
+		 *  Show the Up button in the action bar.
+		 */
 		setupActionBar();
 
 		pushButton = (Button) findViewById(R.id.submit_comment);
@@ -87,7 +94,9 @@ public class CreateCommentActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/**
+		 * Inflate the menu; this adds items to the action bar if it is present.
+		 */
 		getMenuInflater().inflate(R.menu.create_comment, menu);
 		return true;
 	}
@@ -96,13 +105,14 @@ public class CreateCommentActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
+			/**
+			 * This ID represents the Home or Up button. In the case of this
+			 * activity, the Up button is shown. Use NavUtils to allow users
+			 * to navigate up one level in the application structure. For
+			 * more details, see the Navigation pattern on Android Design:
+			 * http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			 *http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			*/
 			NavUtils.navigateUpFromSameTask(this);
 			return true;			
 		}
@@ -164,7 +174,10 @@ public class CreateCommentActivity extends Activity {
 	}
 
 	/**
-	 * this function encodes photo to string
+	 * this function encodes the photo to string so the picture
+	 * can be stored on the server with the rest of the comment 
+	 * information, and so it can later be retrieved by all users
+	 * of the application
 	 * @param photo
 	 * @return
 	 */
@@ -177,6 +190,17 @@ public class CreateCommentActivity extends Activity {
 		return encodedImage;
 	}
 
+	/**
+	 * submitComment puts the comment into a top level array so it
+	 * can later be uploaded to the server. If the comment that the 
+	 * user is trying to add is empty, the user will get an error and
+	 * will be prompted to type something in the comment box. 
+	 * If the user enters a comment, the comment (and possibly the picture)
+	 * will get all the 
+	 * associated metadata to go with it automatically, such as the 
+	 * date, the ID, and the location.
+	 * @param view
+	 */
 	public void submitComment(View view) {
 		if (type == Resource.TYPE_TOP_LEVEL) {
 			Calendar timeStamp = Calendar.getInstance();
