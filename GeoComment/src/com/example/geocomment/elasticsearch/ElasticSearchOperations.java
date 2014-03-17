@@ -24,13 +24,28 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * This Class handle the communication between the app and the sever using Elasticsearch
+ * 
+ * Taken from https://github.com/zjullion/PicPosterComplete
+ *
+ */
 public class ElasticSearchOperations {
 
+	/**
+	 * Define the sever URL
+	 */
 	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04test5/";
+	//for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
 
 	private static Gson GSON;
 
+	
+	/**
+	 * This method push a TopLevel comment to the sever.
+	 * @param model
+	 */
 	public static void pushComment(final TopLevel model) {
 		if (GSON == null)
 			constructGson();
@@ -67,6 +82,12 @@ public class ElasticSearchOperations {
 
 		thread.start();
 	}
+	
+	/**
+	 * This method get all top level comment created from the sever.
+	 * @param model 
+	 * @param activity
+	 */
 
 	public static void searchALL(final TopLevelList model,
 			final GeoCommentActivity activity) {
@@ -126,6 +147,9 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
+	/**
+	 * This method construct a custom Gson for picture.
+	 */
 	private static void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
