@@ -28,6 +28,12 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 	}
 
 	@Override
+	/**
+	 * This part creates the main view.
+	 * If the user decided to add a picture, the picture is 
+	 * converted to a bitmap so it can be added to the server 
+	 * with the rest of the comment information.
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		if (convertView == null) {
