@@ -17,18 +17,30 @@ public class TopLevelList {
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<TopLevel>();
 	}
-
+	
+	/**
+	 * call pushComment in ElasticSearchOperations to 
+	 * push a top level comment to the server
+	 * @param topLevel
+	 */
 	public void AddTopLevel(TopLevel topLevel) {
 		this.topLevelList.add(0,topLevel);
 		ElasticSearchOperations.pushComment(topLevel);
 		this.adapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * add a top level comment to top level comment collection
+	 * @param pots
+	 */
 	public void addTopLevelCollection(Collection<TopLevel> pots) {
 		this.topLevelList.addAll(pots);
 		this.adapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * clear top level comment collection
+	 */
 	public void clear() {
 		this.topLevelList.clear();
 		this.adapter.notifyDataSetChanged();
