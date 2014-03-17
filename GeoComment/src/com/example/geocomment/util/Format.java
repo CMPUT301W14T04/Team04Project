@@ -10,6 +10,11 @@ public class Format {
 	private final static int START_COMMENT = 0;
 	private final static int END_COMMENT = 140;
 	
+	/*
+	 * This function takes a Calendar timestamp
+	 * and uses the SimpleDatFormat class
+	 * to convert the timeStamp into a string
+	 */
 	public static String dateFormat(Calendar timeStamp)
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy-HH:mm");

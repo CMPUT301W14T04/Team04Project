@@ -22,7 +22,9 @@ import com.google.gson.JsonSerializer;
 public class BitmapJsonConverter implements JsonDeserializer<Bitmap>,
 		JsonSerializer<Bitmap> {
 
-	
+	/*
+	 *This function takes a bitmap and serializes it to a JSON 
+	 */
 	@Override
 	public JsonElement serialize(Bitmap src, Type typeOfSrc, JsonSerializationContext context) {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -31,7 +33,9 @@ public class BitmapJsonConverter implements JsonDeserializer<Bitmap>,
 		return new JsonPrimitive(base64Encoded);
 	}
 
-	
+	/*
+	 *Takes a JSON Element and deserializes it back into a Bitmap 
+	 */
 	@Override
 	public Bitmap deserialize(JsonElement src, Type typeOfSrc, JsonDeserializationContext context) 
 			throws JsonParseException {

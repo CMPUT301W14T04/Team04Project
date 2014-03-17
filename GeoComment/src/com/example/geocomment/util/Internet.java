@@ -15,7 +15,12 @@ public class Internet
 		this.aContext = aContext;
 
 	}
-
+	
+	/*
+	 * This function uses the ConnectivityManager class
+	 * to check if a connection exists and checks all
+	 * network information to make sure it is connected.
+	 */
 	public boolean isConnectedToInternet()
 	{
 		ConnectivityManager connectivity = (ConnectivityManager) aContext.getSystemService(Context.CONNECTIVITY_SERVICE);
