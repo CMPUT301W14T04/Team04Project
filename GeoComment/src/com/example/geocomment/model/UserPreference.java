@@ -15,7 +15,7 @@ public class UserPreference {
 	}
 	public UserPreference()
 	{
-		
+
 	}
 
 	/**
@@ -38,15 +38,13 @@ public class UserPreference {
 	public LocationList getLocationList() {
 		return locationList;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {
 		return "UserPreference [userName=" + userName + ", id=" + id
 				+ ", locationList=" + locationList + "]";
 	}
-	
-	
+
+
 
 }

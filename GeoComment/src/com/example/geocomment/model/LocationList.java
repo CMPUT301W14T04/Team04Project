@@ -1,5 +1,4 @@
-package com.example.geocomment.model;
-
+package com.example.geocomment.model; 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,10 +11,16 @@ public class LocationList implements Parcelable {
 
 	private List<double[]> locationHistory;
 
+	/**
+	 * returns a list of locations
+	 */
 	public LocationList() {
 		this.locationHistory = new ArrayList<double[]>();
-	}
-	
+	} 
+
+	/**
+	 * @param source
+	 */
 	@SuppressWarnings("unchecked")
 	private LocationList(Parcel source)
 	{
@@ -26,11 +31,15 @@ public class LocationList implements Parcelable {
 		return locationHistory.size();
 	}
 
+	/**
+	 * asks user to modify location
+	 * @param location
+	 */
 	public void addLocation (Location location)
 	{
 		double lat = location.getLatitude();
 		double lon = location.getLongitude();
-		
+
 		double [] lo = {lat,lon};
 		if(getListSize()<=4)
 			locationHistory.add(lo);
@@ -40,12 +49,12 @@ public class LocationList implements Parcelable {
 		}
 
 	}
-	
+
 	public List<double[]> getLocationList()
 	{
 		return Collections.unmodifiableList(locationHistory);
 	}
-	
+
 	/**
 	 * @precondition i should be less than 4.
 	 * @param the index of one location
@@ -55,7 +64,10 @@ public class LocationList implements Parcelable {
 	{
 		return locationHistory.get(i);
 	}
-	
+
+	/**
+	 * @param locationHistory
+	 */
 	public void setLocationList(List<double[]> locationHistory)
 	{
 		this.locationHistory=locationHistory;
@@ -70,24 +82,28 @@ public class LocationList implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeList(locationHistory);
-		
+
 	}
+
+	/**
+	 * creates a location
+	 */
 	public static final Parcelable.Creator<LocationList> CREATOR = new Creator<LocationList>()
 			{
 
-				@Override
-				public LocationList[] newArray(int size)
-				{
+		@Override
+		public LocationList[] newArray(int size)
+		{
 
-					// TODO Auto-generated method stub
-					return new LocationList[size];
-				}
+			// TODO Auto-generated method stub
+			return new LocationList[size];
+		}
 
-				@Override
-				public LocationList createFromParcel(Parcel source)
-				{
+		@Override
+		public LocationList createFromParcel(Parcel source)
+		{
 
-					return new LocationList(source);
-				}
+			return new LocationList(source);
+		}
 			};
 }

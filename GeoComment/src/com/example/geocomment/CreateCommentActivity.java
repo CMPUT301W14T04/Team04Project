@@ -47,7 +47,7 @@ public class CreateCommentActivity extends Activity {
 	Location location;
 
 	int type;
-	
+
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
 	private ImageView imageView = null;
@@ -71,7 +71,7 @@ public class CreateCommentActivity extends Activity {
 		locationList = (LocationList) bundle
 				.getParcelable(Resource.USER_LOCATION_HISTORY);
 		type = bundle.getInt(Resource.TOP_LEVEL_COMMENT);
-		
+
 		imageView = (ImageView)findViewById(R.id.imageView1);
 		imageView.setImageBitmap(null);
 	}
@@ -111,7 +111,10 @@ public class CreateCommentActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
+	/**
+	 * dialog pops up after clicking action_new_picture icon in action bar opens camera or gallery
+	 */
 	public void dialog() {
 		AlertDialog.Builder builder = new Builder(CreateCommentActivity.this);
 		builder.setTitle("Attach a picture from:");
@@ -138,7 +141,9 @@ public class CreateCommentActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap)data.getExtras().get("data");
+			//resize chosen photo
 			photo = photo.createScaledBitmap(photo, 600, 600, false);
+			//set photo for preview
 			imageView.setImageBitmap(photo);
 			getStringFromBitmap(photo);
 		}
@@ -152,11 +157,17 @@ public class CreateCommentActivity extends Activity {
 			String picturePath = cursor.getString(columnIndex);
 			cursor.close();
 			photo = (BitmapFactory.decodeFile(picturePath));
+			//set photo for preview
 			imageView.setImageBitmap(photo);
 			getStringFromBitmap(photo);
 		}  
 	}
 
+	/**
+	 * this function encodes photo to string
+	 * @param photo
+	 * @return
+	 */
 	public String getStringFromBitmap(Bitmap photo) {
 		final int COMPRESSION_QUALITY = 100;
 		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();

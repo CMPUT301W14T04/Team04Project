@@ -9,6 +9,14 @@ import android.util.Log;
 public class Reply extends Comment {
 
 
+	/**
+	 * initialize all parameters of a reply
+	 * @param aUser
+	 * @param timeStamp
+	 * @param aPicture
+	 * @param textComment
+	 * @param aLocation
+	 */
 	public Reply(User aUser, Calendar timeStamp, String aPicture,
 			String textComment, double[] aLocation)
 	{
@@ -26,6 +34,9 @@ public class Reply extends Comment {
 		this.timeStamp = null;
 	}
 
+	/**
+	 * @param source
+	 */
 	private Reply(Parcel source)
 	{
 
@@ -56,8 +67,11 @@ public class Reply extends Comment {
 		dest.writeSerializable(timeStamp);
 	}
 
+	/**
+	 * creates a new reply
+	 */
 	public static final Parcelable.Creator<Reply> CREATOR = new Creator<Reply>()
-	{
+			{
 
 		@Override
 		public Reply[] newArray(int size)
@@ -73,6 +87,6 @@ public class Reply extends Comment {
 
 			return new Reply(source);
 		}
-	};
+			};
 
 }

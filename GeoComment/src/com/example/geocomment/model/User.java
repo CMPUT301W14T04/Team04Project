@@ -9,15 +9,23 @@ public class User implements Parcelable {
 	private String ID;
 	private double [] userLocation;
 
+	/**
+	 * @param userLocation
+	 * @param userName
+	 * @param ID
+	 */
 	public User(double[] userLocation, String userName, String ID) {
 		this.userName = userName;
 		this.ID = ID;
 		this.userLocation = userLocation;
 	}
 	public User(){
-		
+
 	}
 
+	/**
+	 * @param source
+	 */
 	private User(Parcel source) {
 
 		userLocation = source.createDoubleArray();
@@ -49,13 +57,13 @@ public class User implements Parcelable {
 
 		return ID;
 	}
-	
+
 	public void setID(String ID)
 	{
 		this.ID=ID;
 	}
 
-	
+
 	/**
 	 * @return the userLocation
 	 */
@@ -79,6 +87,9 @@ public class User implements Parcelable {
 		dest.writeString(ID);
 	}
 
+	/**
+	 * creates a new user
+	 */
 	public static final Parcelable.Creator<User> CREATOR = new Creator<User>() {
 
 		@Override

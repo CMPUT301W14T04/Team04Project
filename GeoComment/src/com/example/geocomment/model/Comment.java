@@ -1,5 +1,4 @@
-package com.example.geocomment.model;
-
+package com.example.geocomment.model; 
 import java.util.Calendar;
 
 import android.os.Parcelable;
@@ -12,6 +11,14 @@ public abstract class Comment implements Parcelable {
 	protected Calendar timeStamp;
 	protected double [] aLocation;
 
+	/**
+	 * initialize all the parameters of a comment
+	 * @param aUser
+	 * @param timeStamp
+	 * @param aPicture
+	 * @param textComment
+	 * @param aLocation
+	 */
 	public Comment(User aUser, Calendar timeStamp, String aPicture,
 			String textComment, double [] aLocation) {
 
@@ -34,7 +41,6 @@ public abstract class Comment implements Parcelable {
 	}
 
 	/**
-	 * 
 	 * @return User ID
 	 */
 	public String getUserID() {
@@ -71,10 +77,16 @@ public abstract class Comment implements Parcelable {
 		this.aPicture = aPicture;
 	}
 
+	/**
+	 * @param timeStamp
+	 */
 	public void setTimeStamp(Calendar timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 
+	/**
+	 * @return
+	 */
 	public Calendar getDate() {
 		return timeStamp;
 	}
@@ -85,6 +97,6 @@ public abstract class Comment implements Parcelable {
 	public double[] getaLocation() {
 		return aLocation;
 	}
-	
+
 
 }

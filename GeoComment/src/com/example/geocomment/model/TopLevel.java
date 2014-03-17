@@ -9,10 +9,19 @@ import android.os.Parcelable;
 import android.util.Log;
 
 public class TopLevel extends Comment {
-	
+
 	private String ID;
 	private List <Reply> replies;
 
+	/**
+	 * initialize all parameters of a top level comment
+	 * @param aUser
+	 * @param timeStamp
+	 * @param aPicture
+	 * @param textComment
+	 * @param aLocation
+	 * @param ID
+	 */
 	public TopLevel(User aUser, Calendar timeStamp, String aPicture,
 			String textComment, double[] aLocation,String ID)
 	{
@@ -33,6 +42,9 @@ public class TopLevel extends Comment {
 		this.replies=null;
 	}
 
+	/**
+	 * @param source
+	 */
 	@SuppressWarnings("unchecked")
 	private TopLevel(Parcel source)
 	{
@@ -51,9 +63,8 @@ public class TopLevel extends Comment {
 	{
 		return ID;
 	}
-	
+
 	/**
-	 * 
 	 * @return A replies list.
 	 * @return null if the list is empty.
 	 */
@@ -63,7 +74,7 @@ public class TopLevel extends Comment {
 			return null;
 		return this.replies;
 	}
-	
+
 	public void setReplies (List<Reply> replies)
 	{
 		this.replies= replies;
@@ -91,8 +102,11 @@ public class TopLevel extends Comment {
 		dest.writeList(replies);
 	}
 
+	/**
+	 * creates a new top level comment
+	 */
 	public static final Parcelable.Creator<TopLevel> CREATOR = new Creator<TopLevel>()
-	{
+			{
 
 		@Override
 		public TopLevel[] newArray(int size)
@@ -108,6 +122,6 @@ public class TopLevel extends Comment {
 
 			return new TopLevel(source);
 		}
-	};
+			};
 
 }
