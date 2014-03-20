@@ -102,6 +102,11 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 		assertEquals(list.get(2),comment4);
 		assertEquals(list.get(1),comment5);
 		assertEquals(list.get(0),comment6);
+		commentList.clear();
+		//this.adapter.notifyDataSetChanged(); THIS LINE IN TOPLEVEL CAUSES
+		//TEST TO FAIL CREATES A NULL POINTER EXCEPTION
+		list=commentList.getList();
+		assertEquals(0,list.size());
 		}
 	
 	

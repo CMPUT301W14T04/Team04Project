@@ -26,7 +26,7 @@ public class TopLevelList {
 	public void AddTopLevel(TopLevel topLevel) {
 		this.topLevelList.add(0,topLevel);
 		ElasticSearchOperations.pushComment(topLevel);
-		this.adapter.notifyDataSetChanged();
+		//this.adapter.notifyDataSetChanged();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class TopLevelList {
 	 */
 	public void clear() {
 		this.topLevelList.clear();
-		this.adapter.notifyDataSetChanged();
+		//this.adapter.notifyDataSetChanged();
 	}
 
 	public List<TopLevel> getList() {
