@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class GeoCommentActivity extends Activity {
 
 	Spinner sortList;
 	ListView commentListView;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -214,7 +216,11 @@ public class GeoCommentActivity extends Activity {
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
-
+			/*Gson gson = new Gson();
+			TopLevelList toplevel = new TopLevelList();
+			for (TopLevel t: toplevel.getList() ){
+				gson.toJson(t);
+			}*/
 		}
 	}
 

@@ -48,4 +48,13 @@
         android:textColor="@android:color/black"
         android:textSize="12sp" />
 
+    <ImageButton
+       
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/date_added"
+        android:layout_below="@+id/comment"
+       	android:src="@drawable/ic_heart" />
+
 </RelativeLayout>

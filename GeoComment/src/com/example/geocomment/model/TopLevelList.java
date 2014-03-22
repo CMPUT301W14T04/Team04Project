@@ -12,10 +12,27 @@ import android.widget.ArrayAdapter;
 public class TopLevelList {
 
 	private List<TopLevel> topLevelList;
+	private List<TopLevel> favourites;
 	private ArrayAdapter<TopLevel> adapter;
 
+	
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<TopLevel>();
+		this.favourites = new ArrayList<TopLevel>();
+	}
+	
+	public void AddFavourite(TopLevel fav){
+		this.favourites.add(fav);
+		this.adapter.notifyDataSetChanged();
+	}
+	
+	public void favClear() {
+		this.favourites.clear();
+		this.adapter.notifyDataSetChanged();
+	}
+
+	public List<TopLevel> getFavList() {
+		return Collections.unmodifiableList(favourites);
 	}
 	
 	/**
