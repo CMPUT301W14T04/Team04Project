@@ -55,7 +55,7 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 		//BUTTON WORKS BY ITSELF SOMETIMES AND ITS REALLY STRANGE
 		//ONLY TOP LEVELS
 		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
-		image.setOnClickListener(new View.OnClickListener(){
+		/*image.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				if (comment_meta.isFavourite()==false){
@@ -73,14 +73,18 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 
 			}
 
-		});
+		});*/
 		
 		
 		
 		
 		if (comment_meta != null) {
-			
-
+			if(comment_meta.isFavourite()==true){
+				image.setBackgroundColor(Color.RED);
+			}
+			else if (comment_meta.isFavourite()==false){
+				image.setBackgroundColor(Color.GRAY);
+			}
 			picImageView  = (ImageView) convertView.findViewById(R.id.pic_image_view);
 			if (comment_meta.aPicture != null) {
 				decodedString = Base64.decode(comment_meta.aPicture, Base64.DEFAULT);

@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -57,6 +59,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 	Spinner sortList;
 	ListView commentListView;
 	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		favouritesList = new TopLevelList();
 		commentList = new TopLevelList();
 		locationHistory = new LocationList();
-		adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());
+		//adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());DON'T NEED THESE LINES HERE
 
 		location = new GPSLocation(GeoCommentActivity.this);
 		internet = new Internet(GeoCommentActivity.this);
@@ -86,9 +89,12 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		// Apply the adapter to the spinner
 		sortList.setAdapter(adapterSpinner);
 		
-		commentListView.setAdapter(adapter);
-		commentList.setAdapter(adapter);
+		//commentListView.setAdapter(adapter);DON'T NEED THESE LINES HERE
+		//commentList.setAdapter(adapter);DON'T NEED THESE LINES HERE
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+		
+		favouritesList.add();//REMOVE LATER
+		
 	}
 
 	@Override
@@ -299,17 +305,17 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Favourite")){
-		//Toast.makeText(this, "default",Toast.LENGTH_SHORT).show();
-			//adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, favouritesList.getList());
-			//commentListView.setAdapter(adapter);
-			//favouritesList.setAdapter(adapter);
-			for (TopLevel t: favouritesList.getList()){
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, favouritesList.getFavList());
+			commentListView.setAdapter(adapter);
+			favouritesList.setAdapter(adapter);
+			for (TopLevel t: favouritesList.getFavList()){
 				Toast.makeText(this, t.getTextComment(), Toast.LENGTH_SHORT).show();
 			}
-			Toast.makeText(this, "favourite", Toast.LENGTH_SHORT).show();
 		}
 		else if (parent.getItemAtPosition(pos).equals("Main")){
-			Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
 
 		}
 		
