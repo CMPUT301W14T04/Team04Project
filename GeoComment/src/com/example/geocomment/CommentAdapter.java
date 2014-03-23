@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.geocomment.model.Comment;
 import com.example.geocomment.model.TopLevel;
+import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.util.Format;
 
 
@@ -60,10 +61,13 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 				if (comment_meta.isFavourite()==false){
 					image.setBackgroundColor(Color.RED);
 					Comment.setFavourite(true);
+					TopLevelList.AddFavourite(comment_meta);
 				}
 				else{
 					image.setBackgroundColor(Color.GRAY);
 					Comment.setFavourite(false);
+					TopLevelList.RemoveFavourite(comment_meta);
+
 				}
 				Toast.makeText(parent.getContext(), comment_meta.getTextComment()+" "+comment_meta.isFavourite() , Toast.LENGTH_SHORT).show();
 

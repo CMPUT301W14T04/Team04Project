@@ -7,5 +7,9 @@
     <string name="title_activity_create_comment">CreateCommentActivity</string>
     <string name="title_activity_option">OptionActivity</string>
     <string name="new_picture">New Picture</string>
+    <string-array name="sortArray">
+        <item >Main</item>
+        <item>Favourite</item>
+    </string-array>
 
 </resources>

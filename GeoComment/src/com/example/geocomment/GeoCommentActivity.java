@@ -15,8 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
@@ -37,7 +41,7 @@ import com.google.gson.GsonBuilder;
  * @author CMPUT 301 Team 04
  * 
  */
-public class GeoCommentActivity extends Activity {
+public class GeoCommentActivity extends Activity implements OnItemSelectedListener {
 
 	Gson gson;
 	Internet internet;
@@ -61,6 +65,7 @@ public class GeoCommentActivity extends Activity {
 
 		// initialization variables
 		sortList = (Spinner) findViewById(R.id.sortList);
+		sortList.setOnItemSelectedListener(this);
 		commentListView = (ListView) findViewById(R.id.commentListView);
 
 		favouritesList = new TopLevelList();
@@ -73,6 +78,13 @@ public class GeoCommentActivity extends Activity {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gson = gsonBuilder.create(); 
 		userPre = new UserPreference();
+		
+		ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(this,
+		        R.array.sortArray, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		sortList.setAdapter(adapterSpinner);
 		
 		commentListView.setAdapter(adapter);
 		commentList.setAdapter(adapter);
@@ -281,6 +293,32 @@ public class GeoCommentActivity extends Activity {
 			break;
 		}
 
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos,
+			long id) {
+		if (parent.getItemAtPosition(pos).equals("Favourite")){
+		//Toast.makeText(this, "default",Toast.LENGTH_SHORT).show();
+			//adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, favouritesList.getList());
+			//commentListView.setAdapter(adapter);
+			//favouritesList.setAdapter(adapter);
+			for (TopLevel t: favouritesList.getList()){
+				Toast.makeText(this, t.getTextComment(), Toast.LENGTH_SHORT).show();
+			}
+			Toast.makeText(this, "favourite", Toast.LENGTH_SHORT).show();
+		}
+		else if (parent.getItemAtPosition(pos).equals("Main")){
+			Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
+
+		}
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
