@@ -49,42 +49,47 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 			convertView = inflater.inflate(R.layout.comment_row, null);
 		}
 		
-		
-
 		final TopLevel comment_meta = this.getItem(position);
+	
 		//BUTTON WORKS BY ITSELF SOMETIMES AND ITS REALLY STRANGE
 		//ONLY TOP LEVELS
 		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
-		/*image.setOnClickListener(new View.OnClickListener(){
+		image.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				if (comment_meta.isFavourite()==false){
-					image.setBackgroundColor(Color.RED);
-					Comment.setFavourite(true);
-					TopLevelList.AddFavourite(comment_meta);
-				}
-				else{
-					image.setBackgroundColor(Color.GRAY);
-					Comment.setFavourite(false);
-					TopLevelList.RemoveFavourite(comment_meta);
+				//if (comment_meta.isFavourite()==false){
+					//image.setBackgroundColor(Color.RED);
+					//Comment.setFavourite(true);
+					//TopLevelList.AddFavourite(comment_meta);
+				//}
+				//else{
+					//image.setBackgroundColor(Color.GRAY);
+					//Comment.setFavourite(false);
+					//TopLevelList.RemoveFavourite(comment_meta);
 
-				}
+				//}
 				Toast.makeText(parent.getContext(), comment_meta.getTextComment()+" "+comment_meta.isFavourite() , Toast.LENGTH_SHORT).show();
 
 			}
 
-		});*/
+		});
 		
 		
 		
 		
 		if (comment_meta != null) {
-			if(comment_meta.isFavourite()==true){
+			
+			//TAREK
+			/*if(comment_meta.isFavourite()==true){
 				image.setBackgroundColor(Color.RED);
 			}
 			else if (comment_meta.isFavourite()==false){
 				image.setBackgroundColor(Color.GRAY);
-			}
+			}*/
+			//TAREK
+			
+			
+			
 			picImageView  = (ImageView) convertView.findViewById(R.id.pic_image_view);
 			if (comment_meta.aPicture != null) {
 				decodedString = Base64.decode(comment_meta.aPicture, Base64.DEFAULT);

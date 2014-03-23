@@ -74,8 +74,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		favouritesList = new TopLevelList();
 		commentList = new TopLevelList();
 		locationHistory = new LocationList();
-		//adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());DON'T NEED THESE LINES HERE
-
+		
 		location = new GPSLocation(GeoCommentActivity.this);
 		internet = new Internet(GeoCommentActivity.this);
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -88,12 +87,10 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		sortList.setAdapter(adapterSpinner);
-		
-		//commentListView.setAdapter(adapter);DON'T NEED THESE LINES HERE
-		//commentList.setAdapter(adapter);DON'T NEED THESE LINES HERE
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		
 		favouritesList.add();//REMOVE LATER
+		
 		
 	}
 
@@ -186,12 +183,20 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 			}
 			return userInfo;
 		case Resource.FAVOURITE_LOAD:
-			String favouritesJson = null;
+			//String favouritesJson = null;
 			try {
 				fis = openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						fis));
-				favouritesJson = in.readLine();
+				String fav = in.readLine();
+				while (fav!=null){
+					TopLevel t = gson.fromJson(fav, TopLevel.class);
+					favouritesList.AddTopLevel(t);
+					Toast.makeText(this, t.getTextComment(), Toast.LENGTH_SHORT).show();
+					fav=in.readLine();
+				}
+				fis.close();
+				//favouritesJson = in.readLine();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -199,7 +204,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return favouritesJson;
+			//return favouritesJson;
 
 		}
 
@@ -234,11 +239,22 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
-			/*Gson gson = new Gson();
-			TopLevelList toplevel = new TopLevelList();
-			for (TopLevel t: toplevel.getList() ){
-				gson.toJson(t);
-			}*/
+			try{
+				fos = openFileOutput(Resource.FAVOURITE_FILE,
+						Context.MODE_PRIVATE);
+				for (TopLevel t: favouritesList.getFavList() ){
+					String fav = gson.toJson(t)+"\n";
+					fos.write(fav.getBytes());
+					}
+				fos.close();
+			}catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
 
