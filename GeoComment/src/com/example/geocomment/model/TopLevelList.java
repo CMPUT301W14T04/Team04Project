@@ -17,15 +17,6 @@ public class TopLevelList {
 	private static ArrayAdapter<TopLevel> adapter;
 
 
-	public void add(){
-		Calendar timeStamp = Calendar.getInstance();
-
-		User user = new User(null, "elbohtim", "1");
-		favourites.add(new TopLevel(user,timeStamp, null, "String_1",null,null));
-		favourites.add(new TopLevel(user,timeStamp, null, "String_2",null,null));
-		favourites.add(new TopLevel(user,timeStamp, null, "String_3",null,null));
-		favourites.add(new TopLevel(user,timeStamp, null, "String_4",null,null));
-	}
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<TopLevel>();
 		favourites = new ArrayList<TopLevel>();

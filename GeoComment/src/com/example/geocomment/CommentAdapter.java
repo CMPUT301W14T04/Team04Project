@@ -53,17 +53,21 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 	
 		//BUTTON WORKS BY ITSELF SOMETIMES AND ITS REALLY STRANGE
 		//ONLY TOP LEVELS
-		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
+        
+		/*final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
+		
 		image.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				
+				image.setBackgroundColor(Color.CYAN);
 				//if (comment_meta.isFavourite()==false){
 					//image.setBackgroundColor(Color.RED);
 					//Comment.setFavourite(true);
 					//TopLevelList.AddFavourite(comment_meta);
 				//}
 				//else{
-					//image.setBackgroundColor(Color.GRAY);
+					//image.setBackgroundColor(Color.LTGRAY);
 					//Comment.setFavourite(false);
 					//TopLevelList.RemoveFavourite(comment_meta);
 
@@ -73,22 +77,11 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 			}
 
 		});
+		*/
 		
-		
-		
-		
+		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
+		image.setFocusable(false);
 		if (comment_meta != null) {
-			
-			//TAREK
-			/*if(comment_meta.isFavourite()==true){
-				image.setBackgroundColor(Color.RED);
-			}
-			else if (comment_meta.isFavourite()==false){
-				image.setBackgroundColor(Color.GRAY);
-			}*/
-			//TAREK
-			
-			
 			
 			picImageView  = (ImageView) convertView.findViewById(R.id.pic_image_view);
 			if (comment_meta.aPicture != null) {
