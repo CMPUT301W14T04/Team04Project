@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.gson.JsonElement;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -22,7 +24,7 @@ public class TopLevel extends Comment {
 	 * @param aLocation
 	 * @param ID
 	 */
-	public TopLevel(User aUser, Calendar timeStamp, String aPicture,
+	public TopLevel(User aUser, Calendar timeStamp, JsonElement aPicture,
 			String textComment, double[] aLocation,String ID)
 	{
 
@@ -53,7 +55,7 @@ public class TopLevel extends Comment {
 				"ParcelData(Parcel source): time to put back parcel data");
 		textComment = source.readString();
 		aUser = (User) source.readValue(getClass().getClassLoader());
-		aPicture = (String) source.readValue(getClass().getClassLoader());
+		aPicture = (JsonElement) source.readValue(getClass().getClassLoader());
 		timeStamp = (Calendar) source.readSerializable();
 		ID = source.readString();
 		replies = (ArrayList<Reply>) source.readArrayList(getClass().getClassLoader());

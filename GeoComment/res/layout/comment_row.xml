@@ -10,7 +10,8 @@
         android:layout_centerVertical="true"
         android:layout_margin="5dp"
         android:padding="3dp"
-        android:contentDescription="@string/picture_comment_row" />
+        android:contentDescription="@string/picture_comment_row"
+        android:text="@string/picture_comment_row" />
 
     <TextView
         android:id="@+id/tvtitle"

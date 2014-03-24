@@ -34,6 +34,8 @@ import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.User;
 import com.example.geocomment.util.Resource;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 
 /**
  * This class creates the comment activity for the application.
@@ -155,7 +157,7 @@ public class CreateCommentActivity extends Activity {
 			photo = photo.createScaledBitmap(photo, 600, 600, false);
 			//set photo for preview
 			imageView.setImageBitmap(photo);
-			getStringFromBitmap(photo);
+			
 		}
 		if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK) {  
 			Uri selectedImage = data.getData();
@@ -169,7 +171,7 @@ public class CreateCommentActivity extends Activity {
 			photo = (BitmapFactory.decodeFile(picturePath));
 			//set photo for preview
 			imageView.setImageBitmap(photo);
-			getStringFromBitmap(photo);
+			
 		}  
 	}
 
@@ -181,13 +183,13 @@ public class CreateCommentActivity extends Activity {
 	 * @param photo
 	 * @return
 	 */
-	public String getStringFromBitmap(Bitmap photo) {
+	public JsonElement getStringFromBitmap(Bitmap photo) {
 		final int COMPRESSION_QUALITY = 100;
 		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
 		photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
 		byte[] b = byteArrayBitmapStream.toByteArray();
 		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-		return encodedImage;
+		return new JsonPrimitive(encodedImage);
 	}
 
 	/**
@@ -207,7 +209,7 @@ public class CreateCommentActivity extends Activity {
 			String text = textComment.getText().toString();
 			String ID = Resource.generateID();
 			double[] location = user.getUserLocation();
-			reply = new Reply(user, timeStamp, encodedImage, "hollalala", location);
+			reply = new Reply(user, timeStamp, getStringFromBitmap(photo), "hollalala", location);
 			List<Reply> replies = new ArrayList<Reply>();
 			replies.add(reply);
 
@@ -216,7 +218,7 @@ public class CreateCommentActivity extends Activity {
 						Toast.LENGTH_LONG).show();
 			} else {
 
-				topLevel = new TopLevel(user, timeStamp, encodedImage, text,
+				topLevel = new TopLevel(user, timeStamp, getStringFromBitmap(photo), text,
 						location, ID);
 				topLevel.setReplies(replies);
 

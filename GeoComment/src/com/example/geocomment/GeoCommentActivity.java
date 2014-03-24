@@ -14,6 +14,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,7 +40,7 @@ import com.google.gson.GsonBuilder;
  * @author CMPUT 301 Team 04
  * 
  */
-public class GeoCommentActivity extends Activity {
+public class GeoCommentActivity extends Activity implements OnItemSelectedListener {
 
 	Gson gson;
 	Internet internet;
@@ -59,6 +63,9 @@ public class GeoCommentActivity extends Activity {
 
 		// initialization variables
 		sortList = (Spinner) findViewById(R.id.sortList);
+		ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.sorting_array, android.R.layout.simple_spinner_item);
+		spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sortList.setAdapter(spinner_adapter);
 		commentListView = (ListView) findViewById(R.id.commentListView);
 
 		favouritesList = new TopLevelList();
@@ -275,6 +282,19 @@ public class GeoCommentActivity extends Activity {
 			break;
 		}
 
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

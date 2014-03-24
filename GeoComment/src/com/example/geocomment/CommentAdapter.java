@@ -18,7 +18,6 @@ import com.example.geocomment.util.Format;
 
 public class CommentAdapter extends ArrayAdapter<TopLevel> {
 
-	private ImageView picImageView = null;
 	private byte[] decodedString = null;
 	private Bitmap decodedByte = null;
 
@@ -44,9 +43,11 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 		TopLevel comment_meta = this.getItem(position);
 		if (comment_meta != null) {
 
-			picImageView  = (ImageView) convertView.findViewById(R.id.pic_image_view);
+			ImageView picImageView  = (ImageView) convertView
+					.findViewById(R.id.pic_image_view);
 			if (comment_meta.aPicture != null) {
-				decodedString = Base64.decode(comment_meta.aPicture, Base64.DEFAULT);
+				String base64Encoded = comment_meta.getaPicture().getAsJsonPrimitive().getAsString();
+				decodedString = Base64.decode(base64Encoded, Base64.NO_WRAP);
 				decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 				picImageView.setImageBitmap(decodedByte);
 			}
@@ -70,4 +71,5 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 		return convertView;
 
 	}
+
 }

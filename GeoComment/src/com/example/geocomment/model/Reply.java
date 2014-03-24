@@ -2,6 +2,8 @@ package com.example.geocomment.model;
 
 import java.util.Calendar;
 
+import com.google.gson.JsonElement;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -17,7 +19,7 @@ public class Reply extends Comment {
 	 * @param textComment
 	 * @param aLocation
 	 */
-	public Reply(User aUser, Calendar timeStamp, String aPicture,
+	public Reply(User aUser, Calendar timeStamp, JsonElement aPicture,
 			String textComment, double[] aLocation)
 	{
 
@@ -44,7 +46,7 @@ public class Reply extends Comment {
 				"ParcelData(Parcel source): time to put back parcel data");
 		textComment = source.readString();
 		aUser = (User) source.readValue(getClass().getClassLoader());
-		aPicture = (String) source.readValue(getClass().getClassLoader());
+		aPicture = (JsonElement) source.readValue(getClass().getClassLoader());
 		timeStamp = (Calendar) source.readSerializable();
 	}
 
