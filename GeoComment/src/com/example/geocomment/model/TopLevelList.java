@@ -31,9 +31,9 @@ public class TopLevelList {
 		favourites = new ArrayList<TopLevel>();
 	}
 	
-	public static void AddFavourite(TopLevel fav){
+	public void AddFavourite(TopLevel fav){
 		favourites.add(fav);
-		adapter.notifyDataSetChanged();
+		//adapter.notifyDataSetChanged(); CAUSES PROBLEMS
 	}
 	
 	public static void RemoveFavourite(TopLevel fav){

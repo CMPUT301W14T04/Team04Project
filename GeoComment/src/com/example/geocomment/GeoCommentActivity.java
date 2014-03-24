@@ -62,13 +62,19 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 	Spinner sortList;
 	ListView commentListView;
 	
+	ArrayList<TopLevel> array;
+	/*
+	 * Cache resources http://www.youtube.com/watch?v=876seTGOhE0
+	 * http://www.youtube.com/watch?v=MpR-1WZx_hA
+	 */
 	public void cacheSave(){
+		//this.deleteFile(Resource.CACHE_STORE);
 		File folder= getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(cache);
-			for (TopLevel t: favouritesList.getFavList()){
+			for (TopLevel t: favouritesList.getFavList()){//CHANGE THE LIST
 					String string=gson.toJson(t)+"\n";
 					fos.write(string.getBytes());
 				}
@@ -132,10 +138,12 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		
 		
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
-		
-		favouritesList.add();//REMOVE LATER
+		array=new ArrayList<TopLevel>();
+		//favouritesList.add();//REMOVE LATER
 		//cacheSave();
 		//cacheLoad();
+		//save(Resource.FAVOURITE_SAVE);
+		//load(Resource.FAVOURITE_LOAD);
 		
 	}
 
@@ -237,7 +245,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 				String fav = in.readLine();
 				while (fav!=null){
 					TopLevel t = gson.fromJson(fav, TopLevel.class);
-					//favouritesList.AddTopLevel(t);
+					favouritesList.AddFavourite(t);
 					Toast.makeText(this, t.getTextComment(), Toast.LENGTH_SHORT).show();
 					fav=in.readLine();
 				}
