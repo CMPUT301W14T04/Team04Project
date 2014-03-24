@@ -1,6 +1,7 @@
 package com.example.geocomment;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,9 +10,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.http.HttpResponseCache;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -59,8 +62,47 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 	Spinner sortList;
 	ListView commentListView;
 	
+	public void cacheSave(){
+		File folder= getCacheDir();
+		File cache = new File(folder, Resource.CACHE_STORE);
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(cache);
+			for (TopLevel t: favouritesList.getFavList()){
+					String string=gson.toJson(t)+"\n";
+					fos.write(string.getBytes());
+				}
+			fos.close();
+			} catch (Exception e) {
+			  e.printStackTrace();
+			}
+	}
 	
+	public void cacheLoad(){
+		File folder=getCacheDir();
+		File cache=new File(folder, Resource.CACHE_STORE);
+		FileInputStream fis;
+		try{
+			fis= new FileInputStream(cache);
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+			String readCache = in.readLine();
+			while (readCache!=null){
+				TopLevel t = gson.fromJson(readCache, TopLevel.class);
+				//favouritesList.AddTopLevel(t);
+				Toast.makeText(this, t.getTextComment(), Toast.LENGTH_SHORT).show();
+				readCache=in.readLine();
+			}
+			fis.close();
+		}catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,12 +129,16 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		sortList.setAdapter(adapterSpinner);
+		
+		
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		
 		favouritesList.add();//REMOVE LATER
-		
+		//cacheSave();
+		//cacheLoad();
 		
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -191,7 +237,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 				String fav = in.readLine();
 				while (fav!=null){
 					TopLevel t = gson.fromJson(fav, TopLevel.class);
-					favouritesList.AddTopLevel(t);
+					//favouritesList.AddTopLevel(t);
 					Toast.makeText(this, t.getTextComment(), Toast.LENGTH_SHORT).show();
 					fav=in.readLine();
 				}
