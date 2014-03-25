@@ -13,6 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class CommentBrowseActivity extends Activity {
 //	private TextView likeNumber;
 	private TextView text;
 	private TextView location;
-//	private ImageView picture;
+	private ImageView picture;
 	private ListView replies;
 
 	private TopLevel toplevel;
@@ -56,7 +57,7 @@ public class CommentBrowseActivity extends Activity {
 //		likeNumber = (TextView) findViewById(R.id.likeNumber);
 		text = (TextView) findViewById(R.id.textBrowse);
 		location = (TextView) findViewById(R.id.locationBrowse);
-//		picture = (ImageView) findViewById(R.id.topLevelPicture);
+		picture = (ImageView) findViewById(R.id.topLevelPicture);
 		replies = (ListView) findViewById(R.id.repliesListViewBrowse);
 
 		repliesList = new TopLevelList();
@@ -79,6 +80,7 @@ public class CommentBrowseActivity extends Activity {
 		date.setText(displayDate);
 		text.setText(displayText);
 		location.setText(loca(toplevel.getaLocation()));
+		picture.setImageBitmap(toplevel.getaPicture());
 
 		replies.setAdapter(adapter);
 		repliesList.setAdapter(adapter);
