@@ -4,10 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.location.Geocoder;
-
-import com.example.geocomment.CreateCommentActivity;
 
 @SuppressLint("SimpleDateFormat")
 public class Format {

@@ -2,7 +2,7 @@ package com.example.geocomment.model;
 
 import java.util.Calendar;
 
-import com.google.gson.JsonElement;
+import android.graphics.Bitmap;
 
 public interface Commentor {
 	
@@ -26,7 +26,7 @@ public interface Commentor {
 	/**
 	 * @return the aPicture
 	 */
-	public String getaPicture();
+	public Bitmap getaPicture();
 
 	/**
 	 * @param aPicture

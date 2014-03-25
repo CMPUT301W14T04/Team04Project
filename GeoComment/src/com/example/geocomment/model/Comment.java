@@ -1,15 +1,16 @@
 package com.example.geocomment.model; 
 import java.util.Calendar;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Parcelable;
 
-import com.google.gson.JsonElement;
-
+@SuppressLint("ParcelCreator")
 public abstract class Comment implements Parcelable, Commentor {
 
 	protected User aUser;
 	protected String textComment;
-	public String aPicture;
+	public Bitmap aPicture;
 	protected Calendar timeStamp;
 	protected double [] aLocation;
 
@@ -21,12 +22,12 @@ public abstract class Comment implements Parcelable, Commentor {
 	 * @param textComment
 	 * @param aLocation
 	 */
-	public Comment(User aUser, Calendar timeStamp, String aPicture2,
+	public Comment(User aUser, Calendar timeStamp, Bitmap aPicture,
 			String textComment, double [] aLocation) {
 
 		this.aUser = aUser;
 		this.timeStamp = timeStamp;
-		this.aPicture = aPicture2;
+		this.aPicture = aPicture;
 		this.textComment = textComment;
 		this.aLocation = aLocation;
 	}
@@ -67,7 +68,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return the aPicture
 	 */
-	public String getaPicture() {
+	public Bitmap getaPicture() {
 		return aPicture;
 	}
 
@@ -75,7 +76,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	 * @param aPicture
 	 *            the aPicture to set
 	 */
-	public void setaPicture(String aPicture) {
+	public void setaPicture(Bitmap aPicture) {
 		this.aPicture = aPicture;
 	}
 

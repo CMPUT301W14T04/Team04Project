@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 public class TopLevelList {
@@ -25,6 +26,10 @@ public class TopLevelList {
 	 */
 	public void AddTopLevel(Commentor comment) {
 		this.topLevelList.add(0,comment);
+		if(comment.getaPicture()==null)
+		{
+			Log.e("Picture is null", "is null" );
+		}
 		ElasticSearchOperations.pushComment(comment,1);
 		this.adapter.notifyDataSetChanged();
 	}

@@ -15,11 +15,9 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +26,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.Reply;
@@ -53,14 +50,16 @@ public class CreateCommentActivity extends Activity {
 	User user;
 	LocationList locationList;
 	Location location;
+	
 
 	int type;
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
+	private static final int MAX_BITMAP_DIMENSIONS = 50;
 	private ImageView imageView = null;
-	private Bitmap photo = null;
-	String encodedImage = null;
+	Bitmap photo = null;
+//	String encodedImage = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +154,7 @@ public class CreateCommentActivity extends Activity {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap)data.getExtras().get("data");
 			//resize chosen photo
-			photo = photo.createScaledBitmap(photo, 600, 600, false);
+			photo = photo.createScaledBitmap(photo, 100, 100, false);
 			//set photo for preview
 			imageView.setImageBitmap(photo);
 			
@@ -184,14 +183,14 @@ public class CreateCommentActivity extends Activity {
 	 * @param photo
 	 * @return
 	 */
-	public JsonElement getStringFromBitmap(Bitmap photo) {
-		final int COMPRESSION_QUALITY = 100;
-		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
-		photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
-		byte[] b = byteArrayBitmapStream.toByteArray();
-		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-		return new JsonPrimitive(encodedImage);
-	}
+//	public JsonElement getStringFromBitmap(Bitmap photo) {
+//		final int COMPRESSION_QUALITY = 100;
+//		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+//		photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
+//		byte[] b = byteArrayBitmapStream.toByteArray();
+//		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+//		return new JsonPrimitive(encodedImage);
+//	}
 
 	/**
 	 * submitComment puts the comment into a top level array so it
@@ -212,13 +211,12 @@ public class CreateCommentActivity extends Activity {
 			double[] location = user.getUserLocation();
 
 
-
 			if (text.isEmpty()) {
 				Toast.makeText(this, "You can't submit an empty text",
 						Toast.LENGTH_LONG).show();
 			} else {
 
-				Comment = new TopLevel(user, timeStamp, encodedImage, text,
+				Comment = new TopLevel(user, timeStamp, photo, text,
 						location, ID);
 
 				Intent intent = new Intent();
@@ -243,7 +241,7 @@ public class CreateCommentActivity extends Activity {
 						Toast.LENGTH_LONG).show();
 			} else {
 
-				Comment = new TopLevel(user, timeStamp, encodedImage, text,
+				Comment = new TopLevel(user, timeStamp, photo, text,
 						location, ID);
 
 				Intent intent = new Intent();
@@ -258,4 +256,5 @@ public class CreateCommentActivity extends Activity {
 		}
 
 	}
+	
 }

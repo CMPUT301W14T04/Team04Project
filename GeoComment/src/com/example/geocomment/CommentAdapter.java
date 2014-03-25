@@ -4,8 +4,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,8 @@ import com.example.geocomment.util.Format;
 
 public class CommentAdapter extends ArrayAdapter<Commentor> {
 
-	private byte[] decodedString = null;
-	private Bitmap decodedByte = null;
+//	private byte[] decodedString = null;
+//	private Bitmap decodedByte = null;
 
 	public CommentAdapter(Context context, int resource, List<Commentor> list) {
 		super(context, resource, list);
@@ -46,12 +44,9 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 			ImageView picImageView  = (ImageView) convertView
 					.findViewById(R.id.pic_image_view);
-			if (comment_meta.getaPicture() != null) {
-				decodedString = Base64.decode(comment_meta.getaPicture(), Base64.DEFAULT);
-//				String base64Encoded = comment_meta.getaPicture().getAsJsonPrimitive().getAsString();
-//				decodedString = Base64.decode(base64Encoded, Base64.NO_WRAP);
-				decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-				picImageView.setImageBitmap(decodedByte);
+			if (picImageView != null) {
+
+				picImageView.setImageBitmap(comment_meta.getaPicture());
 			}
 
 			TextView comment = (TextView) convertView

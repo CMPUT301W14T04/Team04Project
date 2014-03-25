@@ -13,7 +13,6 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -131,7 +130,6 @@ public class CommentBrowseActivity extends Activity {
 
 				String localityString = returnAddress.getLocality();
 				String city = returnAddress.getCountryName();
-				String zipcode = returnAddress.getThoroughfare();
 
 				local.append(localityString + ", ");
 				local.append(city + ".");
