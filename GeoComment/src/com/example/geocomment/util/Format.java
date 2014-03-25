@@ -1,8 +1,13 @@
 package com.example.geocomment.util;
 
-import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.location.Geocoder;
+
+import com.example.geocomment.CreateCommentActivity;
 
 @SuppressLint("SimpleDateFormat")
 public class Format {
@@ -26,5 +31,7 @@ public class Format {
 		String previewComment = textComment.substring(START_COMMENT, END_COMMENT) + "..."; 
 		return previewComment; 
 	}
+	
+
 
 }

@@ -1,9 +1,7 @@
 package com.example.geocomment;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.util.Base64;
@@ -29,6 +28,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
@@ -47,7 +48,7 @@ public class CreateCommentActivity extends Activity {
 	Button pushButton;
 	EditText textComment;
 
-	TopLevel topLevel;
+	Commentor Comment;
 	Reply reply;
 	User user;
 	LocationList locationList;
@@ -209,29 +210,51 @@ public class CreateCommentActivity extends Activity {
 			String text = textComment.getText().toString();
 			String ID = Resource.generateID();
 			double[] location = user.getUserLocation();
-			reply = new Reply(user, timeStamp, getStringFromBitmap(photo), "hollalala", location);
-			List<Reply> replies = new ArrayList<Reply>();
-			replies.add(reply);
+
+
 
 			if (text.isEmpty()) {
 				Toast.makeText(this, "You can't submit an empty text",
 						Toast.LENGTH_LONG).show();
 			} else {
 
-				topLevel = new TopLevel(user, timeStamp, getStringFromBitmap(photo), text,
+				Comment = new TopLevel(user, timeStamp, encodedImage, text,
 						location, ID);
-				topLevel.setReplies(replies);
 
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
-				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT, topLevel);
+				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT, (TopLevel) Comment);
 				intent.putExtras(bundle);
 				setResult(Resource.RESQUEST_NEW_TOP_LEVEL, intent);
-				Log.e("Comment ID:", topLevel.getID());
 
 				finish();
 			}
 
+		}
+		
+		if (type == Resource.TYPE_REPLY){
+			Calendar timeStamp = Calendar.getInstance();
+			String text = textComment.getText().toString();
+			String ID = Resource.generateID();
+			double[] location = user.getUserLocation();
+
+			if (text.isEmpty()) {
+				Toast.makeText(this, "You can't submit an empty text",
+						Toast.LENGTH_LONG).show();
+			} else {
+
+				Comment = new TopLevel(user, timeStamp, encodedImage, text,
+						location, ID);
+
+				Intent intent = new Intent();
+				Bundle bundle = new Bundle();
+				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT, (Reply)Comment);
+				intent.putExtras(bundle);
+				setResult(Resource.RESQUEST_NEW_TOP_LEVEL, intent);
+
+				finish();
+			}
+			
 		}
 
 	}

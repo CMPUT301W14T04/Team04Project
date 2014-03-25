@@ -1,15 +1,15 @@
 package com.example.geocomment.model; 
 import java.util.Calendar;
 
-import com.google.gson.JsonElement;
-
 import android.os.Parcelable;
 
-public abstract class Comment implements Parcelable {
+import com.google.gson.JsonElement;
+
+public abstract class Comment implements Parcelable, Commentor {
 
 	protected User aUser;
 	protected String textComment;
-	public JsonElement aPicture;
+	public String aPicture;
 	protected Calendar timeStamp;
 	protected double [] aLocation;
 
@@ -17,22 +17,27 @@ public abstract class Comment implements Parcelable {
 	 * initialize all the parameters of a comment
 	 * @param aUser
 	 * @param timeStamp
-	 * @param aPicture
+	 * @param aPicture2
 	 * @param textComment
 	 * @param aLocation
 	 */
-	public Comment(User aUser, Calendar timeStamp, JsonElement aPicture,
+	public Comment(User aUser, Calendar timeStamp, String aPicture2,
 			String textComment, double [] aLocation) {
 
 		this.aUser = aUser;
 		this.timeStamp = timeStamp;
-		this.aPicture = aPicture;
+		this.aPicture = aPicture2;
 		this.textComment = textComment;
 		this.aLocation = aLocation;
 	}
 
 	public Comment() {
 
+	}
+
+	public Comment(User aUser2, Calendar timeStamp2, JsonElement aPicture2,
+			String textComment2, double[] aLocation2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -67,7 +72,7 @@ public abstract class Comment implements Parcelable {
 	/**
 	 * @return the aPicture
 	 */
-	public JsonElement getaPicture() {
+	public String getaPicture() {
 		return aPicture;
 	}
 
@@ -75,7 +80,7 @@ public abstract class Comment implements Parcelable {
 	 * @param aPicture
 	 *            the aPicture to set
 	 */
-	public void setaPicture(JsonElement aPicture) {
+	public void setaPicture(String aPicture) {
 		this.aPicture = aPicture;
 	}
 

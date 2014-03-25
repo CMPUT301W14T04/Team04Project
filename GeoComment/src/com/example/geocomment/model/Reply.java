@@ -2,13 +2,15 @@ package com.example.geocomment.model;
 
 import java.util.Calendar;
 
-import com.google.gson.JsonElement;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.gson.JsonElement;
+
 public class Reply extends Comment {
+	
+	private String parentID;
 
 
 	/**
@@ -19,11 +21,13 @@ public class Reply extends Comment {
 	 * @param textComment
 	 * @param aLocation
 	 */
+
 	public Reply(User aUser, Calendar timeStamp, JsonElement aPicture,
-			String textComment, double[] aLocation)
+			String textComment, double[] aLocation, String parentID)
 	{
 
 		super(aUser,timeStamp,aPicture,textComment, aLocation);
+		this.parentID=parentID;
 	}
 
 	public Reply()
@@ -34,6 +38,7 @@ public class Reply extends Comment {
 		this.textComment = null;
 		this.aUser = null;
 		this.timeStamp = null;
+		this.parentID=null;
 	}
 
 	/**
@@ -46,8 +51,9 @@ public class Reply extends Comment {
 				"ParcelData(Parcel source): time to put back parcel data");
 		textComment = source.readString();
 		aUser = (User) source.readValue(getClass().getClassLoader());
-		aPicture = (JsonElement) source.readValue(getClass().getClassLoader());
+		aPicture = (String) source.readValue(getClass().getClassLoader());
 		timeStamp = (Calendar) source.readSerializable();
+		parentID = source.readString();
 	}
 
 	@Override
@@ -67,6 +73,7 @@ public class Reply extends Comment {
 		dest.writeValue(aUser);
 		dest.writeValue(aPicture);
 		dest.writeSerializable(timeStamp);
+		dest.writeString(parentID);
 	}
 
 	/**
@@ -90,5 +97,12 @@ public class Reply extends Comment {
 			return new Reply(source);
 		}
 			};
+
+
+	@Override
+	public void setaPicture(String aPicture) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -13,5 +13,7 @@
         <item>Proximity to me</item>
         <item>Proximity to another location</item>
     </string-array>
+    <string name="title_activity_comment_browse">CommentBrowseActivity</string>
+
 
 </resources>

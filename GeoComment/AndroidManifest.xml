@@ -45,6 +45,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.geocomment.MainActivity" />
         </activity>
+        <activity
+            android:name="com.example.geocomment.CommentBrowseActivity"
+            android:label="@string/title_activity_comment_browse"
+            android:parentActivityName="com.example.geocomment.GeoCommentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.geocomment.GeoCommentActivity" />
+        </activity>
     </application>
 
 </manifest>

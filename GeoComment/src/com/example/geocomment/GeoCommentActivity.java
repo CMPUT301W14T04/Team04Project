@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
@@ -40,7 +42,9 @@ import com.google.gson.GsonBuilder;
  * @author CMPUT 301 Team 04
  * 
  */
-public class GeoCommentActivity extends Activity implements OnItemSelectedListener {
+
+public class GeoCommentActivity extends Activity implements OnItemClickListener ,OnItemSelectedListener {
+
 
 	Gson gson;
 	Internet internet;
@@ -78,10 +82,10 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gson = gsonBuilder.create(); 
 		userPre = new UserPreference();
-		
 		commentListView.setAdapter(adapter);
 		commentList.setAdapter(adapter);
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+		commentListView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -126,7 +130,7 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 		String info = load(Resource.GENERAL_INFO_LOAD);
 		if (info == null) {
 			
-			user = new User(locations, "Guillermo", Resource.generateID());
+			user = new User(locations, null, Resource.generateID());
 			locationHistory.addLocation(location.getLocation());
 			userPre = new UserPreference(user.getUserName(), user.getID(),
 					locationHistory);
@@ -148,6 +152,18 @@ public class GeoCommentActivity extends Activity implements OnItemSelectedListen
 	protected void onResume() {
 		super.onResume();
 	}
+	
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+	
+		Commentor topLevel = commentList.getComment(position);
+		Intent intent = new Intent(this,CommentBrowseActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("test", (TopLevel)topLevel);
+		intent.putExtras(bundle);
+		startActivity(intent);
+		
+	}
+
 
 	/**
 	 * This loads

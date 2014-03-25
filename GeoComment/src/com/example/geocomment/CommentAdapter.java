@@ -13,15 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.geocomment.model.TopLevel;
+import com.example.geocomment.model.Commentor;
 import com.example.geocomment.util.Format;
 
-public class CommentAdapter extends ArrayAdapter<TopLevel> {
+public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 	private byte[] decodedString = null;
 	private Bitmap decodedByte = null;
 
-	public CommentAdapter(Context context, int resource, List<TopLevel> list) {
+	public CommentAdapter(Context context, int resource, List<Commentor> list) {
 		super(context, resource, list);
 		// TODO Auto-generated constructor stub
 	}
@@ -40,13 +40,15 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 			convertView = inflater.inflate(R.layout.comment_row, null);
 		}
 
-		TopLevel comment_meta = this.getItem(position);
+		Commentor comment_meta = this.getItem(position);
 		if (comment_meta != null) {
+
 
 			ImageView picImageView  = (ImageView) convertView
 					.findViewById(R.id.pic_image_view);
-			if (comment_meta.aPicture != null) {
-				String base64Encoded = comment_meta.getaPicture().getAsJsonPrimitive().getAsString();
+			if (comment_meta.getaPicture() != null) {
+				decodedString = Base64.decode(comment_meta.getaPicture(), Base64.DEFAULT);
+//				String base64Encoded = comment_meta.getaPicture().getAsJsonPrimitive().getAsString();
 				decodedString = Base64.decode(base64Encoded, Base64.NO_WRAP);
 				decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 				picImageView.setImageBitmap(decodedByte);

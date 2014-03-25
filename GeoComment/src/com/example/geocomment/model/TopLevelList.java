@@ -11,21 +11,21 @@ import android.widget.ArrayAdapter;
 
 public class TopLevelList {
 
-	private List<TopLevel> topLevelList;
-	private ArrayAdapter<TopLevel> adapter;
+	private List<Commentor> topLevelList;
+	private ArrayAdapter<Commentor> adapter;
 
 	public TopLevelList() {
-		this.topLevelList = new ArrayList<TopLevel>();
+		this.topLevelList = new ArrayList<Commentor>();
 	}
 	
 	/**
 	 * call pushComment in ElasticSearchOperations to 
 	 * push a top level comment to the server
-	 * @param topLevel
+	 * @param comment
 	 */
-	public void AddTopLevel(TopLevel topLevel) {
-		this.topLevelList.add(0,topLevel);
-		ElasticSearchOperations.pushComment(topLevel);
+	public void AddTopLevel(Commentor comment) {
+		this.topLevelList.add(0,comment);
+		ElasticSearchOperations.pushComment(comment,1);
 		this.adapter.notifyDataSetChanged();
 	}
 
@@ -33,7 +33,7 @@ public class TopLevelList {
 	 * add a top level comment to top level comment collection
 	 * @param pots
 	 */
-	public void addTopLevelCollection(Collection<TopLevel> pots) {
+	public void addTopLevelCollection(Collection<Commentor> pots) {
 		this.topLevelList.addAll(pots);
 		this.adapter.notifyDataSetChanged();
 	}
@@ -46,12 +46,17 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
-	public List<TopLevel> getList() {
+	public List<Commentor> getList() {
 		return Collections.unmodifiableList(topLevelList);
 	}
 
-	public void setAdapter(ArrayAdapter<TopLevel> adapter) {
+	public void setAdapter(ArrayAdapter<Commentor> adapter) {
 		this.adapter = adapter;
+	}
+	
+	public Commentor getComment(int i)
+	{
+		return topLevelList.get(i);
 	}
 
 }
