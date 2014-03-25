@@ -22,7 +22,7 @@ public class Reply extends Comment {
 	 * @param aLocation
 	 */
 
-	public Reply(User aUser, Calendar timeStamp, JsonElement aPicture,
+	public Reply(User aUser, Calendar timeStamp, String aPicture,
 			String textComment, double[] aLocation, String parentID)
 	{
 

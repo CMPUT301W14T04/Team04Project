@@ -35,11 +35,6 @@ public abstract class Comment implements Parcelable, Commentor {
 
 	}
 
-	public Comment(User aUser2, Calendar timeStamp2, JsonElement aPicture2,
-			String textComment2, double[] aLocation2) {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @return User Username
 	 */

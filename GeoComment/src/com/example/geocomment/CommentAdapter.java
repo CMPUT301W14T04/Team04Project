@@ -49,7 +49,7 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 			if (comment_meta.getaPicture() != null) {
 				decodedString = Base64.decode(comment_meta.getaPicture(), Base64.DEFAULT);
 //				String base64Encoded = comment_meta.getaPicture().getAsJsonPrimitive().getAsString();
-				decodedString = Base64.decode(base64Encoded, Base64.NO_WRAP);
+//				decodedString = Base64.decode(base64Encoded, Base64.NO_WRAP);
 				decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 				picImageView.setImageBitmap(decodedByte);
 			}
