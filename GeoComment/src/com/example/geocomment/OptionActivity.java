@@ -16,6 +16,8 @@ import android.widget.Toast;
  * on your phone so the user does not have to enter a 
  * username everytime said user wants to makes either a top
  * level comment or a reply comment.
+ * 
+ * @author CMPUT 301 Team 04
  */
 public class OptionActivity extends Activity {
 

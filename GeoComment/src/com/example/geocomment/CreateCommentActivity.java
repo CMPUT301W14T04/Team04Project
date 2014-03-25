@@ -1,6 +1,5 @@
 package com.example.geocomment;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -17,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +30,13 @@ import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.User;
 import com.example.geocomment.util.Resource;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 
 /**
  * This class creates the comment activity for the application.
  * Each comment has text, username, reply, possibly a picture, and 
  * the location associated with it.
+ * 
+ * @author CMPUT 301 Team 04
  */
 public class CreateCommentActivity extends Activity {
 
@@ -56,7 +54,7 @@ public class CreateCommentActivity extends Activity {
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
-	private static final int MAX_BITMAP_DIMENSIONS = 50;
+//	private static final int MAX_BITMAP_DIMENSIONS = 50;
 	private ImageView imageView = null;
 	Bitmap photo = null;
 //	String encodedImage = null;

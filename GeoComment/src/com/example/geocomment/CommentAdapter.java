@@ -3,7 +3,6 @@ package com.example.geocomment;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,12 @@ import android.widget.TextView;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.util.Format;
 
+/**
+ * 
+ * this class set a custom adapter to the lisvtiew base on the list of comments
+ * @author CMPUT 301 Team 04
+ *
+ */
 public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 //	private byte[] decodedString = null;

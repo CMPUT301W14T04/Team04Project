@@ -22,6 +22,14 @@ import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.util.Format;
 
+
+/**
+ * 
+ * This activity allow the user to see the top level comment at the top and its replies.
+ * 
+ * @author CMPUT 301 Team 04
+ *
+ */
 public class CommentBrowseActivity extends Activity {
 
 	private TextView username;
@@ -113,6 +121,12 @@ public class CommentBrowseActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	//Thinking in use this method when the comment is create so the user do to have to wait till the geocoder find the location.
+	/**
+	 * this method use the latitude and longitude of the comment to determine the city, and country using geocoder.
+	 * @param location
+	 * @return
+	 */
 	private StringBuilder loca(double[] location) {
 		double lat = location[0];
 		double lon = location[1];
