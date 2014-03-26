@@ -10,13 +10,13 @@ public abstract class Comment implements Parcelable {
 	public String aPicture;
 	protected Calendar timeStamp;
 	protected double [] aLocation;
-	protected static boolean favourite= false;
+	protected boolean favourite= false;
 
 	public boolean isFavourite() {
 		return favourite;
 	}
 
-	public static void setFavourite(boolean favourite1) {
+	public void setFavourite(boolean favourite1) {
 			favourite = favourite1;
 	}
 

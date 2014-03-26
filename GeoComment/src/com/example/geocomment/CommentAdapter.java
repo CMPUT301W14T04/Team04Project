@@ -43,7 +43,7 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 	 * converted to a bitmap so it can be added to the server 
 	 * with the rest of the comment information.
 	 */
-	public View getView(int position, View convertView, final ViewGroup parent) {
+	public View getView( int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(this.getContext());
 			convertView = inflater.inflate(R.layout.comment_row, null);
@@ -53,36 +53,31 @@ public class CommentAdapter extends ArrayAdapter<TopLevel> {
 	
 		//BUTTON WORKS BY ITSELF SOMETIMES AND ITS REALLY STRANGE
 		//ONLY TOP LEVELS
-        
-		/*final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
-		
-		image.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				
-				image.setBackgroundColor(Color.CYAN);
-				//if (comment_meta.isFavourite()==false){
-					//image.setBackgroundColor(Color.RED);
-					//Comment.setFavourite(true);
-					//TopLevelList.AddFavourite(comment_meta);
-				//}
-				//else{
-					//image.setBackgroundColor(Color.LTGRAY);
-					//Comment.setFavourite(false);
-					//TopLevelList.RemoveFavourite(comment_meta);
-
-				//}
-				Toast.makeText(parent.getContext(), comment_meta.getTextComment()+" "+comment_meta.isFavourite() , Toast.LENGTH_SHORT).show();
-
-			}
-
-		});
-		*/
 		
 		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
 		image.setFocusable(false);
+		image.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if (comment_meta.isFavourite()==false){
+					comment_meta.setFavourite(true);
+					image.setImageResource(R.drawable.ic_redheart);
+				}
+				else{
+					comment_meta.setFavourite(false);
+					image.setImageResource(R.drawable.ic_heart);
+				}
+				Toast.makeText(parent.getContext(), comment_meta.getTextComment()+" "+comment_meta.isFavourite() , Toast.LENGTH_SHORT).show();
+				}
+			});
+		
 		if (comment_meta != null) {
-			
+			if (comment_meta.isFavourite()==false){
+				image.setImageResource(R.drawable.ic_heart);
+			}
+			else{
+				image.setImageResource(R.drawable.ic_redheart);
+			}
 			picImageView  = (ImageView) convertView.findViewById(R.id.pic_image_view);
 			if (comment_meta.aPicture != null) {
 				decodedString = Base64.decode(comment_meta.aPicture, Base64.DEFAULT);
