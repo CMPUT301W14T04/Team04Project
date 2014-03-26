@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import com.example.geocomment.GeoCommentActivity;
+import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
@@ -37,7 +38,7 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 	TopLevelList commentList= new TopLevelList();
 	User user = new User(null, "elbohtim", "1");
 	
-	List<TopLevel> list = new ArrayList <TopLevel>() ;
+	List<Commentor> list = new ArrayList <Commentor>() ;
 	
 	public Tests() {
 		super(GeoCommentActivity.class);

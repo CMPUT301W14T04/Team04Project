@@ -13,6 +13,8 @@ public abstract class Comment implements Parcelable, Commentor {
 	public Bitmap aPicture;
 	protected Calendar timeStamp;
 	protected double [] aLocation;
+	protected boolean favourite =false;
+
 
 	/**
 	 * initialize all the parameters of a comment
@@ -100,6 +102,20 @@ public abstract class Comment implements Parcelable, Commentor {
 	public double[] getaLocation() {
 		return aLocation;
 	}
+	
+	
+	/*
+	 * Set favourite
+	 */
+	public boolean isFavourite() {
+		return favourite;
+	}
 
+	/*
+	 * Get favourite
+	 */
+	public void setFavourite(boolean favourite) {
+		this.favourite = favourite;
+	}
 
 }

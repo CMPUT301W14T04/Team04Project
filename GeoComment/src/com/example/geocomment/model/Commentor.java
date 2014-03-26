@@ -49,6 +49,8 @@ public interface Commentor {
 	 */
 	public double[] getaLocation();
 
-
+	public boolean isFavourite();
+	
+	public void setFavourite(boolean favourite);
 
 }
