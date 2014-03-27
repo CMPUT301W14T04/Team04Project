@@ -85,10 +85,10 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gson = gsonBuilder.create(); 
 		userPre = new UserPreference();
-		commentListView.setAdapter(adapter);
-		commentList.setAdapter(adapter);
+		//commentListView.setAdapter(adapter);
+		//commentList.setAdapter(adapter);
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
-		//commentListView.setOnItemClickListener(this);
+		commentListView.setOnItemClickListener(this);
 		
 	}
 
