@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.model.Commentor;
+import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.util.Format;
 
@@ -67,8 +68,6 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 					comment_meta.setFavourite(false);
 					image.setImageResource(R.drawable.ic_heart);
 				}
-				Toast.makeText(parent.getContext(), comment_meta.getTextComment()+" "+comment_meta.isFavourite() , Toast.LENGTH_SHORT).show();
-				//DELETE TOAST
 			}
 		});
 		if (comment_meta != null) {

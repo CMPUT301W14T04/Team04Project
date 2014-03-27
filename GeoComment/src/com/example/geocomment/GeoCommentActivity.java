@@ -258,8 +258,8 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 						Context.MODE_PRIVATE);
 				for (Commentor favComment: commentList.getFavList() ){
 					if (favComment.isFavourite()==true){
-						//String fav = gson.toJson(favComment)+"\n"; PROBLEM IS HERE 
-						//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
+						//String fav = gson.toJson(favComment); //TAKES REALLY LONG
+						Toast.makeText(this, favComment.getTextComment(), Toast.LENGTH_SHORT).show();
 						//fos.write(fav.getBytes());
 						}
 					}

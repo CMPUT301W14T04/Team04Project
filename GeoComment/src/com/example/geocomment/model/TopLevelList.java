@@ -77,7 +77,9 @@ public class TopLevelList {
 	public void update(){
 		for (Commentor c:topLevelList){
 			if (c.isFavourite()==true){
-				favourite.add(c);
+				if(!favourite.contains(c)){
+					favourite.add(c);
+				}
 			}
 		}
 		this.adapter.notifyDataSetChanged();
