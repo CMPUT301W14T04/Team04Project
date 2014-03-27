@@ -356,11 +356,13 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 			commentList.setAdapter(adapter);
 		}
 		else if (parent.getItemAtPosition(pos).equals("Score")){
+			commentList.updateSocre();
 			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getScoreList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 		}
 		else if (parent.getItemAtPosition(pos).equals("Proximity to me")){
+			commentList.updateProxiMe();
 			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getProxiMeList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
