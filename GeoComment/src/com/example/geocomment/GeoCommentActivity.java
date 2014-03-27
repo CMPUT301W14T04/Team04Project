@@ -24,7 +24,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
-import com.example.geocomment.model.Comment;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.TopLevel;
@@ -347,6 +346,26 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 		else if (parent.getItemAtPosition(pos).equals("Favourites")){
 			commentList.update();
 			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getFavList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+		}
+		else if (parent.getItemAtPosition(pos).equals("Picture")){
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getPictureList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+		}
+		else if (parent.getItemAtPosition(pos).equals("Score")){
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getScoreList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+		}
+		else if (parent.getItemAtPosition(pos).equals("Proximity to me")){
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getProxiMeList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+		}
+		else if (parent.getItemAtPosition(pos).equals("Proximity to another location")){
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getProxiLocList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 		}

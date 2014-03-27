@@ -1,28 +1,32 @@
 package com.example.geocomment.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.example.geocomment.GeoCommentActivity;
-import com.example.geocomment.elasticsearch.ElasticSearchOperations;
-import com.example.geocomment.util.GPSLocation;
-
-import android.app.Activity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 
 public class TopLevelList {
 
 	private List<Commentor> topLevelList;
 	private ArrayAdapter<Commentor> adapter;
 	private List<Commentor> favourite;
+	private List<Commentor> picture;
+	private List<Commentor> socre;
+	private List<Commentor> proxiMe;
+	private List<Commentor> proxiLoc;
 
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<Commentor>();
 		this.favourite= new ArrayList<Commentor>();
+		this.picture = new ArrayList<Commentor>();
+		this.socre = new ArrayList<Commentor>();
+		this.proxiMe = new ArrayList<Commentor>();
+		this.proxiLoc = new ArrayList<Commentor>();
 	}
 	
 	/**
@@ -62,6 +66,26 @@ public class TopLevelList {
 	}
 	public List<Commentor> getFavList() {
 		return Collections.unmodifiableList(favourite);
+	}
+	
+	public List<Commentor> getPictureList() {
+		// TODO Auto-generated method stub
+		return Collections.unmodifiableList(picture);
+	}
+	
+	public List<Commentor> getScoreList() {
+		// TODO Auto-generated method stub
+		return Collections.unmodifiableList(socre);
+	}
+
+	public List<Commentor> getProxiMeList() {
+		// TODO Auto-generated method stub
+		return Collections.unmodifiableList(proxiMe);
+	}
+
+	public List<Commentor> getProxiLocList() {
+		// TODO Auto-generated method stub
+		return Collections.unmodifiableList(proxiLoc);
 	}
 
 	public void setAdapter(ArrayAdapter<Commentor> adapter) {
