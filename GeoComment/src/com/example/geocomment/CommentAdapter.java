@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.model.Commentor;
+import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.util.Format;
 
 /**
@@ -51,7 +52,6 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 		 * This creates a link to the favourite button and implements 
 		 * an on clicklistner
 		 */
-		
 		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
 		image.setFocusable(false);
 		image.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +61,7 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 				if (comment_meta.isFavourite()==false){
 					comment_meta.setFavourite(true);
 					image.setImageResource(R.drawable.ic_favheart);
+					//top.addFav(comment_meta);
 				}
 				else{
 					comment_meta.setFavourite(false);

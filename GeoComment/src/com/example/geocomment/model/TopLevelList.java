@@ -1,12 +1,16 @@
 package com.example.geocomment.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.util.GPSLocation;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -14,9 +18,11 @@ public class TopLevelList {
 
 	private List<Commentor> topLevelList;
 	private ArrayAdapter<Commentor> adapter;
+	private List<Commentor> favourite;
 
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<Commentor>();
+		this.favourite= new ArrayList<Commentor>();
 	}
 	
 	/**
@@ -54,6 +60,9 @@ public class TopLevelList {
 	public List<Commentor> getList() {
 		return Collections.unmodifiableList(topLevelList);
 	}
+	public List<Commentor> getFavList() {
+		return Collections.unmodifiableList(favourite);
+	}
 
 	public void setAdapter(ArrayAdapter<Commentor> adapter) {
 		this.adapter = adapter;
@@ -63,5 +72,21 @@ public class TopLevelList {
 	{
 		return topLevelList.get(i);
 	}
-
+	
+	
+	public void addFav(){
+		for (Commentor c:topLevelList){
+			if (c.isFavourite()==true){
+				favourite.add(c);
+			}
+		}
+		this.adapter.notifyDataSetChanged();
+	}
+	//Implement need comments to have ID's
+	/*public void removeFav(Commentor comment){
+		for (Commentor c: favourite){
+			if c.ge
+		}
+	}*/
+	
 }

@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.model.Comment;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.TopLevel;
@@ -67,7 +68,9 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 
 		// initialization variables
 		sortList = (Spinner) findViewById(R.id.sortList);
-		ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.sorting_array, android.R.layout.simple_spinner_item);
+		sortList.setOnItemSelectedListener(this);
+		ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(this, 
+				R.array.sorting_array, android.R.layout.simple_spinner_item);
 		spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sortList.setAdapter(spinner_adapter);
 		commentListView = (ListView) findViewById(R.id.commentListView);
@@ -75,7 +78,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 		favouritesList = new TopLevelList();
 		commentList = new TopLevelList();
 		locationHistory = new LocationList();
-		adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());
+		//adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());
 
 		location = new GPSLocation(GeoCommentActivity.this);
 		internet = new Internet(GeoCommentActivity.this);
@@ -85,7 +88,8 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 		commentListView.setAdapter(adapter);
 		commentList.setAdapter(adapter);
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
-		commentListView.setOnItemClickListener(this);
+		//commentListView.setOnItemClickListener(this);
+		
 	}
 
 	@Override
@@ -141,11 +145,13 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 			user = new User(locations, userPre.getUserName(), userPre.getId());
 			locationHistory = userPre.getLocationList();
 		}
+		
+	
+
 	}
 
 	protected void onPause() {
 		super.onPause();
-
 		save(Resource.GENERAL_INFO_SAVE);
 	}
 
@@ -189,20 +195,29 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 			}
 			return userInfo;
 		case Resource.FAVOURITE_LOAD:
-			String favouritesJson = null;
-			try {
+			//String favouritesJson = null;
+			//Buggy
+			/*try {
 				fis = openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						fis));
-				favouritesJson = in.readLine();
+				String fav = in.readLine();
+				while (fav!=null){
+					Commentor t = gson.fromJson(fav, Commentor.class);
+					//favouritesList.AddFavourite(t);
+					Toast.makeText(this, t.getTextComment()+"!", Toast.LENGTH_SHORT).show();
+					fav=in.readLine();
+				}
+				fis.close();
+				//favouritesJson = in.readLine();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			return favouritesJson;
+			}*/
+			//return favouritesJson;
 
 		}
 
@@ -237,7 +252,27 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
-
+			//BUGGY
+			try{
+				fos = openFileOutput(Resource.FAVOURITE_FILE,
+						Context.MODE_PRIVATE);
+				for (Commentor favComment: commentList.getFavList() ){
+					if (favComment.isFavourite()==true){
+						//String fav = gson.toJson(favComment)+"\n"; PROBLEM IS HERE 
+						//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
+						//fos.write(fav.getBytes());
+						}
+					}
+				fos.close();
+				
+			}catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
 
@@ -301,10 +336,24 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		
+	public void onItemSelected(AdapterView<?> parent, View view, int pos,
+			long id) {
+		if (parent.getItemAtPosition(pos).equals("Home")){
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+
+		}
+		else if (parent.getItemAtPosition(pos).equals("Favourites")){
+			/*for (int i=0;i<=5;i++){
+				 	commentList.getList().get(i).setFavourite(true);
+				}
+			commentList.addFav();*/
+			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getFavList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+		}
+
 	}
 
 	@Override
@@ -312,5 +361,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 		// TODO Auto-generated method stub
 		
 	}
+//	save(Resource.FAVOURITE_SAVE);
+//	load(Resource.FAVOURITE_LOAD);
 
 }
