@@ -345,10 +345,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 
 		}
 		else if (parent.getItemAtPosition(pos).equals("Favourites")){
-			/*for (int i=0;i<=5;i++){
-				 	commentList.getList().get(i).setFavourite(true);
-				}
-			commentList.addFav();*/
+			commentList.update();
 			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getFavList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);

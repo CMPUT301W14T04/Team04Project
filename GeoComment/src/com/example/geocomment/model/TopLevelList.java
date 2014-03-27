@@ -74,7 +74,7 @@ public class TopLevelList {
 	}
 	
 	
-	public void addFav(){
+	public void update(){
 		for (Commentor c:topLevelList){
 			if (c.isFavourite()==true){
 				favourite.add(c);
