@@ -350,6 +350,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 			commentList.setAdapter(adapter);
 		}
 		else if (parent.getItemAtPosition(pos).equals("Picture")){
+			commentList.updatePicture();
 			adapter = new CommentAdapter(getApplicationContext(), R.layout.comment_row, commentList.getPictureList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);

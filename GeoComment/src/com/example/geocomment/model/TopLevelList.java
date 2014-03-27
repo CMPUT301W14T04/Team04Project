@@ -15,7 +15,7 @@ public class TopLevelList {
 	private List<Commentor> topLevelList;
 	private ArrayAdapter<Commentor> adapter;
 	private List<Commentor> favourite;
-	private List<Commentor> picture;
+	private List<Commentor> picture = null;
 	private List<Commentor> socre;
 	private List<Commentor> proxiMe;
 	private List<Commentor> proxiLoc;
@@ -102,6 +102,20 @@ public class TopLevelList {
 		for (Commentor c:topLevelList){
 			if (c.isFavourite()==true){
 				favourite.add(c);
+			}
+		}
+		this.adapter.notifyDataSetChanged();
+	}
+	
+	public void updatePicture() {
+		for (Commentor c: topLevelList) {
+			if (c.getaPicture() != null & picture.contains(c) == false) {
+				picture.add(c);
+			}
+		}
+		for (Commentor c: topLevelList) {
+			if (c.getaPicture() == null & picture.contains(c) == false) {
+				picture.add(c);
 			}
 		}
 		this.adapter.notifyDataSetChanged();
