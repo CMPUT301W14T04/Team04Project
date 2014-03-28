@@ -178,6 +178,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener,
 		Intent intent = new Intent(this,CommentBrowseActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("test", (TopLevel)topLevel);
+		bundle.putParcelable("user", user);
 		intent.putExtras(bundle);
 		startActivity(intent);
 		
@@ -327,7 +328,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener,
 		case Resource.RESQUEST_NEW_TOP_LEVEL:
 			if(data!=null){
 			TopLevel aTopLevel = data.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
-			commentList.AddTopLevel(aTopLevel);
+			commentList.AddTopLevel(aTopLevel, 2);
 			Log.e("Comment ID in MAin", aTopLevel.getID());
 			}
 			else

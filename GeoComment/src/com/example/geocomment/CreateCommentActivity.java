@@ -32,9 +32,9 @@ import com.example.geocomment.model.User;
 import com.example.geocomment.util.Resource;
 
 /**
- * This class creates the comment activity for the application.
- * Each comment has text, username, reply, possibly a picture, and 
- * the location associated with it.
+ * This class creates the comment activity for the application. Each comment has
+ * text, username, reply, possibly a picture, and the location associated with
+ * it.
  * 
  * @author CMPUT 301 Team 04
  */
@@ -48,23 +48,24 @@ public class CreateCommentActivity extends Activity {
 	User user;
 	LocationList locationList;
 	Location location;
-	
+	String parentID;
 
 	int type;
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
-//	private static final int MAX_BITMAP_DIMENSIONS = 50;
+	// private static final int MAX_BITMAP_DIMENSIONS = 50;
 	private ImageView imageView = null;
 	Bitmap photo = null;
-//	String encodedImage = null;
+
+	// String encodedImage = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_comment);
 		/**
-		 *  Show the Up button in the action bar.
+		 * Show the Up button in the action bar.
 		 */
 		setupActionBar();
 
@@ -78,8 +79,9 @@ public class CreateCommentActivity extends Activity {
 		locationList = (LocationList) bundle
 				.getParcelable(Resource.USER_LOCATION_HISTORY);
 		type = bundle.getInt(Resource.TOP_LEVEL_COMMENT);
+		parentID = bundle.getString("parentID");
 
-		imageView = (ImageView)findViewById(R.id.imageView1);
+		imageView = (ImageView) findViewById(R.id.imageView1);
 		imageView.setImageBitmap(null);
 	}
 
@@ -107,14 +109,16 @@ public class CreateCommentActivity extends Activity {
 		case android.R.id.home:
 			/**
 			 * This ID represents the Home or Up button. In the case of this
-			 * activity, the Up button is shown. Use NavUtils to allow users
-			 * to navigate up one level in the application structure. For
-			 * more details, see the Navigation pattern on Android Design:
-			 * http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			 *http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			*/
+			 * activity, the Up button is shown. Use NavUtils to allow users to
+			 * navigate up one level in the application structure. For more
+			 * details, see the Navigation pattern on Android Design:
+			 * http://developer
+			 * .android.com/design/patterns/navigation.html#up-vs-back
+			 * http://developer
+			 * .android.com/design/patterns/navigation.html#up-vs-back
+			 */
 			NavUtils.navigateUpFromSameTask(this);
-			return true;			
+			return true;
 		}
 		if (item.getItemId() == R.id.action_new_picture) {
 			dialog();
@@ -123,7 +127,8 @@ public class CreateCommentActivity extends Activity {
 	}
 
 	/**
-	 * dialog pops up after clicking action_new_picture icon in action bar opens camera or gallery
+	 * dialog pops up after clicking action_new_picture icon in action bar opens
+	 * camera or gallery
 	 */
 	public void dialog() {
 		AlertDialog.Builder builder = new Builder(CreateCommentActivity.this);
@@ -131,15 +136,18 @@ public class CreateCommentActivity extends Activity {
 		builder.setPositiveButton("Camera", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
-				startActivityForResult(cameraIntent, CAMERA_REQUEST); 
+				Intent cameraIntent = new Intent(
+						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(cameraIntent, CAMERA_REQUEST);
 			}
 		});
 
 		builder.setNeutralButton("Gallary", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				Intent intent = new Intent(
+						Intent.ACTION_PICK,
+						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				startActivityForResult(intent, GALLARY_REQUEST);
 			}
 		});
@@ -150,14 +158,14 @@ public class CreateCommentActivity extends Activity {
 	@SuppressWarnings("static-access")
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-			photo = (Bitmap)data.getExtras().get("data");
-			//resize chosen photo
+			photo = (Bitmap) data.getExtras().get("data");
+			// resize chosen photo
 			photo = photo.createScaledBitmap(photo, 100, 100, false);
-			//set photo for preview
+			// set photo for preview
 			imageView.setImageBitmap(photo);
-			
+
 		}
-		if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK) {  
+		if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK) {
 			Uri selectedImage = data.getData();
 			String[] filePathColumn = { MediaStore.Images.Media.DATA };
 			Cursor cursor = getContentResolver().query(selectedImage,
@@ -167,38 +175,39 @@ public class CreateCommentActivity extends Activity {
 			String picturePath = cursor.getString(columnIndex);
 			cursor.close();
 			photo = (BitmapFactory.decodeFile(picturePath));
-			//set photo for preview
+			// set photo for preview
 			imageView.setImageBitmap(photo);
-			
-		}  
+
+		}
 	}
 
 	/**
-	 * this function encodes the photo to string so the picture
-	 * can be stored on the server with the rest of the comment 
-	 * information, and so it can later be retrieved by all users
-	 * of the application
+	 * this function encodes the photo to string so the picture can be stored on
+	 * the server with the rest of the comment information, and so it can later
+	 * be retrieved by all users of the application
+	 * 
 	 * @param photo
 	 * @return
 	 */
-//	public JsonElement getStringFromBitmap(Bitmap photo) {
-//		final int COMPRESSION_QUALITY = 100;
-//		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
-//		photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
-//		byte[] b = byteArrayBitmapStream.toByteArray();
-//		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-//		return new JsonPrimitive(encodedImage);
-//	}
+	// public JsonElement getStringFromBitmap(Bitmap photo) {
+	// final int COMPRESSION_QUALITY = 100;
+	// ByteArrayOutputStream byteArrayBitmapStream = new
+	// ByteArrayOutputStream();
+	// photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+	// byteArrayBitmapStream);
+	// byte[] b = byteArrayBitmapStream.toByteArray();
+	// encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+	// return new JsonPrimitive(encodedImage);
+	// }
 
 	/**
-	 * submitComment puts the comment into a top level array so it
-	 * can later be uploaded to the server. If the comment that the 
-	 * user is trying to add is empty, the user will get an error and
-	 * will be prompted to type something in the comment box. 
-	 * If the user enters a comment, the comment (and possibly the picture)
-	 * will get all the 
-	 * associated metadata to go with it automatically, such as the 
-	 * date, the ID, and the location.
+	 * submitComment puts the comment into a top level array so it can later be
+	 * uploaded to the server. If the comment that the user is trying to add is
+	 * empty, the user will get an error and will be prompted to type something
+	 * in the comment box. If the user enters a comment, the comment (and
+	 * possibly the picture) will get all the associated metadata to go with it
+	 * automatically, such as the date, the ID, and the location.
+	 * 
 	 * @param view
 	 */
 	public void submitComment(View view) {
@@ -208,18 +217,16 @@ public class CreateCommentActivity extends Activity {
 			String ID = Resource.generateID();
 			double[] location = user.getUserLocation();
 
-
 			if (text.isEmpty()) {
 				Toast.makeText(this, "You can't submit an empty text",
 						Toast.LENGTH_LONG).show();
 			} else {
-
-				Comment = new TopLevel(user, timeStamp, photo, text,
-						location, ID);
-
+					Comment = new TopLevel(user, timeStamp, photo, text,
+							location, ID);
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
-				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT, (TopLevel) Comment);
+				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT,
+						(TopLevel) Comment);
 				intent.putExtras(bundle);
 				setResult(Resource.RESQUEST_NEW_TOP_LEVEL, intent);
 
@@ -227,8 +234,8 @@ public class CreateCommentActivity extends Activity {
 			}
 
 		}
-		
-		if (type == Resource.TYPE_REPLY){
+
+		if (type == Resource.TYPE_REPLY) {
 			Calendar timeStamp = Calendar.getInstance();
 			String text = textComment.getText().toString();
 			String ID = Resource.generateID();
@@ -239,20 +246,21 @@ public class CreateCommentActivity extends Activity {
 						Toast.LENGTH_LONG).show();
 			} else {
 
-				Comment = new TopLevel(user, timeStamp, photo, text,
-						location, ID);
+				Comment = new Reply(user, timeStamp, photo, text, location,
+						parentID,ID);
 
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
-				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT, (Reply)Comment);
+				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT,
+						(Reply) Comment);
 				intent.putExtras(bundle);
-				setResult(Resource.RESQUEST_NEW_TOP_LEVEL, intent);
+				setResult(100, intent);
 
 				finish();
 			}
-			
+
 		}
 
 	}
-	
+
 }

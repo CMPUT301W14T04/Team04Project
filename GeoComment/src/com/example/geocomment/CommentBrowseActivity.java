@@ -19,9 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
+import com.example.geocomment.model.User;
 import com.example.geocomment.util.Format;
+import com.example.geocomment.util.Resource;
 
 
 /**
@@ -44,6 +47,7 @@ public class CommentBrowseActivity extends Activity {
 	private TopLevel toplevel;
 	private TopLevelList repliesList;
 	private CommentAdapter adapter;
+	private User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,8 @@ public class CommentBrowseActivity extends Activity {
 		Bundle bundle = intent.getExtras();
 
 		toplevel = (TopLevel) bundle.getParcelable("test");
+		user = (User) bundle.getParcelable("user");
+		Log.e("the user", user.getUserName());
 
 		/*
 		 * just variable that store info from comment object
@@ -119,6 +125,16 @@ public class CommentBrowseActivity extends Activity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.reply_comment:
+			if (user.getUserName() == null) {
+				Toast.makeText(
+						this,
+						"Before you share your exp with other,"
+								+ "you need to identificate yourself with an "
+								+ "UserName", Toast.LENGTH_LONG).show();
+			} else
+				creatNewComment();
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -142,6 +158,7 @@ public class CommentBrowseActivity extends Activity {
 			if (Geocoder.isPresent()) {
 				Toast.makeText(getApplicationContext(), "geocoder present",
 						Toast.LENGTH_SHORT).show();
+				try{
 				Address returnAddress = addresses.get(0);
 
 				String localityString = returnAddress.getLocality();
@@ -149,6 +166,10 @@ public class CommentBrowseActivity extends Activity {
 
 				local.append(localityString + ", ");
 				local.append(city + ".");
+				}catch(IndexOutOfBoundsException e)
+				{
+					Toast.makeText(this, "Error in Location", Toast.LENGTH_SHORT).show();
+				}
 //				Toast.makeText(getApplicationContext(), zipcode, Toast.LENGTH_SHORT)
 //						.show();
 
@@ -168,5 +189,33 @@ public class CommentBrowseActivity extends Activity {
 		}
 		return local;
 	}
+	
+	public void creatNewComment() {
+		Intent intent = new Intent(CommentBrowseActivity.this,
+				CreateCommentActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(Resource.USER_INFO, user);
+//		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
+		bundle.putString("parentID", toplevel.getID());
+		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_REPLY);
+		intent.putExtras(bundle);
+		startActivityForResult(intent, 100);
+	}
+	
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		switch(requestCode)
+		{
+		case 100:
+			if(data!=null){
+			Reply aTopLevel = data.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
+			repliesList.AddTopLevel(aTopLevel, 2);
+			Log.e("Comment ID in MAin", aTopLevel.getID());
+			}
+			else
+				Log.e("error in acti", "data = null");
+			break;
+		}
+}
 
 }

@@ -38,13 +38,16 @@ public class TopLevelList {
 	 * push a top level comment to the server
 	 * @param comment
 	 */
-	public void AddTopLevel(Commentor comment) {
+	public void AddTopLevel(Commentor comment, int type) {
 		this.topLevelList.add(0,comment);
 		if(comment.getaPicture()==null)
 		{
 			Log.e("Picture is null", "is null" );
 		}
+		if(type==1)
 		ElasticSearchOperations.pushComment(comment,1);
+		else
+			ElasticSearchOperations.pushComment(comment,2);
 		this.adapter.notifyDataSetChanged();
 	}
 

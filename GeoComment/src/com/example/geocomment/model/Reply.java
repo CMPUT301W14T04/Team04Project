@@ -10,6 +10,7 @@ import android.util.Log;
 public class Reply extends Comment {
 	
 	private String parentID;
+	private String ID;
 
 
 	/**
@@ -22,11 +23,12 @@ public class Reply extends Comment {
 	 */
 
 	public Reply(User aUser, Calendar timeStamp, Bitmap aPicture,
-			String textComment, double[] aLocation, String parentID)
+			String textComment, double[] aLocation, String parentID , String ID)
 	{
 
 		super(aUser, timeStamp, aPicture, textComment, aLocation);
 		this.parentID=parentID;
+		this.ID =ID;
 	}
 
 	public Reply()
@@ -53,6 +55,12 @@ public class Reply extends Comment {
 		aPicture = (Bitmap) source.readValue(getClass().getClassLoader());
 		timeStamp = (Calendar) source.readSerializable();
 		parentID = source.readString();
+		ID = source.readString();
+	}
+	
+	public String getID()
+	{
+		return this.ID;
 	}
 
 	@Override
@@ -73,6 +81,7 @@ public class Reply extends Comment {
 		dest.writeValue(aPicture);
 		dest.writeSerializable(timeStamp);
 		dest.writeString(parentID);
+		dest.writeString(ID);
 	}
 
 	/**
