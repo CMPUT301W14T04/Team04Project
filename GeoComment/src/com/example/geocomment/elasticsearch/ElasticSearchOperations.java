@@ -185,7 +185,7 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search");
+				HttpPost request = new HttpPost(SERVER_URL_REPLY + "_search");
 				String query = "{\"query\": {\"match\": {\"parentID\" :\"*"
 						+ ID + "*\" }}}";
 				String responseJson = "";
@@ -209,7 +209,7 @@ public class ElasticSearchOperations {
 							new InputStreamReader(entity.getContent()));
 
 					String output = reader.readLine();
-					Log.e("paja", output);
+					Log.e("Replies search", output);
 					while (output != null) {
 						responseJson += output;
 						output = reader.readLine();

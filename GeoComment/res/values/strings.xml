@@ -19,5 +19,6 @@
 
     <string name="title_activity_comment_browse">CommentBrowseActivity</string>
     <string name="title_activity_edit_comment">EditCommentActivity</string>
+    <string name= "reply_comment">Reply a comment</string>
 
 </resources>
