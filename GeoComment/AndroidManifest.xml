@@ -53,6 +53,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.geocomment.GeoCommentActivity" />
         </activity>
+        <activity
+            android:name="com.example.geocomment.EditCommentActivity"
+            android:label="@string/title_activity_edit_comment" >
+        </activity>
     </application>
 
 </manifest>

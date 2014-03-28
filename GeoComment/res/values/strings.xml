@@ -7,6 +7,7 @@
     <string name="title_activity_create_comment">CreateCommentActivity</string>
     <string name="title_activity_option">OptionActivity</string>
     <string name="new_picture">New Picture</string>
+
     <string-array name="sorting_array">
         <item>Home</item>
         <item>Picture</item>
@@ -15,7 +16,8 @@
         <item>Proximity to another location</item>
         <item>Favourites</item>
     </string-array>
-    <string name="title_activity_comment_browse">CommentBrowseActivity</string>
 
+    <string name="title_activity_comment_browse">CommentBrowseActivity</string>
+    <string name="title_activity_edit_comment">EditCommentActivity</string>
 
 </resources>

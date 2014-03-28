@@ -12,11 +12,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -43,8 +48,7 @@ import com.google.gson.GsonBuilder;
  * 
  */
 
-public class GeoCommentActivity extends Activity implements OnItemClickListener ,OnItemSelectedListener {
-
+public class GeoCommentActivity extends Activity implements OnItemClickListener, OnItemSelectedListener {
 
 	Gson gson;
 	Internet internet;
@@ -88,7 +92,17 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 		//commentList.setAdapter(adapter);
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		commentListView.setOnItemClickListener(this);
-		
+		registerForContextMenu(commentListView);
+		commentListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+		});
 	}
 
 	@Override
@@ -297,7 +311,7 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 	 */
 	public void openSettings() {
 		Intent intent = new Intent(GeoCommentActivity.this , OptionActivity.class);
-		intent.putExtra("Uusername", user.getUserName());
+		intent.putExtra("Username", user.getUserName());
 		startActivityForResult(intent, 90);
 	}
 
@@ -382,5 +396,30 @@ public class GeoCommentActivity extends Activity implements OnItemClickListener 
 	}
 //	save(Resource.FAVOURITE_SAVE);
 //	load(Resource.FAVOURITE_LOAD);
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		// Long click to edit comment
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		switch(item.getItemId()) {
+			case R.id.edit:
+				Intent intent = new Intent(GeoCommentActivity.this, EditCommentActivity.class);
+				startActivity(intent);
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		// TODO Auto-generated method stub
+		super.onCreateContextMenu(menu, v, menuInfo);
+		if (v.getId() == R.id.commentListView) {
+			MenuInflater inflater =getMenuInflater();
+			inflater.inflate(R.menu.comment_menu, menu);
+		}
+	}
+	
 }

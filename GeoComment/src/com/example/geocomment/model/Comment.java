@@ -4,6 +4,7 @@ import java.util.Calendar;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
+import android.util.Log;
 
 @SuppressLint("ParcelCreator")
 public abstract class Comment implements Parcelable, Commentor {
@@ -86,6 +87,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	 * @param timeStamp
 	 */
 	public void setTimeStamp(Calendar timeStamp) {
+		Log.d("Date", this.timeStamp.toString());
 		this.timeStamp = timeStamp;
 	}
 
