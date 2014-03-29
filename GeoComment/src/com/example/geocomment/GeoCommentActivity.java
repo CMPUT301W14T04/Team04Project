@@ -181,16 +181,18 @@ public class GeoCommentActivity extends Activity implements
 			return true;
 		case R.id.settings:
 			openSettings();
+			return true;
 		case R.id.refresh_button:
 			internet = new Internet(GeoCommentActivity.this);
 	    	if (internet.isConnectedToInternet()) {
-	    		Intent intent = new Intent(getApplicationContext(), GeoCommentActivity.class);
-	    		startActivity(intent);
+	    		commentList.clear();
+	    		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 	    	} else {
 	    		Toast.makeText(getApplicationContext(), 
 	    				"No internet connection!", 
 	    				Toast.LENGTH_LONG).show();
 	    	}
+	    	return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -238,7 +240,7 @@ public class GeoCommentActivity extends Activity implements
 		Commentor topLevel = commentList.getComment(position);
 		Intent intent = new Intent(this, CommentBrowseActivity.class);
 		Bundle bundle = new Bundle();
-		bundle.putParcelable("test", (TopLevel) topLevel);
+		bundle.putParcelable("test", (TopLevel)topLevel);
 		bundle.putParcelable("user", user);
 		intent.putExtras(bundle);
 		startActivity(intent);
@@ -381,12 +383,13 @@ public class GeoCommentActivity extends Activity implements
 
 		switch (requestCode) {
 		case Resource.RESQUEST_NEW_TOP_LEVEL:
-			if (data != null) {
-				TopLevel aTopLevel = data
-						.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
-				commentList.AddTopLevel(aTopLevel, 2);
-				Log.e("Comment ID in MAin", aTopLevel.getID());
-			} else
+
+			if(data!=null){
+			TopLevel aTopLevel = data.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
+			commentList.AddTopLevel(aTopLevel, 2);
+			Log.e("Comment ID in MAin", aTopLevel.getID());
+			}
+			else
 				Log.e("error in acti", "data = null");
 			break;
 		case 90:

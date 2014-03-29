@@ -8,7 +8,8 @@
     <item
         android:id="@+id/create_new_comment"
         android:orderInCategory="100"
-        android:showAsAction="collapseActionView"
+
+        android:showAsAction="never"
         android:title="@string/create_comment_button_main_activity"/>
 
 	<item 
