@@ -1,6 +1,7 @@
 package com.example.geocomment;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -72,7 +73,41 @@ public class GeoCommentActivity extends Activity implements
 
 	Spinner sortList;
 	ListView commentListView;
-
+	
+	public void cacheSave(){
+		File folder= getCacheDir();
+		File cache = new File(folder, Resource.CACHE_STORE);
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(cache);
+			String string = gson.toJson(commentList.getList())+"\n";
+			Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+			fos.write(string.getBytes());
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void cacheLoad(){
+		File folder=getCacheDir();
+		File cache=new File(folder, Resource.CACHE_STORE);
+		FileInputStream fis;
+		try{
+			fis= new FileInputStream(cache);
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+			String readCache = in.readLine();
+			Type Type = new TypeToken<ArrayList<TopLevel>>(){}.getType();
+			List<Commentor> listFav= gson.fromJson(readCache, Type);
+			Toast.makeText(this, readCache , Toast.LENGTH_SHORT).show();
+			fis.close();
+		}catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,6 +151,10 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
+	//	load(Resource.FAVOURITE_LOAD);
+		/*Toast.makeText(this, commentList.getList().toString(), Toast.LENGTH_SHORT).show();
+		cacheSave();
+		cacheLoad();*/
 	}
 
 	@Override
@@ -231,29 +270,19 @@ public class GeoCommentActivity extends Activity implements
 			}
 			return userInfo;
 		case Resource.FAVOURITE_LOAD:
-			// String favouritesJson = null;
-			// Buggy
-			/*
-			 * try { fis = openFileInput(Resource.FAVOURITE_FILE);
-			 * BufferedReader in = new BufferedReader(new InputStreamReader(
-			 * fis)); String fav = in.readLine(); while (fav!=null){ Commentor t
-			 * = gson.fromJson(fav, Commentor.class);
-			 * //favouritesList.AddFavourite(t); Toast.makeText(this,
-			 * t.getTextComment()+"!", Toast.LENGTH_SHORT).show();
-			 * fav=in.readLine(); } fis.close(); //favouritesJson =
-			 * in.readLine(); } catch (FileNotFoundException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); } catch
-			 * (IOException e) { // TODO Auto-generated catch block
-			 * e.printStackTrace(); }
-			 */
-			// return favouritesJson;
 			try{
 				fis=openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 				String fav=in.readLine();
 				Type Type = new TypeToken<ArrayList<TopLevel>>(){}.getType();
 				List<Commentor> listFav= gson.fromJson(fav, Type);
-				commentList.setFavourite(listFav);
+				Toast.makeText(this, listFav.toString(), Toast.LENGTH_SHORT).show();
+				for (Commentor c: listFav){
+					c.setFavourite(true);
+					Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
+					//commentList.addFav(c);
+					}
+				//commentList.setFavourite(listFav);
 				fis.close();
 				} catch (FileNotFoundException e) { 
 					// TODOAuto-generated catch block 
@@ -296,11 +325,13 @@ public class GeoCommentActivity extends Activity implements
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
+			commentList.updateFav();
 			try {
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 			
 				String fav = gson.toJson(commentList.getFavList())+"\n"; 
+				Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				fos.close();
 
@@ -382,13 +413,13 @@ public class GeoCommentActivity extends Activity implements
 			commentList.setAdapter(adapter);
 
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
-			commentList.update();
+			commentList.updateFav();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getFavList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			//save(Resource.FAVOURITE_SAVE);
-			//load(Resource.FAVOURITE_LOAD);
+			save(Resource.FAVOURITE_SAVE);
+		
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 			adapter = new CommentAdapter(getApplicationContext(),

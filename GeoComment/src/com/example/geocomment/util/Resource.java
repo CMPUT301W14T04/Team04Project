@@ -13,6 +13,8 @@ public class Resource {
 	public final static String FAVOURITE_FILE = "favourite.json";
 	public final static String GENERAL_INFO = "info.json";
 	public final static String LIST_STORE = "list.json";
+	public final static String CACHE_STORE = "cache.json";
+
 	
 	
 	//integer that represent save and load of files.

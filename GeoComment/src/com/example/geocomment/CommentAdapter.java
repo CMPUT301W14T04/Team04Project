@@ -62,7 +62,6 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 				if (comment_meta.isFavourite()==false){
 					comment_meta.setFavourite(true);
 					image.setImageResource(R.drawable.ic_favheart);
-					//top.addFav(comment_meta);
 				}
 				else{
 					comment_meta.setFavourite(false);
