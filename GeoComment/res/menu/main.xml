@@ -3,12 +3,19 @@
     <item
         android:id="@+id/settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="collapseActionView"
         android:title="@string/action_settings"/>
     <item
         android:id="@+id/create_new_comment"
         android:orderInCategory="100"
+
         android:showAsAction="never"
         android:title="@string/create_comment_button_main_activity"/>
 
+	<item 
+	    android:id="@+id/refresh_button"
+        android:orderInCategory="100"
+        android:showAsAction="collapseActionView"
+        android:title="Refresh"/>    
+    
 </menu>
