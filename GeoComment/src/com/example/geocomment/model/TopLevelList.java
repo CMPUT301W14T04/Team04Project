@@ -33,6 +33,7 @@ public class TopLevelList {
 		this.proxiLoc = new ArrayList<Commentor>();
 	}
 
+	
 	/**
 	 * call pushComment in ElasticSearchOperations to 
 	 * push a top level comment to the server
@@ -149,13 +150,12 @@ public class TopLevelList {
 		// TODO Auto-generated method stub
 		
 	}
-
-	//Implement need comments to have ID's
-	/*public void removeFav(Commentor comment){
-		for (Commentor c: favourite){
-			if c.ge
-		}
-	}*/
+	
+	
+	public void setFavourite(List<Commentor> favourite) {
+		this.favourite = favourite;
+	}
+	
 
 
 

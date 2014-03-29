@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.elasticsearch.ElasticSearchSearchResponse;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.TopLevel;
@@ -42,6 +46,7 @@ import com.example.geocomment.util.Internet;
 import com.example.geocomment.util.Resource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * 
@@ -183,7 +188,7 @@ public class GeoCommentActivity extends Activity implements
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
 	}
-
+	
 	protected void onResume() {
 		super.onResume();
 	}
@@ -242,6 +247,21 @@ public class GeoCommentActivity extends Activity implements
 			 * e.printStackTrace(); }
 			 */
 			// return favouritesJson;
+			try{
+				fis=openFileInput(Resource.FAVOURITE_FILE);
+				BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+				String fav=in.readLine();
+				Type Type = new TypeToken<ArrayList<TopLevel>>(){}.getType();
+				List<Commentor> listFav= gson.fromJson(fav, Type);
+				commentList.setFavourite(listFav);
+				fis.close();
+				} catch (FileNotFoundException e) { 
+					// TODOAuto-generated catch block 
+					e.printStackTrace(); 
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					 e.printStackTrace(); 
+					 }
 
 		}
 
@@ -276,19 +296,12 @@ public class GeoCommentActivity extends Activity implements
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
-			// BUGGY
 			try {
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
-				for (Commentor favComment : commentList.getFavList()) {
-					if (favComment.isFavourite() == true) {
-						// String fav = gson.toJson(favComment); //TAKES REALLY
-						// LONG
-						Toast.makeText(this, favComment.getTextComment(),
-								Toast.LENGTH_SHORT).show();
-						// fos.write(fav.getBytes());
-					}
-				}
+			
+				String fav = gson.toJson(commentList.getFavList())+"\n"; 
+				fos.write(fav.getBytes());
 				fos.close();
 
 			} catch (FileNotFoundException e) {
@@ -374,6 +387,8 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getFavList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
+			//save(Resource.FAVOURITE_SAVE);
+			//load(Resource.FAVOURITE_LOAD);
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 			adapter = new CommentAdapter(getApplicationContext(),
@@ -408,8 +423,6 @@ public class GeoCommentActivity extends Activity implements
 
 	}
 
-	// save(Resource.FAVOURITE_SAVE);
-	// load(Resource.FAVOURITE_LOAD);
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
