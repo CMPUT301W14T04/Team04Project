@@ -281,8 +281,11 @@ public class GeoCommentActivity extends Activity implements
 				//Toast.makeText(this, listFav.toString(), Toast.LENGTH_SHORT).show();
 				for (Commentor c: listFav){
 					c.setFavourite(true);
-					//Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
-					commentList.addFav(c);
+				/*	for(int i=0; i<commentList.getList().size();i++){
+						
+					}*/
+					Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
+					//commentList.addFav(c);
 					}
 				//commentList.setFavourite(listFav);
 				fis.close();
