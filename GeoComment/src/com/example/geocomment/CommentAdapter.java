@@ -10,11 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.geocomment.model.Commentor;
-import com.example.geocomment.model.TopLevel;
-import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.util.Format;
 
 /**
