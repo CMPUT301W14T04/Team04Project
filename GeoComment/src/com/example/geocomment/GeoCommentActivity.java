@@ -15,7 +15,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -31,11 +30,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
-import com.example.geocomment.elasticsearch.ElasticSearchSearchResponse;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.TopLevel;
@@ -389,7 +386,7 @@ public class GeoCommentActivity extends Activity implements
 
 			if(data!=null){
 			TopLevel aTopLevel = data.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
-			commentList.AddTopLevel(aTopLevel, 2);
+			commentList.AddTopLevel(aTopLevel, 1);
 			Log.e("Comment ID in MAin", aTopLevel.getID());
 			}
 			else
@@ -413,11 +410,13 @@ public class GeoCommentActivity extends Activity implements
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Home")) {
+			//commentList.updateDate();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 
+		
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
 			commentList.updateFav();
 			adapter = new CommentAdapter(getApplicationContext(),

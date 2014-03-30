@@ -10,7 +10,6 @@ import android.util.Log;
 public class Reply extends Comment {
 	
 	private String parentID;
-	private String ID;
 
 
 	/**
@@ -26,7 +25,7 @@ public class Reply extends Comment {
 			String textComment, double[] aLocation, String parentID , String ID)
 	{
 
-		super(aUser, timeStamp, aPicture, textComment, aLocation);
+		super(aUser, timeStamp, aPicture, textComment, aLocation,ID);
 		this.parentID=parentID;
 		this.ID =ID;
 	}
