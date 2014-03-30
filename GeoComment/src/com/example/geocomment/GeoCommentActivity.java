@@ -378,7 +378,7 @@ public class GeoCommentActivity extends Activity implements
 		if (parent.getItemAtPosition(pos).equals("Home")) {
 			//commentList.updateDate();
 			adapter = new CommentAdapter(getApplicationContext(),
-					R.layout.comment_row, commentList.getDateList());
+					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 
