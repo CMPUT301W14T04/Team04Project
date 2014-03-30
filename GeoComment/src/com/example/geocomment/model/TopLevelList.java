@@ -8,9 +8,7 @@ import java.util.List;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 
 public class TopLevelList {
@@ -36,10 +34,6 @@ public class TopLevelList {
 		this.dateList = new ArrayList<Commentor>();
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 	/**
 	 * call pushComment in ElasticSearchOperations to push a top level comment
 	 * to the server
@@ -51,13 +45,10 @@ public class TopLevelList {
 		if (comment.getaPicture() == null) {
 			Log.e("Picture is null", "is null");
 		}
-<<<<<<< HEAD
 		if (type == 1)
 			ElasticSearchOperations.pushComment(comment, 1);
-=======
 		if(type==1)
 			ElasticSearchOperations.pushComment(comment,1);
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 		else
 			ElasticSearchOperations.pushComment(comment, 2);
 		this.adapter.notifyDataSetChanged();
@@ -84,15 +75,12 @@ public class TopLevelList {
 	public List<Commentor> getList() {
 		return Collections.unmodifiableList(topLevelList);
 	}
-<<<<<<< HEAD
 
-=======
-	
+
 	public List<Commentor> getDateList() {
 		return Collections.unmodifiableList(dateList);
 	}
-	
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
+
 	public List<Commentor> getFavList() {
 		return Collections.unmodifiableList(favourite);
 	}
@@ -117,17 +105,6 @@ public class TopLevelList {
 		return Collections.unmodifiableList(proxiLoc);
 	}
 
-<<<<<<< HEAD
-	public static Comparator<Commentor> dateCompare = new Comparator<Commentor>() {
-		public int compare(Commentor comment1, Commentor comment2) {
-			Calendar date1 = comment1.getDate();
-			Calendar date2 = comment2.getDate();
-			return date1.compareTo(date2);
-		}
-	};
-
-=======
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 	public void setAdapter(ArrayAdapter<Commentor> adapter) {
 		this.adapter = adapter;
 	}
@@ -135,16 +112,10 @@ public class TopLevelList {
 	public Commentor getComment(int i) {
 		return topLevelList.get(i);
 	}
-<<<<<<< HEAD
 
-	public void updatePicture() {
-		// Comparator<Commentor> compare = dateCompare;
-		for (Commentor c : topLevelList) {
-=======
-	
 	public void updateDate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void update(){
@@ -160,12 +131,21 @@ public class TopLevelList {
 
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 			if (c.getaPicture() != null & picture.contains(c) == false) {
 				picture.add(c);
+				Collections.sort(picture, new Comparator<Commentor>() {
+					public int compare(Commentor comment1, Commentor comment2) {
+						return comment2.getDate().compareTo(comment1.getDate());
+					}
+				});
 			} else if (c.getaPicture() == null
 					& nonPicture.contains(c) == false) {
 				nonPicture.add(c);
+				Collections.sort(nonPicture, new Comparator<Commentor>() {
+					public int compare(Commentor comment1, Commentor comment2) {
+						return comment2.getDate().compareTo(comment1.getDate());
+					}
+				});
 			}
 		}
 		if (picture.contains(nonPicture.get(0)) == false) {
@@ -194,11 +174,6 @@ public class TopLevelList {
 
 	}
 
-<<<<<<< HEAD
-	public void setFavourite(List<Commentor> favourite) {
-		this.favourite = favourite;
-	}
-
 	public void updateFav() {
 		for (Commentor c : topLevelList) {
 			if (c.isFavourite() == true) {
@@ -217,11 +192,11 @@ public class TopLevelList {
 	public void addFav(Commentor c) {
 		favourite.add(c);
 	}
-=======
+
 
 	public void setFavourite(List<Commentor> favourite) {
 		this.favourite = favourite;
 	}
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
+
 
 }

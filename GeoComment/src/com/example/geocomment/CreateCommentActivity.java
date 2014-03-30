@@ -3,18 +3,10 @@ package com.example.geocomment;
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -121,7 +113,9 @@ public class CreateCommentActivity extends Activity {
 			return true;
 		}
 		if (item.getItemId() == R.id.action_new_picture) {
-			dialog();
+			Intent cameraIntent = new Intent(
+					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+			startActivityForResult(cameraIntent, CAMERA_REQUEST);
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -130,30 +124,6 @@ public class CreateCommentActivity extends Activity {
 	 * dialog pops up after clicking action_new_picture icon in action bar opens
 	 * camera or gallery
 	 */
-	public void dialog() {
-		AlertDialog.Builder builder = new Builder(CreateCommentActivity.this);
-		builder.setTitle("Attach a picture from:");
-		builder.setPositiveButton("Camera", new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Intent cameraIntent = new Intent(
-						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(cameraIntent, CAMERA_REQUEST);
-			}
-		});
-
-		builder.setNeutralButton("Gallary", new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(
-						Intent.ACTION_PICK,
-						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(intent, GALLARY_REQUEST);
-			}
-		});
-
-		builder.create().show();
-	}
 
 	@SuppressWarnings("static-access")
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -163,21 +133,6 @@ public class CreateCommentActivity extends Activity {
 			photo = photo.createScaledBitmap(photo, 100, 100, false);
 			// set photo for preview
 			imageView.setImageBitmap(photo);
-
-		}
-		if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK) {
-			Uri selectedImage = data.getData();
-			String[] filePathColumn = { MediaStore.Images.Media.DATA };
-			Cursor cursor = getContentResolver().query(selectedImage,
-					filePathColumn, null, null, null);
-			cursor.moveToFirst();
-			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-			String picturePath = cursor.getString(columnIndex);
-			cursor.close();
-			photo = (BitmapFactory.decodeFile(picturePath));
-			// set photo for preview
-			imageView.setImageBitmap(photo);
-
 		}
 	}
 
@@ -221,8 +176,8 @@ public class CreateCommentActivity extends Activity {
 				Toast.makeText(this, "You can't submit an empty text",
 						Toast.LENGTH_LONG).show();
 			} else {
-					Comment = new TopLevel(user, timeStamp, photo, text,
-							location, ID);
+				Comment = new TopLevel(user, timeStamp, photo, text,
+						location, ID);
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
 				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT,
