@@ -43,6 +43,8 @@ public interface Commentor {
 	 * @return
 	 */
 	public Calendar getDate() ;
+	
+	public String getID();
 
 	/**
 	 * @return the aLocation

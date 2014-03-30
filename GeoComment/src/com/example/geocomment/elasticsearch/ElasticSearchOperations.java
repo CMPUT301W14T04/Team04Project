@@ -57,10 +57,12 @@ public class ElasticSearchOperations {
 		switch(type)
 		{
 		case 1:
-			url=SERVER_URL;
+			url=SERVER_URL + model.getID();
+			Log.e("www", url);
 			break;
 		case 2:
-			url=SERVER_URL_REPLY;
+			url=SERVER_URL_REPLY + model.getID();
+			Log.e("www", "reply");
 			break;
 		}
 		

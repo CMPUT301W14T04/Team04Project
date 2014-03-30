@@ -355,7 +355,7 @@ public class GeoCommentActivity extends Activity implements
 
 			if(data!=null){
 			TopLevel aTopLevel = data.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
-			commentList.AddTopLevel(aTopLevel, 2);
+			commentList.AddTopLevel(aTopLevel, 1);
 			Log.e("Comment ID in MAin", aTopLevel.getID());
 			}
 			else

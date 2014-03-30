@@ -15,6 +15,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	protected Calendar timeStamp;
 	protected double [] aLocation;
 	protected boolean favourite =false;
+	protected String ID;
 
 
 	/**
@@ -26,13 +27,14 @@ public abstract class Comment implements Parcelable, Commentor {
 	 * @param aLocation
 	 */
 	public Comment(User aUser, Calendar timeStamp, Bitmap aPicture,
-			String textComment, double [] aLocation) {
+			String textComment, double [] aLocation,String ID) {
 
 		this.aUser = aUser;
 		this.timeStamp = timeStamp;
 		this.aPicture = aPicture;
 		this.textComment = textComment;
 		this.aLocation = aLocation;
+		this.ID=ID;
 	}
 
 	public Comment() {
@@ -103,6 +105,11 @@ public abstract class Comment implements Parcelable, Commentor {
 	 */
 	public double[] getaLocation() {
 		return aLocation;
+	}
+	
+	public String getID()
+	{
+		return this.ID;
 	}
 	
 	

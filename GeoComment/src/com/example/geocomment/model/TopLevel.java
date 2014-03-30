@@ -9,7 +9,6 @@ import android.util.Log;
 
 public class TopLevel extends Comment {
 
-	private String ID;
 
 	/**
 	 * initialize all parameters of a top level comment
@@ -25,7 +24,7 @@ public class TopLevel extends Comment {
 			String textComment, double[] aLocation,String ID)
 	{
 
-		super(aUser, timeStamp, aPicture, textComment, aLocation);
+		super(aUser, timeStamp, aPicture, textComment, aLocation,ID);
 		this.ID = ID;
 	}
 
