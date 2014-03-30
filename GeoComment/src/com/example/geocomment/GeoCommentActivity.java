@@ -151,7 +151,7 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
-	//	load(Resource.FAVOURITE_LOAD);
+		load(Resource.FAVOURITE_LOAD);
 		/*Toast.makeText(this, commentList.getList().toString(), Toast.LENGTH_SHORT).show();
 		cacheSave();
 		cacheLoad();*/
@@ -278,11 +278,11 @@ public class GeoCommentActivity extends Activity implements
 				String fav=in.readLine();
 				Type Type = new TypeToken<ArrayList<TopLevel>>(){}.getType();
 				List<Commentor> listFav= gson.fromJson(fav, Type);
-				Toast.makeText(this, listFav.toString(), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(this, listFav.toString(), Toast.LENGTH_SHORT).show();
 				for (Commentor c: listFav){
 					c.setFavourite(true);
-					Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
-					//commentList.addFav(c);
+					//Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
+					commentList.addFav(c);
 					}
 				//commentList.setFavourite(listFav);
 				fis.close();
