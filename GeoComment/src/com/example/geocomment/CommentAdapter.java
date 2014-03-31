@@ -3,7 +3,6 @@ package com.example.geocomment;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,13 +52,10 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 		 * This creates a link to the favourite button and implements an on
 		 * clicklistner
 		 */
-<<<<<<< HEAD
-		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
 
-=======
 		final ImageButton image = (ImageButton) convertView
 				.findViewById(R.id.imageButton1);
->>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
+
 		image.setFocusable(false);
 		image.setOnClickListener(new View.OnClickListener() {
 

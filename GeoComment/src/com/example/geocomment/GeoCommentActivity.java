@@ -79,7 +79,6 @@ public class GeoCommentActivity extends Activity implements
 		try {
 			fos = new FileOutputStream(cache);
 			String string = gson.toJson(commentList.getList()) + "\n";
-			Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
 			fos.write(string.getBytes());
 			fos.close();
 		} catch (Exception e) {
@@ -87,7 +86,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
-	public void cacheLoad() {
+	public List<Commentor> cacheLoad() {
 		File folder = getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
 		FileInputStream fis;
@@ -98,8 +97,11 @@ public class GeoCommentActivity extends Activity implements
 			Type Type = new TypeToken<ArrayList<TopLevel>>() {
 			}.getType();
 			List<Commentor> listFav = gson.fromJson(readCache, Type);
-			Toast.makeText(this, readCache, Toast.LENGTH_SHORT).show();
+			for(Commentor c:listFav){
+				commentList.addCache(c);
+			}
 			fis.close();
+			return listFav;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,6 +109,7 @@ public class GeoCommentActivity extends Activity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
@@ -153,17 +156,13 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
-<<<<<<< HEAD
-		//		Toast.makeText(this, commentList.getList, Toast.LENGTH_SHORT).show();
-		/*cacheSave();
-		cacheLoad();*/
-=======
+
 		load(Resource.FAVOURITE_LOAD);
 		/*
 		 * Toast.makeText(this, commentList.getList().toString(),
 		 * Toast.LENGTH_SHORT).show(); cacheSave(); cacheLoad();
 		 */
->>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
+
 	}
 
 	@Override
@@ -237,6 +236,10 @@ public class GeoCommentActivity extends Activity implements
 	protected void onPause() {
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
+		if (internet.isConnectedToInternet()){
+			cacheSave();
+		}
+
 	}
 
 	protected void onResume() {
@@ -281,7 +284,6 @@ public class GeoCommentActivity extends Activity implements
 			}
 			return userInfo;
 		case Resource.FAVOURITE_LOAD:
-<<<<<<< HEAD
 			try{
 				fis=openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(fis));
@@ -293,30 +295,7 @@ public class GeoCommentActivity extends Activity implements
 					//Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
 					commentList.addFav(listFav.get(i));
 				}
-=======
-			try {
-				fis = openFileInput(Resource.FAVOURITE_FILE);
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						fis));
-				String fav = in.readLine();
-				Type Type = new TypeToken<ArrayList<TopLevel>>() {
-				}.getType();
-				List<Commentor> listFav = gson.fromJson(fav, Type);
-				// Toast.makeText(this, listFav.toString(),
-				// Toast.LENGTH_SHORT).show();
-				for (Commentor c : listFav) {
-					c.setFavourite(true);
-					/*
-					 * for(int i=0; i<commentList.getList().size();i++){
-					 * 
-					 * }
-					 */
-					Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT)
-							.show();
-					// commentList.addFav(c);
-				}
-				// commentList.setFavourite(listFav);
->>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
+
 				fis.close();
 			} catch (FileNotFoundException e) {
 				// TODOAuto-generated catch block
@@ -359,6 +338,7 @@ public class GeoCommentActivity extends Activity implements
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
+			commentList.updateFav();
 			try {
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
@@ -452,15 +432,24 @@ public class GeoCommentActivity extends Activity implements
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Home")) {
-			load(Resource.FAVOURITE_LOAD);
-
-			adapter = new CommentAdapter(getApplicationContext(),
-					R.layout.comment_row, commentList.getList());
-			commentListView.setAdapter(adapter);
-			commentList.setAdapter(adapter);
-
-		
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+				commentListView.setAdapter(adapter);
+				commentList.setAdapter(adapter);
+			
+		}else if (parent.getItemAtPosition(pos).equals("Cache")){
+			if (cacheLoad()!=null){
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, cacheLoad());
+				commentListView.setAdapter(adapter);
+				commentList.setAdapter(adapter);
+			}
+			else{
+				Toast.makeText(this, "Nothing is cached", Toast.LENGTH_SHORT).show();
+			}
+			
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
+			commentList.updateFav();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getFavList());
 			commentListView.setAdapter(adapter);
