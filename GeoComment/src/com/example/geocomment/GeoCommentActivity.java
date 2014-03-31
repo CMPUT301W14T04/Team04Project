@@ -437,8 +437,6 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-
-		
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
 			commentList.updateFav();
 			adapter = new CommentAdapter(getApplicationContext(),
@@ -446,7 +444,13 @@ public class GeoCommentActivity extends Activity implements
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 			save(Resource.FAVOURITE_SAVE);
-			
+		} else if (parent.getItemAtPosition(pos).equals("Date")) {
+			commentList.updateDate();
+			adapter = new CommentAdapter(getApplicationContext(),
+					R.layout.comment_row, commentList.getDateList());
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+			save(Resource.FAVOURITE_SAVE);
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 			adapter = new CommentAdapter(getApplicationContext(),

@@ -73,7 +73,7 @@ public class CommentBrowseActivity extends Activity {
 
 		toplevel = (TopLevel) bundle.getParcelable("test");
 		user = (User) bundle.getParcelable("user");
-		Log.e("the user", user.getUserName());
+//		Log.e("the user", user.getUserName());
 
 		/*
 		 * just variable that store info from comment object
@@ -193,13 +193,17 @@ public class CommentBrowseActivity extends Activity {
 	public void creatNewComment() {
 		Intent intent = new Intent(CommentBrowseActivity.this,
 				CreateCommentActivity.class);
+		
+		if(user.getUserName()!=null){
 		Bundle bundle = new Bundle();
 		bundle.putParcelable(Resource.USER_INFO, user);
 //		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
 		bundle.putString("parentID", toplevel.getID());
 		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_REPLY);
 		intent.putExtras(bundle);
-		startActivityForResult(intent, 100);
+		startActivityForResult(intent, 100);}
+		else 
+			Toast.makeText(this, "Make a username before comment", Toast.LENGTH_SHORT).show();
 	}
 	
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
