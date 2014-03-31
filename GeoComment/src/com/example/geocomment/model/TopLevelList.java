@@ -115,7 +115,17 @@ public class TopLevelList {
 
 	public void updateDate() {
 		// TODO Auto-generated method stub
-
+		Collections.sort(topLevelList, new Comparator<Commentor>() {
+			public int compare(Commentor comment1, Commentor comment2) {
+				return comment2.getDate().compareTo(comment1.getDate());
+			}
+		});
+		for (Commentor c: topLevelList) {
+			if (!dateList.contains(c)) {
+				dateList.add(c);
+			}
+		}
+		this.adapter.notifyDataSetChanged();
 	}
 
 	public void update(){
@@ -156,17 +166,7 @@ public class TopLevelList {
 
 	public void updateSocre() {
 		// TODO Auto-generated method stub
-		Collections.sort(topLevelList, new Comparator<Commentor>() {
-			public int compare(Commentor comment1, Commentor comment2) {
-				return comment2.getDate().compareTo(comment1.getDate());
-			}
-		});
-		for (Commentor c: topLevelList) {
-			if (!score.contains(c)) {
-				score.add(c);
-			}
-		}
-		this.adapter.notifyDataSetChanged();
+		
 	}
 
 	public void updateProxiMe() {
