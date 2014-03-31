@@ -16,6 +16,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	protected double [] aLocation;
 	protected boolean favourite =false;
 	protected String ID;
+	protected String Likes;
 
 
 	/**
@@ -35,6 +36,7 @@ public abstract class Comment implements Parcelable, Commentor {
 		this.textComment = textComment;
 		this.aLocation = aLocation;
 		this.ID=ID;
+		this.Likes=Likes;
 	}
 
 	public Comment() {

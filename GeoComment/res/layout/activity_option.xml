@@ -24,30 +24,26 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="117dp"
-        android:ems="10"
-        android:hint="@string/new_username_option"
-        android:visibility="invisible" >
-
-        <requestFocus />
-    </EditText>
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="32dp"
-        android:onClick="changeUser" />
+        android:layout_centerHorizontal="true"
+        android:onClick="changeUser"
+        android:text="Set Username" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:hint="@string/new_username_option"
+        android:visibility="invisible" />
 
 </RelativeLayout>

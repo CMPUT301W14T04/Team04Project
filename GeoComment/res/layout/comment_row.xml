@@ -26,6 +26,12 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
+     <TextView
+        android:id="@+id/commentId"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+     
     <TextView
         android:id="@+id/comment"
         android:layout_width="fill_parent"

@@ -3,6 +3,7 @@ package com.example.geocomment;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,14 @@ import com.example.geocomment.util.Format;
 /**
  * 
  * this class set a custom adapter to the lisvtiew base on the list of comments
+ * 
  * @author CMPUT 301 Team 04
- *
+ * 
  */
 public class CommentAdapter extends ArrayAdapter<Commentor> {
 
-//	private byte[] decodedString = null;
-//	private Bitmap decodedByte = null;
+	// private byte[] decodedString = null;
+	// private Bitmap decodedByte = null;
 
 	public CommentAdapter(Context context, int resource, List<Commentor> list) {
 		super(context, resource, list);
@@ -45,35 +47,41 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 		}
 
 		final Commentor comment_meta = this.getItem(position);
-		
+
 		/*
-		 * This creates a link to the favourite button and implements 
-		 * an on clicklistner
+		 * This creates a link to the favourite button and implements an on
+		 * clicklistner
 		 */
-		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
+		final ImageButton image = (ImageButton) convertView
+				.findViewById(R.id.imageButton1);
 		image.setFocusable(false);
 		image.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				if (comment_meta.isFavourite()==false){
+				if (comment_meta.isFavourite() == false) {
 					comment_meta.setFavourite(true);
 					image.setImageResource(R.drawable.ic_favheart);
-				}
-				else{
+				}else {
 					comment_meta.setFavourite(false);
 					image.setImageResource(R.drawable.ic_heart);
 				}
 			}
 		});
+
 		if (comment_meta != null) {
-			ImageView picImageView  = (ImageView) convertView
+			ImageView picImageView = (ImageView) convertView
 					.findViewById(R.id.pic_image_view);
 			if (picImageView != null) {
-
 				picImageView.setImageBitmap(comment_meta.getaPicture());
 			}
-
+			/** Set comment id into a hidden textview BEGIN **/
+			TextView commentId = (TextView) convertView
+					.findViewById(R.id.commentId);
+			if (commentId != null) {
+				commentId.setText(comment_meta.getID());
+			}
+			/** Set comment id into a hidden textview ENDs **/
 			TextView comment = (TextView) convertView
 					.findViewById(R.id.comment);
 			if (comment != null)
@@ -86,12 +94,11 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 			TextView username = (TextView) convertView
 					.findViewById(R.id.tvtitle);
-			if(username!=null)
+			if (username != null)
 				username.setText(comment_meta.getUserName());
-			if (comment_meta.isFavourite()==false){
+			if (comment_meta.isFavourite() == false) {
 				image.setImageResource(R.drawable.ic_heart);
-			}
-			else{
+			} else {
 				image.setImageResource(R.drawable.ic_favheart);
 			}
 		}

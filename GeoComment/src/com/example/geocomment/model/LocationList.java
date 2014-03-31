@@ -37,8 +37,15 @@ public class LocationList implements Parcelable {
 	 */
 	public void addLocation (Location location)
 	{
-		double lat = location.getLatitude();
-		double lon = location.getLongitude();
+		double lat = 0;
+		double lon = 0;
+		try {
+			lat = location.getLatitude();
+			lon = location.getLongitude();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		double [] lo = {lat,lon};
 		if(getListSize()<=4)

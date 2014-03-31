@@ -38,7 +38,7 @@ public class ElasticSearchOperations {
 	/**
 	 * Define the sever URL
 	 */
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_commen1/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments/";
 	public static final String SERVER_URL_REPLY = "http://cmput301.softwareprocess.es:8080/testing/team04_replie1/";
 	// for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
@@ -51,6 +51,7 @@ public class ElasticSearchOperations {
 	 * @param model
 	 */
 	public static void pushComment(final Commentor model, int type) {
+		Log.d("pushcomment", GSON.toJson(model));
 		if (GSON == null)
 			constructGson();
 		String url = null;
@@ -63,6 +64,9 @@ public class ElasticSearchOperations {
 		case 2:
 			url=SERVER_URL_REPLY + model.getID();
 			Log.e("www", "reply");
+			break;
+		case 3:
+			url=SERVER_URL + model.getID();
 			break;
 		}
 		

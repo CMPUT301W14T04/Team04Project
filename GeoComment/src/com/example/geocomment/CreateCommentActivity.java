@@ -202,7 +202,7 @@ public class CreateCommentActivity extends Activity {
 			} else {
 
 				Comment = new Reply(user, timeStamp, photo, text, location,
-						parentID,ID);
+						parentID, ID);
 
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
