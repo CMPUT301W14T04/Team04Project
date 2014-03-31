@@ -141,7 +141,7 @@ public class TopLevelList {
 
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
-			if (c.getaPicture() != null & picture.contains(c) == false) {
+			if (c.getaPicture() != null & !picture.contains(c)) {
 				picture.add(c);
 				Collections.sort(picture, new Comparator<Commentor>() {
 					public int compare(Commentor comment1, Commentor comment2) {
@@ -149,7 +149,7 @@ public class TopLevelList {
 					}
 				});
 			} else if (c.getaPicture() == null
-					& nonPicture.contains(c) == false) {
+					& !nonPicture.contains(c)) {
 				nonPicture.add(c);
 				Collections.sort(nonPicture, new Comparator<Commentor>() {
 					public int compare(Commentor comment1, Commentor comment2) {
