@@ -9,9 +9,7 @@ import java.util.List;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 
 public class TopLevelList {
@@ -37,7 +35,10 @@ public class TopLevelList {
 		this.dateList = new ArrayList<Commentor>();
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 	/**
 	 * call pushComment in ElasticSearchOperations to push a top level comment
 	 * to the server
@@ -49,10 +50,17 @@ public class TopLevelList {
 		if (comment.getaPicture() == null) {
 			Log.e("Picture is null", "is null");
 		}
+<<<<<<< HEAD
 		
 		if (type == 1)
 			ElasticSearchOperations.pushComment(comment, 1);
 
+=======
+		if (type == 1)
+			ElasticSearchOperations.pushComment(comment, 1);
+		if(type==1)
+			ElasticSearchOperations.pushComment(comment,1);
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 		else
 			ElasticSearchOperations.pushComment(comment, 2);
 		this.adapter.notifyDataSetChanged();
@@ -79,11 +87,20 @@ public class TopLevelList {
 	public List<Commentor> getList() {
 		return Collections.unmodifiableList(topLevelList);
 	}
+<<<<<<< HEAD
 	
 	public List<Commentor> getDateList() {
 		return Collections.unmodifiableList(dateList);
 	}
 	
+=======
+
+
+	public List<Commentor> getDateList() {
+		return Collections.unmodifiableList(dateList);
+	}
+
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 	public List<Commentor> getFavList() {
 		return Collections.unmodifiableList(favourite);
 	}
@@ -108,6 +125,7 @@ public class TopLevelList {
 		return Collections.unmodifiableList(proxiLoc);
 	}
 
+<<<<<<< HEAD
 
 	public static Comparator<Commentor> dateCompare = new Comparator<Commentor>() {
 		public int compare(Commentor comment1, Commentor comment2) {
@@ -118,6 +136,8 @@ public class TopLevelList {
 	};
 
 
+=======
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 	public void setAdapter(ArrayAdapter<Commentor> adapter) {
 		this.adapter = adapter;
 	}
@@ -126,6 +146,7 @@ public class TopLevelList {
 		return topLevelList.get(i);
 	}
 
+<<<<<<< HEAD
 
 	/*public void updatePicture() {
 		// Comparator<Commentor> compare = dateCompare;
@@ -136,15 +157,42 @@ public class TopLevelList {
 		// TODO Auto-generated method stub
 		
 	}*/
+=======
+	public void updateDate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void update(){
+		for (Commentor c:topLevelList){
+			if (c.isFavourite()==true){
+				if(!favourite.contains(c)){
+					favourite.add(c);
+				}
+			}
+		}
+		this.adapter.notifyDataSetChanged();
+	}
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 
 	
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
 			if (c.getaPicture() != null & picture.contains(c) == false) {
 				picture.add(c);
+				Collections.sort(picture, new Comparator<Commentor>() {
+					public int compare(Commentor comment1, Commentor comment2) {
+						return comment2.getDate().compareTo(comment1.getDate());
+					}
+				});
 			} else if (c.getaPicture() == null
 					& nonPicture.contains(c) == false) {
 				nonPicture.add(c);
+				Collections.sort(nonPicture, new Comparator<Commentor>() {
+					public int compare(Commentor comment1, Commentor comment2) {
+						return comment2.getDate().compareTo(comment1.getDate());
+					}
+				});
 			}
 		}
 		if (picture.contains(nonPicture.get(0)) == false) {
@@ -173,21 +221,45 @@ public class TopLevelList {
 
 	}
 
+<<<<<<< HEAD
 	public void setFavourite(List<Commentor> favourite) {
 		this.favourite = favourite;
 	}
 
 	public void updateFav(){
 		
+=======
+	public void updateFav() {
+		for (Commentor c : topLevelList) {
+			if (c.isFavourite() == true) {
+				if (!favourite.contains(c)) {
+					favourite.add(c);
+				}
+			} else {
+				if (favourite.contains(c)) {
+					favourite.remove(c);
+				}
+			}
+		}
+
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 	}
 	public void updateMain(){
 	
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 
 	public void addFav(Commentor c) {
 		if(!favourite.contains(c)){
 			favourite.add(c);
 		}
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24cf6657c20814712eddd201ec9b464dd191a6c8
 
 }

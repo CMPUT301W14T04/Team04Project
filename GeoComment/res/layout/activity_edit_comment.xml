@@ -28,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_comment_box"
-        android:text="@string/add_create_comment"/>
+        android:text="@string/add_create_comment"
+        android:onClick="submitEdit"/>
 
 </RelativeLayout>

@@ -9,7 +9,6 @@ import android.util.Log;
 
 public class TopLevel extends Comment {
 
-
 	/**
 	 * initialize all parameters of a top level comment
 	 * 
@@ -19,12 +18,11 @@ public class TopLevel extends Comment {
 	 * @param textComment
 	 * @param aLocation
 	 * @param ID
-*/
+	 */
 	public TopLevel(User aUser, Calendar timeStamp, Bitmap aPicture,
-			String textComment, double[] aLocation,String ID)
-	{
-
-		super(aUser, timeStamp, aPicture, textComment, aLocation,ID);
+			String textComment, double[] aLocation, String ID) {
+		super(aUser, timeStamp, aPicture, textComment, aLocation, ID);
+		Log.d("TopLevel", ID);
 		this.ID = ID;
 	}
 
@@ -41,7 +39,6 @@ public class TopLevel extends Comment {
 	 * @param source
 	 */
 	private TopLevel(Parcel source) {
-
 		Log.d("Parcealbe",
 				"ParcelData(Parcel source): time to put back parcel data");
 		textComment = source.readString();
@@ -49,7 +46,7 @@ public class TopLevel extends Comment {
 		aPicture = (Bitmap) source.readValue(getClass().getClassLoader());
 		timeStamp = (Calendar) source.readSerializable();
 		ID = source.readString();
-		aLocation= (double[]) source.readSerializable();
+		aLocation = (double[]) source.readSerializable();
 	}
 
 	public String getID() {
@@ -97,14 +94,14 @@ public class TopLevel extends Comment {
 	@Override
 	public void setaPicture(String aPicture) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	/**
 	 * build a new topLevel commment
+	 * 
 	 * @author Guillermo Ramirez
-	 *
+	 * 
 	 */
-	
 
 }
