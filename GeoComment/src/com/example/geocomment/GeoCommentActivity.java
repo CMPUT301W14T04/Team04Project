@@ -135,6 +135,7 @@ public class GeoCommentActivity extends Activity implements
 		// commentListView.setAdapter(adapter);
 		// commentList.setAdapter(adapter);
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
 		commentListView
@@ -148,9 +149,8 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
-		load(Resource.FAVOURITE_LOAD);
-		/*Toast.makeText(this, commentList.getList().toString(), Toast.LENGTH_SHORT).show();
-		cacheSave();
+		//		Toast.makeText(this, commentList.getList, Toast.LENGTH_SHORT).show();
+		/*cacheSave();
 		cacheLoad();*/
 	}
 
@@ -275,16 +275,11 @@ public class GeoCommentActivity extends Activity implements
 				String fav=in.readLine();
 				Type Type = new TypeToken<ArrayList<TopLevel>>(){}.getType();
 				List<Commentor> listFav= gson.fromJson(fav, Type);
-				//Toast.makeText(this, listFav.toString(), Toast.LENGTH_SHORT).show();
-				for (Commentor c: listFav){
-					c.setFavourite(true);
-				/*	for(int i=0; i<commentList.getList().size();i++){
-						
-					}*/
-					Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
-					//commentList.addFav(c);
-					}
-				//commentList.setFavourite(listFav);
+				for (int i = 0; i<listFav.size();i++){
+					listFav.get(i).setFavourite(true);
+					//Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT).show();
+					commentList.addFav(listFav.get(i));
+				}
 				fis.close();
 				} catch (FileNotFoundException e) { 
 					// TODOAuto-generated catch block 
@@ -327,13 +322,12 @@ public class GeoCommentActivity extends Activity implements
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
-			commentList.updateFav();
 			try {
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 			
 				String fav = gson.toJson(commentList.getFavList())+"\n"; 
-				Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				fos.close();
 
@@ -410,7 +404,8 @@ public class GeoCommentActivity extends Activity implements
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Home")) {
-			//commentList.updateDate();
+			load(Resource.FAVOURITE_LOAD);
+
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
@@ -418,7 +413,6 @@ public class GeoCommentActivity extends Activity implements
 
 		
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
-			commentList.updateFav();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getFavList());
 			commentListView.setAdapter(adapter);
@@ -452,6 +446,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 
 	}
+
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {

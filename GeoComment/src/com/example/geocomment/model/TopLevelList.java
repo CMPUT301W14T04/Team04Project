@@ -1,6 +1,7 @@
 package com.example.geocomment.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,10 +37,7 @@ public class TopLevelList {
 		this.dateList = new ArrayList<Commentor>();
 	}
 
-<<<<<<< HEAD
-=======
 
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 	/**
 	 * call pushComment in ElasticSearchOperations to push a top level comment
 	 * to the server
@@ -51,13 +49,10 @@ public class TopLevelList {
 		if (comment.getaPicture() == null) {
 			Log.e("Picture is null", "is null");
 		}
-<<<<<<< HEAD
+		
 		if (type == 1)
 			ElasticSearchOperations.pushComment(comment, 1);
-=======
-		if(type==1)
-			ElasticSearchOperations.pushComment(comment,1);
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
+
 		else
 			ElasticSearchOperations.pushComment(comment, 2);
 		this.adapter.notifyDataSetChanged();
@@ -84,15 +79,11 @@ public class TopLevelList {
 	public List<Commentor> getList() {
 		return Collections.unmodifiableList(topLevelList);
 	}
-<<<<<<< HEAD
-
-=======
 	
 	public List<Commentor> getDateList() {
 		return Collections.unmodifiableList(dateList);
 	}
 	
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 	public List<Commentor> getFavList() {
 		return Collections.unmodifiableList(favourite);
 	}
@@ -117,7 +108,7 @@ public class TopLevelList {
 		return Collections.unmodifiableList(proxiLoc);
 	}
 
-<<<<<<< HEAD
+
 	public static Comparator<Commentor> dateCompare = new Comparator<Commentor>() {
 		public int compare(Commentor comment1, Commentor comment2) {
 			Calendar date1 = comment1.getDate();
@@ -126,8 +117,7 @@ public class TopLevelList {
 		}
 	};
 
-=======
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
+
 	public void setAdapter(ArrayAdapter<Commentor> adapter) {
 		this.adapter = adapter;
 	}
@@ -135,32 +125,21 @@ public class TopLevelList {
 	public Commentor getComment(int i) {
 		return topLevelList.get(i);
 	}
-<<<<<<< HEAD
 
-	public void updatePicture() {
+
+	/*public void updatePicture() {
 		// Comparator<Commentor> compare = dateCompare;
 		for (Commentor c : topLevelList) {
-=======
+
 	
 	public void updateDate() {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
-	public void update(){
-		for (Commentor c:topLevelList){
-			if (c.isFavourite()==true){
-				if(!favourite.contains(c)){
-					favourite.add(c);
-				}
-			}
-		}
-		this.adapter.notifyDataSetChanged();
-	}
-
+	
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 			if (c.getaPicture() != null & picture.contains(c) == false) {
 				picture.add(c);
 			} else if (c.getaPicture() == null
@@ -194,34 +173,21 @@ public class TopLevelList {
 
 	}
 
-<<<<<<< HEAD
 	public void setFavourite(List<Commentor> favourite) {
 		this.favourite = favourite;
 	}
 
-	public void updateFav() {
-		for (Commentor c : topLevelList) {
-			if (c.isFavourite() == true) {
-				if (!favourite.contains(c)) {
-					favourite.add(c);
-				}
-			} else {
-				if (favourite.contains(c)) {
-					favourite.remove(c);
-				}
-			}
-		}
-
+	public void updateFav(){
+		
+	}
+	public void updateMain(){
+	
 	}
 
 	public void addFav(Commentor c) {
-		favourite.add(c);
+		if(!favourite.contains(c)){
+			favourite.add(c);
+		}
 	}
-=======
-
-	public void setFavourite(List<Commentor> favourite) {
-		this.favourite = favourite;
-	}
->>>>>>> e67df05ed45982a7412e59f25c30ecb9422f25b3
 
 }

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.util.Format;
@@ -51,6 +52,7 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 		 * an on clicklistner
 		 */
 		final ImageButton image = (ImageButton)convertView.findViewById(R.id.imageButton1);
+
 		image.setFocusable(false);
 		image.setOnClickListener(new View.OnClickListener() {
 			
@@ -64,6 +66,7 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 					comment_meta.setFavourite(false);
 					image.setImageResource(R.drawable.ic_heart);
 				}
+				Toast.makeText(parent.getContext(), comment_meta.getTextComment()+"/"+comment_meta.isFavourite(), Toast.LENGTH_SHORT).show();
 			}
 		});
 		if (comment_meta != null) {
