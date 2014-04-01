@@ -61,7 +61,9 @@ public class TopLevelList {
 	 */
 	public void addTopLevelCollection(Collection<Commentor> pots) {
 		this.topLevelList.addAll(pots);
-		this.adapter.notifyDataSetChanged();
+		if (adapter != null){
+			this.adapter.notifyDataSetChanged();
+		}
 	}
 
 	/**
@@ -69,7 +71,9 @@ public class TopLevelList {
 	 */
 	public void clear() {
 		this.topLevelList.clear();
-		this.adapter.notifyDataSetChanged();
+		if (adapter != null){
+			this.adapter.notifyDataSetChanged();
+		}
 	}
 
 	public List<Commentor> getList() {
