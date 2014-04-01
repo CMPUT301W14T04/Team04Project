@@ -103,6 +103,7 @@ public class ElasticSearchOperations {
 		};
 
 		thread.start();
+		
 	}
 
 	/**
@@ -146,7 +147,7 @@ public class ElasticSearchOperations {
 							new InputStreamReader(entity.getContent()));
 
 					String output = reader.readLine();
-					Log.e("paja", output);
+//					Log.e("paja", output);
 					while (output != null) {
 						responseJson += output;
 						output = reader.readLine();
@@ -171,6 +172,8 @@ public class ElasticSearchOperations {
 			}
 		};
 		thread.start();
+		
+//		Log.e("Finish Elastic", "Finish ElasticsearchSearcALl");
 	}
 
 	/**

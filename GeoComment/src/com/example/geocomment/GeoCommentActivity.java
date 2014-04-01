@@ -14,6 +14,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -138,7 +139,35 @@ public class GeoCommentActivity extends Activity implements
 		userPre = new UserPreference();
 		// commentListView.setAdapter(adapter);
 		// commentList.setAdapter(adapter);
-		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+		class getTask extends AsyncTask<ElasticSearchOperations, String, Integer>
+		{
+
+			@Override
+			protected Integer doInBackground(ElasticSearchOperations... params) {
+				
+				ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+				while(commentList.getList().size()>0)
+				{
+				}
+				return 0;
+			}
+			protected void onPostExecute(String result){
+				Log.d("Finish", "Finish getTask");
+				
+				
+			}
+			protected void onPreExecute() {
+				Log.e("Waiting", "Waiting.....");
+			}
+			
+			protected void onProgressUpdate(String... values) {
+				
+				
+			}
+			
+		}
+		new getTask().execute();
+		Toast.makeText(this, ""+commentList.getList().size(), Toast.LENGTH_SHORT).show();
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
 		commentListView
