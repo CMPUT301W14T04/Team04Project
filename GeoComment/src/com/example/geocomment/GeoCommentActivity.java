@@ -227,12 +227,22 @@ public class GeoCommentActivity extends Activity implements
 
 	}
 
+	@Override
 	protected void onPause() {
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
+		commentList.clear();
+		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
 	protected void onResume() {
+		// TODO Auto-generated method stub
 		super.onResume();
 	}
 
@@ -343,7 +353,7 @@ public class GeoCommentActivity extends Activity implements
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
-				String fav = gson.toJson(commentList.getFavList())+"\n"; 
+				String fav = gson.toJson(commentList.getFavList()) + "\n";
 				Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				fos.close();
@@ -432,7 +442,7 @@ public class GeoCommentActivity extends Activity implements
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Home")) {
-			//commentList.updateDate();
+			// commentList.updateDate();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
@@ -498,17 +508,28 @@ public class GeoCommentActivity extends Activity implements
 					.findViewById(R.id.comment)).getText().toString();
 			String id = ((TextView) info.targetView
 					.findViewById(R.id.commentId)).getText().toString();
+			String user_name = ((TextView) info.targetView
+					.findViewById(R.id.tvtitle)).getText().toString();
 			Intent intent = new Intent(GeoCommentActivity.this,
 					EditCommentActivity.class);
 			intent.putExtra("commentId", id);
 			intent.putExtra("text", text);
+			intent.putExtra("user_name", user_name);
 			Bundle bundle = new Bundle();
 			bundle.putParcelable(Resource.USER_INFO, user);
 			bundle.putParcelable(Resource.USER_LOCATION_HISTORY,
 					locationHistory);
 			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
 			intent.putExtras(bundle);
-			startActivityForResult(intent, Resource.RESQUEST_NEW_TOP_LEVEL);
+			Log.d("User Name", user.getUserName());
+			Log.d("user_name", user_name);
+			if (user_name.equals(user.getUserName())) {
+				startActivityForResult(intent, Resource.RESQUEST_NEW_TOP_LEVEL);
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"You don't have permission to edit this comment!",
+						Toast.LENGTH_LONG).show();
+			}
 			// startActivity(intent);
 		default:
 			return super.onContextItemSelected(item);
