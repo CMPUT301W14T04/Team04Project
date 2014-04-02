@@ -60,8 +60,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/tvtitle"
-        android:layout_marginRight="35dp"
+        android:layout_alignRight="@+id/date_added"
         android:background="@drawable/ic_heart" />
 
 </RelativeLayout>
