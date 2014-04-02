@@ -348,12 +348,8 @@ public class GeoCommentActivity extends Activity implements
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
-<<<<<<< HEAD
-				String fav = gson.toJson(commentList.getFavList())+"\n"; 
-=======
 				String fav = gson.toJson(commentList.getFavList()) + "\n";
-				Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
->>>>>>> 9335b40a349ccd7bfe3d1c968a2bd896767ca174
+				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				fos.close();
 
@@ -441,12 +437,7 @@ public class GeoCommentActivity extends Activity implements
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Home")) {
-<<<<<<< HEAD
-			//load(Resource.FAVOURITE_LOAD);
-			//commentList.updateDate();
-=======
 			// commentList.updateDate();
->>>>>>> 9335b40a349ccd7bfe3d1c968a2bd896767ca174
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
