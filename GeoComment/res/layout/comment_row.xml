@@ -11,8 +11,7 @@
         android:layout_margin="5dp"
         android:padding="3dp"
         android:contentDescription="@string/picture_comment_row"
-        android:text="@string/picture_comment_row"
-        android:background="@drawable/face" />
+        android:text="@string/picture_comment_row" />
 
     <TextView
         android:id="@+id/tvtitle"
@@ -58,10 +57,10 @@
 
     <ImageButton
         android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_heart" />
+        android:layout_alignRight="@+id/date_added"
+        android:background="@drawable/ic_heart" />
 
 </RelativeLayout>

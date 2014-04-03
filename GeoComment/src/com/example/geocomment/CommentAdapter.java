@@ -55,6 +55,9 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 		final ImageButton image = (ImageButton) convertView
 				.findViewById(R.id.imageButton1);
 		image.setFocusable(false);
+		if(comment_meta.isFavourite()==true){
+			image.setImageResource(R.drawable.ic_favheart);
+		}
 		image.setOnClickListener(new View.OnClickListener() {
 
 			@Override

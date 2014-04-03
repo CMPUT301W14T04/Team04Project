@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 
@@ -132,17 +133,7 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
-	public void update(){
-		for (Commentor c:topLevelList){
-			if (c.isFavourite()==true){
-				if(!favourite.contains(c)){
-					favourite.add(c);
-				}
-			}
-		}
-		this.adapter.notifyDataSetChanged();
-	}
-
+	
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
 			if (c.getaPicture() != null & !picture.contains(c)) {
@@ -179,23 +170,15 @@ public class TopLevelList {
 	}
 
 	public void updateFav() {
-		for (Commentor c : topLevelList) {
-			if (c.isFavourite() == true) {
-				if (!favourite.contains(c)) {
-					favourite.add(c);
-				}
-			} else {
-				if (favourite.contains(c)) {
-					favourite.remove(c);
-				}
+		favourite.clear();
+		for (Commentor c: topLevelList){
+			if (c.isFavourite()==true){
+				favourite.add(c);
 			}
 		}
 
 	}
 
-	public void addFav(Commentor c) {
-		favourite.add(c);
-	}
 
 
 	public void setFavourite(List<Commentor> favourite) {

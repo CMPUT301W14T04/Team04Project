@@ -73,6 +73,7 @@ public class GeoCommentActivity extends Activity implements
 	Spinner sortList;
 	ListView commentListView;
 
+	
 	public void cacheSave() {
 		File folder = getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
@@ -80,7 +81,6 @@ public class GeoCommentActivity extends Activity implements
 		try {
 			fos = new FileOutputStream(cache);
 			String string = gson.toJson(commentList.getList()) + "\n";
-			Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
 			fos.write(string.getBytes());
 			fos.close();
 		} catch (Exception e) {
@@ -88,7 +88,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
-	public void cacheLoad() {
+	public List<Commentor> cacheLoad() {
 		File folder = getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
 		FileInputStream fis;
@@ -99,8 +99,8 @@ public class GeoCommentActivity extends Activity implements
 			Type Type = new TypeToken<ArrayList<TopLevel>>() {
 			}.getType();
 			List<Commentor> listFav = gson.fromJson(readCache, Type);
-			Toast.makeText(this, readCache, Toast.LENGTH_SHORT).show();
 			fis.close();
+			return listFav;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,6 +108,7 @@ public class GeoCommentActivity extends Activity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
@@ -181,7 +182,7 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
-		load(Resource.FAVOURITE_LOAD);
+		
 		/*
 		 * Toast.makeText(this, commentList.getList().toString(),
 		 * Toast.LENGTH_SHORT).show(); cacheSave(); cacheLoad();
@@ -314,6 +315,7 @@ public class GeoCommentActivity extends Activity implements
 			return userInfo;
 		case Resource.FAVOURITE_LOAD:
 			try {
+				Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
 				fis = openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						fis));
@@ -321,20 +323,13 @@ public class GeoCommentActivity extends Activity implements
 				Type Type = new TypeToken<ArrayList<TopLevel>>() {
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
-				// Toast.makeText(this, listFav.toString(),
-				// Toast.LENGTH_SHORT).show();
 				for (Commentor c : listFav) {
-					c.setFavourite(true);
-					/*
-					 * for(int i=0; i<commentList.getList().size();i++){
-					 * 
-					 * }
-					 */
-					Toast.makeText(this, c.getTextComment(), Toast.LENGTH_SHORT)
-							.show();
-					// commentList.addFav(c);
+					for (Commentor c1:commentList.getList()){
+						if (c1.getID().equals(c.getID())){
+							c1.setFavourite(true);
+						}
+					}
 				}
-				// commentList.setFavourite(listFav);
 				fis.close();
 			} catch (FileNotFoundException e) {
 				// TODOAuto-generated catch block
@@ -383,7 +378,7 @@ public class GeoCommentActivity extends Activity implements
 						Context.MODE_PRIVATE);
 
 				String fav = gson.toJson(commentList.getFavList()) + "\n";
-				Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				fos.close();
 
@@ -476,13 +471,15 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
+			//cacheSave();
+			//cacheLoad();
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
 			commentList.updateFav();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getFavList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			save(Resource.FAVOURITE_SAVE);
+			//save(Resource.FAVOURITE_SAVE);
 		} else if (parent.getItemAtPosition(pos).equals("Date")) {
 			commentList.updateDate();
 			adapter = new CommentAdapter(getApplicationContext(),
