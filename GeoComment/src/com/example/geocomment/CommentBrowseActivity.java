@@ -23,6 +23,7 @@ import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
+import com.example.geocomment.model.favourites;
 import com.example.geocomment.util.Format;
 import com.example.geocomment.util.Resource;
 
@@ -99,6 +100,10 @@ public class CommentBrowseActivity extends Activity {
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
+	protected void onPause() {
+		super.onPause();
+		favourites.updateBrowse(repliesList.getList());
+	}
 	private void setupActionBar() {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);

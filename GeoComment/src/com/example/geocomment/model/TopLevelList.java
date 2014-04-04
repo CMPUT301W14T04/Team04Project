@@ -16,7 +16,6 @@ public class TopLevelList {
 
 	private List<Commentor> topLevelList;
 	private ArrayAdapter<Commentor> adapter;
-	private List<Commentor> favourite;
 	private List<Commentor> picture;
 	private List<Commentor> score;
 	private List<Commentor> proxiMe;
@@ -26,7 +25,6 @@ public class TopLevelList {
 
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<Commentor>();
-		this.favourite = new ArrayList<Commentor>();
 		this.picture = new ArrayList<Commentor>();
 		this.nonPicture = new ArrayList<Commentor>();
 		this.score = new ArrayList<Commentor>();
@@ -86,9 +84,6 @@ public class TopLevelList {
 		return Collections.unmodifiableList(dateList);
 	}
 
-	public List<Commentor> getFavList() {
-		return Collections.unmodifiableList(favourite);
-	}
 
 	public List<Commentor> getPictureList() {
 		// TODO Auto-generated method stub
@@ -169,21 +164,10 @@ public class TopLevelList {
 
 	}
 
-	public void updateFav() {
-		favourite.clear();
-		for (Commentor c: topLevelList){
-			if (c.isFavourite()==true){
-				favourite.add(c);
-			}
-		}
-
-	}
+	
 
 
 
-	public void setFavourite(List<Commentor> favourite) {
-		this.favourite = favourite;
-	}
 
 
 }
