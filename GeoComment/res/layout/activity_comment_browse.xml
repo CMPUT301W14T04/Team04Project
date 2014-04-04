@@ -43,7 +43,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:text="@string/username_comment_browse"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp"
+			android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/dateBrowse"
@@ -52,7 +54,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="@string/date_comment_browse"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/textBrowse"
@@ -73,7 +76,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:text="@string/location_browse"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:textStyle="italic"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -82,28 +86,12 @@
             android:layout_alignParentLeft="true" >
 
             <TextView
-                android:id="@+id/likeBrowse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="likeBrowse"
-                android:text="@string/like_browse"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" "
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/likeNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/like_number_browse"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
     </RelativeLayout>
