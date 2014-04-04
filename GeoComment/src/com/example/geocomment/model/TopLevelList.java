@@ -8,8 +8,6 @@ import java.util.List;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
-
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 
 public class TopLevelList {
@@ -121,6 +119,7 @@ public class TopLevelList {
 	public void updateDate() {
 		// TODO Auto-generated method stub
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
+			@Override
 			public int compare(Commentor comment1, Commentor comment2) {
 				return comment2.getDate().compareTo(comment1.getDate());
 			}
@@ -139,6 +138,7 @@ public class TopLevelList {
 			if (c.getaPicture() != null & !picture.contains(c)) {
 				picture.add(c);
 				Collections.sort(picture, new Comparator<Commentor>() {
+					@Override
 					public int compare(Commentor comment1, Commentor comment2) {
 						return comment2.getDate().compareTo(comment1.getDate());
 					}
@@ -147,6 +147,7 @@ public class TopLevelList {
 					& !nonPicture.contains(c)) {
 				nonPicture.add(c);
 				Collections.sort(nonPicture, new Comparator<Commentor>() {
+					@Override
 					public int compare(Commentor comment1, Commentor comment2) {
 						return comment2.getDate().compareTo(comment1.getDate());
 					}

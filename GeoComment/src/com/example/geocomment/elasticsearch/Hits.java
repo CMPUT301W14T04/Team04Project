@@ -13,7 +13,8 @@ public class Hits<T> {
     public Collection<ElasticSearchResponse<T>> getHits() {
         return hits;
     }
-    public String toString() {
+    @Override
+	public String toString() {
         return (super.toString()+","+total+","+max_score+","+hits);
     }
 }

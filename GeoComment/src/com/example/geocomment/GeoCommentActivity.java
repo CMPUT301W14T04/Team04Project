@@ -14,7 +14,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -140,34 +139,8 @@ public class GeoCommentActivity extends Activity implements
 		userPre = new UserPreference();
 		// commentListView.setAdapter(adapter);
 		// commentList.setAdapter(adapter);
-		class getTask extends AsyncTask<ElasticSearchOperations, String, Integer>
-		{
-
-			@Override
-			protected Integer doInBackground(ElasticSearchOperations... params) {
-				
-				ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
-				while(commentList.getList().size()>0)
-				{
-				}
-				return 0;
-			}
-			protected void onPostExecute(String result){
-				Log.d("Finish", "Finish getTask");
-				
-				
-			}
-			protected void onPreExecute() {
-				Log.e("Waiting", "Waiting.....");
-			}
-			
-			protected void onProgressUpdate(String... values) {
-				
-				
-			}
-			
-		}
-		new getTask().execute();
+		
+		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		Toast.makeText(this, ""+commentList.getList().size(), Toast.LENGTH_SHORT).show();
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
@@ -199,6 +172,7 @@ public class GeoCommentActivity extends Activity implements
 	/**
 	 * Before the user can make a comment, they must enter in a username
 	 */
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.create_new_comment:
@@ -235,6 +209,7 @@ public class GeoCommentActivity extends Activity implements
 	 * the users default location when posting comments. If the user enters no
 	 * username, the default username is Guillermo
 	 */
+	@Override
 	protected void onStart() {
 		super.onStart();
 		double[] locations = { location.getLatitude(), location.getLongitude() };
@@ -276,6 +251,7 @@ public class GeoCommentActivity extends Activity implements
 		super.onResume();
 	}
 
+	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long id) {
 
@@ -435,6 +411,7 @@ public class GeoCommentActivity extends Activity implements
 	 * (such as ID, location, username, the comment itself and possibly a
 	 * picture) to a list of all the comments.
 	 */
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		switch (requestCode) {
@@ -557,6 +534,13 @@ public class GeoCommentActivity extends Activity implements
 						Toast.LENGTH_LONG).show();
 			}
 			// startActivity(intent);
+		case R.id.viewProfile:
+			int i = info.position;
+			List<Commentor> list = commentList.getList();
+			String userID =list.get(i).getUserID();
+//			Log.e("userID", userID);
+//			Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_SHORT).show();
+			viewProfile(userID);
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -571,6 +555,11 @@ public class GeoCommentActivity extends Activity implements
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.comment_menu, menu);
 		}
+	}
+	
+	private void viewProfile(String aUser)
+	{
+		Toast.makeText(getApplicationContext(), "LOL", Toast.LENGTH_SHORT).show();
 	}
 
 }

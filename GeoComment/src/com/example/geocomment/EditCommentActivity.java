@@ -21,7 +21,6 @@ import com.example.geocomment.model.LocationList;
 import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.User;
-import com.example.geocomment.util.Internet;
 import com.example.geocomment.util.Resource;
 
 public class EditCommentActivity extends Activity {
@@ -103,12 +102,13 @@ public class EditCommentActivity extends Activity {
 	 * dialog pops up after clicking action_new_picture icon in action bar opens
 	 * camera or gallery
 	 */
+	@Override
 	@SuppressWarnings("static-access")
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
 			// resize chosen photo
-			photo = photo.createScaledBitmap(photo, 100, 100, false);
+			photo = Bitmap.createScaledBitmap(photo, 100, 100, false);
 			// set photo for preview
 			Log.d("Image", "set photo for preview");
 			imageView.setImageBitmap(photo);

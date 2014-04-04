@@ -206,6 +206,7 @@ public class CommentBrowseActivity extends Activity {
 			Toast.makeText(this, "Make a username before comment", Toast.LENGTH_SHORT).show();
 	}
 	
+@Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
 		switch(requestCode)

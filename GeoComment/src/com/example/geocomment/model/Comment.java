@@ -46,6 +46,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return User Username
 	 */
+	@Override
 	public String getUserName() {
 		return aUser.getUserName();
 	}
@@ -53,6 +54,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return User ID
 	 */
+	@Override
 	public String getUserID() {
 		return aUser.getID();
 	}
@@ -60,6 +62,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return the textComment
 	 */
+	@Override
 	public String getTextComment() {
 		return textComment;
 	}
@@ -68,6 +71,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	 * @param textComment
 	 *            the textComment to set
 	 */
+	@Override
 	public void setTextComment(String textComment) {
 		this.textComment = textComment;
 	}
@@ -75,6 +79,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return the aPicture
 	 */
+	@Override
 	public Bitmap getaPicture() {
 		return aPicture;
 	}
@@ -90,6 +95,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @param timeStamp
 	 */
+	@Override
 	public void setTimeStamp(Calendar timeStamp) {
 		Log.d("Date", this.timeStamp.toString());
 		this.timeStamp = timeStamp;
@@ -98,6 +104,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return
 	 */
+	@Override
 	public Calendar getDate() {
 		return timeStamp;
 	}
@@ -105,10 +112,12 @@ public abstract class Comment implements Parcelable, Commentor {
 	/**
 	 * @return the aLocation
 	 */
+	@Override
 	public double[] getaLocation() {
 		return aLocation;
 	}
 	
+	@Override
 	public String getID()
 	{
 		return this.ID;
@@ -118,6 +127,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/*
 	 * Set favourite
 	 */
+	@Override
 	public boolean isFavourite() {
 		return favourite;
 	}
@@ -125,6 +135,7 @@ public abstract class Comment implements Parcelable, Commentor {
 	/*
 	 * Get favourite
 	 */
+	@Override
 	public void setFavourite(boolean favourite) {
 		this.favourite = favourite;
 	}
