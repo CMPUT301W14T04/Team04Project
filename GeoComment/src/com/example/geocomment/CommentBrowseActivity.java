@@ -100,6 +100,7 @@ public class CommentBrowseActivity extends Activity {
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
+	@Override
 	protected void onPause() {
 		super.onPause();
 		favourites.updateBrowse(repliesList.getList());

@@ -36,7 +36,6 @@ import android.widget.Toast;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
-import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;

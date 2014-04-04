@@ -8,9 +8,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ProfileActivity" >
 
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/face" />
+
     <TextView
+        android:id="@+id/profileUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/profilePic"
+        android:layout_marginRight="48dp"
+        android:text="Username"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/profileQuote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profilePic"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/profileUsername"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="17dp"
+        android:layout_toRightOf="@+id/profilePic"
+        android:text="This is a quote"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
