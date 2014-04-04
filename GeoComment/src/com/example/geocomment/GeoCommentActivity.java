@@ -137,12 +137,11 @@ public class GeoCommentActivity extends Activity implements
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gson = gsonBuilder.create();
 		userPre = new UserPreference();
-<<<<<<< HEAD
-=======
+
 		// commentListView.setAdapter(adapter);
 		// commentList.setAdapter(adapter);
 		
->>>>>>> d5fddfbc3729be0bbb76c558dcdf460d57071b2b
+
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		Toast.makeText(this, ""+commentList.getList().size(), Toast.LENGTH_SHORT).show();
 		commentListView.setOnItemClickListener(this);
@@ -316,7 +315,7 @@ public class GeoCommentActivity extends Activity implements
 				Type Type = new TypeToken<ArrayList<TopLevel>>() {
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
-				
+				//Toast.makeText(this, gson.toJson(listFav), Toast.LENGTH_SHORT).show();
 				/*if(internet.isConnectedToInternet()==false){
 					String favReply=in.readLine();
 					Type Reply = new TypeToken<ArrayList<Reply>>() {
