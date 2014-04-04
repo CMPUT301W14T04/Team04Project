@@ -14,6 +14,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -41,6 +42,7 @@ import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
 import com.example.geocomment.model.UserPreference;
 import com.example.geocomment.model.favourites;
+import com.example.geocomment.util.BitmapJsonConverter;
 import com.example.geocomment.util.GPSLocation;
 import com.example.geocomment.util.Internet;
 import com.example.geocomment.util.Resource;
@@ -58,7 +60,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class GeoCommentActivity extends Activity implements
 		OnItemClickListener, OnItemSelectedListener {
-	Gson gson;
+	 Gson gson;
 	Internet internet;
 	GPSLocation location;
 
@@ -72,11 +74,21 @@ public class GeoCommentActivity extends Activity implements
 	ListView commentListView;
 	ArrayList<Commentor> cacheList;
 	
+	
+	private void constructGson() {
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		gson = builder.create();
+	}
+	
 	public void cacheSave() {
+		this.deleteFile(Resource.CACHE_STORE);
 		File folder = getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
 		FileOutputStream fos;
 		try {
+			if(gson==null)
+				constructGson();
 			fos = new FileOutputStream(cache);
 			String string = gson.toJson(commentList.getList()) + "\n";
 			fos.write(string.getBytes());
@@ -94,12 +106,13 @@ public class GeoCommentActivity extends Activity implements
 			fis = new FileInputStream(cache);
 			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 			String readCache = in.readLine();
+			Log.i("Cached:", readCache);
 			Type Type = new TypeToken<ArrayList<TopLevel>>() {
 			}.getType();
 			List<Commentor> listFav = gson.fromJson(readCache, Type);
-			for (int i=0;i<listFav.size();i++){
-				cacheList.add(listFav.get(i));
-			}
+//			for (int i=0;i<listFav.size();i++){
+//				cacheList.add(listFav.get(i));
+//			}
 			fis.close();
 			return listFav;
 		} catch (FileNotFoundException e) {
@@ -134,7 +147,11 @@ public class GeoCommentActivity extends Activity implements
 		location = new GPSLocation(GeoCommentActivity.this);
 		internet = new Internet(GeoCommentActivity.this);
 		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		
+
 		gson = gsonBuilder.create();
+		
 		userPre = new UserPreference();
 
 		// commentListView.setAdapter(adapter);
@@ -156,7 +173,10 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
-		cacheLoad();
+/*		if (internet.isConnectedToInternet()==false){
+			cacheLoad();
+			Toast.makeText(this, gson.toJson(cacheLoad()),Toast.LENGTH_SHORT).show();
+		}*/
 		load(Resource.FAVOURITE_LOAD);
 		//Toast.makeText(this, gson.toJson(cacheList),Toast.LENGTH_SHORT).show();
 		/*
@@ -469,11 +489,19 @@ public class GeoCommentActivity extends Activity implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		if (parent.getItemAtPosition(pos).equals("Home")) {
+		if (parent.getItemAtPosition(pos).equals("Date")) {
 			// commentList.updateDate();
-		
-			adapter = new CommentAdapter(getApplicationContext(),
-					R.layout.comment_row, commentList.getList());
+			if(internet.isConnectedToInternet()==false){
+				Toast.makeText(this, "No internet from last visit", Toast.LENGTH_LONG).show(); 
+				commentList.clear();
+				commentList.addTopLevelCollection(cacheLoad());
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+			}
+			else{
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 			//cacheSave();
@@ -484,14 +512,14 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row,favourites.returnFav());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-		} else if (parent.getItemAtPosition(pos).equals("Date")) {
+		/*} else if (parent.getItemAtPosition(pos).equals("Date")) {
 			commentList.updateDate();
 
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getDateList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			save(Resource.FAVOURITE_SAVE);
+			save(Resource.FAVOURITE_SAVE);*/
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 
@@ -593,5 +621,6 @@ public class GeoCommentActivity extends Activity implements
 	{
 		Toast.makeText(getApplicationContext(), "LOL", Toast.LENGTH_SHORT).show();
 	}
+	
 
 }
