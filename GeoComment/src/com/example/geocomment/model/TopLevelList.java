@@ -58,6 +58,12 @@ public class TopLevelList {
 	 */
 	public void addTopLevelCollection(Collection<Commentor> pots) {
 		this.topLevelList.addAll(pots);
+		Collections.sort(topLevelList, new Comparator<Commentor>() {
+			@Override
+			public int compare(Commentor comment1, Commentor comment2) {
+				return comment2.getDate().compareTo(comment1.getDate());
+			}
+		});
 		if (adapter != null){
 			this.adapter.notifyDataSetChanged();
 		}
@@ -73,7 +79,9 @@ public class TopLevelList {
 		}
 	}
 
+	
 	public List<Commentor> getList() {
+		
 		return Collections.unmodifiableList(topLevelList);
 	}
 
