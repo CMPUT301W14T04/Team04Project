@@ -24,7 +24,7 @@ public class LocationList implements Parcelable {
 	@SuppressWarnings("unchecked")
 	private LocationList(Parcel source)
 	{
-		this.locationHistory= (ArrayList<double []>)source.readArrayList(getClass().getClassLoader());
+		this.locationHistory= source.readArrayList(getClass().getClassLoader());
 	}
 
 	private int getListSize() {

@@ -11,5 +11,11 @@
         android:icon="@drawable/ic_action_camera"
         android:title="@string/new_picture"
         android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/location_change"
+        android:icon="@drawable/ic_action_place"
+        android:title="Change Location"
+        android:showAsAction="ifRoom"
+        />
 
 </menu>

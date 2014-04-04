@@ -23,7 +23,8 @@ public class ElasticSearchSearchResponse<T> {
         }
         return out;
     }
-    public String toString() {
+    @Override
+	public String toString() {
         return (super.toString() + ":" + took + "," + _shards + "," + exists + ","  + hits);     
     }
 }

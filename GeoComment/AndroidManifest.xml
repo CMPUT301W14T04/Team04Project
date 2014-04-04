@@ -57,6 +57,10 @@
             android:name="com.example.geocomment.EditCommentActivity"
             android:label="@string/title_activity_edit_comment" >
         </activity>
+        <activity
+            android:name="com.example.geocomment.ProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
     </application>
 
 </manifest>
