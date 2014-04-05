@@ -34,6 +34,7 @@ public class EditCommentActivity extends Activity {
 	Location location;
 	String parentID;
 	String user_name;
+	int likes;
 
 	int type;
 
@@ -52,6 +53,7 @@ public class EditCommentActivity extends Activity {
 		commentId = intent.getStringExtra("commentId");
 		text = intent.getStringExtra("text");
 		user_name = intent.getStringExtra("user_name");
+		likes = intent.getIntExtra("likes", 0);
 		editText = (TextView) findViewById(R.id.edit_comment_box);
 		editText.setText(text);
 
@@ -62,6 +64,7 @@ public class EditCommentActivity extends Activity {
 				.getParcelable(Resource.USER_LOCATION_HISTORY);
 		type = bundle.getInt(Resource.TOP_LEVEL_COMMENT);
 		parentID = bundle.getString("parentID");
+		photo = bundle.getParcelable("photo");
 		imageView = (ImageView) findViewById(R.id.imageView123);
 		imageView.setImageBitmap(null);
 	}
@@ -126,10 +129,11 @@ public class EditCommentActivity extends Activity {
 				Toast.makeText(this, "You can't submit an empty text",
 						Toast.LENGTH_LONG).show();
 			} else {
-				User u = new User();
-				u.setUserName(user_name);
-				Comment = new TopLevel(u, timeStamp, photo, text, location,
-						ID);
+				//User u = new User();
+				//u.setUserName(user_name);
+				Comment = new TopLevel(user, timeStamp, photo, text, location,
+						ID, likes);
+				//Comment = new TopLevel(text, ID);
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
 				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT,

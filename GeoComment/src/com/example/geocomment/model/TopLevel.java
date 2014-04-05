@@ -20,12 +20,16 @@ public class TopLevel extends Comment {
 	 * @param ID
 	 */
 	public TopLevel(User aUser, Calendar timeStamp, Bitmap aPicture,
-			String textComment, double[] aLocation, String ID) {
-		super(aUser, timeStamp, aPicture, textComment, aLocation, ID);
+			String textComment, double[] aLocation, String ID, int likes) {
+		super(aUser, timeStamp, aPicture, textComment, aLocation, ID, likes);
 		Log.d("TopLevel", ID);
 		this.ID = ID;
 	}
 
+	public TopLevel(String textComment, String ID){
+		super(textComment,ID);
+	}
+	
 	public TopLevel() {
 
 		super();
@@ -33,6 +37,7 @@ public class TopLevel extends Comment {
 		this.textComment = null;
 		this.aUser = null;
 		this.timeStamp = null;
+		this.likes = 0;
 	}
 
 	/**
@@ -47,6 +52,7 @@ public class TopLevel extends Comment {
 		timeStamp = (Calendar) source.readSerializable();
 		ID = source.readString();
 		aLocation = (double[]) source.readSerializable();
+		likes = source.readInt();
 	}
 
 	@Override

@@ -3,47 +3,65 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <ImageView
-        android:id="@+id/pic_image_view"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerVertical="true"
-        android:layout_margin="5dp"
-        android:padding="3dp"
-        android:contentDescription="@string/picture_comment_row"
-        android:text="@string/picture_comment_row" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" >
+
+        <Button
+            android:id="@+id/likes_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Like"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_heart" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/linearLayout1"
+        android:layout_toRightOf="@+id/pic_image_view" >
+
+        <TextView
+            android:id="@+id/tvtitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:maxLines="1"
+            android:onClick="profileView"
+            android:text="@string/user_comment_row"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvtitle"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@string/text_comment_row"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/tvtitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dip"
-        android:layout_toLeftOf="@+id/date_added"
-        android:layout_toRightOf="@+id/pic_image_view"
-        android:maxLines="1"
-        android:text="@string/user_comment_row"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:onClick="profileView" />
-
-     <TextView
         android:id="@+id/commentId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone" />
-     
-    <TextView
-        android:id="@+id/comment"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvtitle"
-        android:layout_toRightOf="@+id/pic_image_view"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="@string/text_comment_row"
-        android:textColor="@android:color/black"
-        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/date_added"
@@ -56,15 +74,16 @@
         android:textColor="@android:color/black"
         android:textSize="12sp" />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-
-        android:layout_height="35dp"
-        android:layout_width="35dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/date_added"
-        android:layout_below="@+id/comment"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ic_heart" />
+    <ImageView
+        android:id="@+id/pic_image_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:background="@android:drawable/alert_dark_frame"
+        android:contentDescription="@string/picture_comment_row"
+        android:padding="3dp"
+        android:text="@string/picture_comment_row" />
 
 </RelativeLayout>

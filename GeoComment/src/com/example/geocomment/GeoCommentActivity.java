@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -29,6 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +39,6 @@ import android.widget.Toast;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
-import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
@@ -574,6 +575,8 @@ public class GeoCommentActivity extends Activity implements
 					.findViewById(R.id.commentId)).getText().toString();
 			String user_name = ((TextView) info.targetView
 					.findViewById(R.id.tvtitle)).getText().toString();
+			Bitmap photo = ((BitmapDrawable)((ImageView) info.targetView
+					.findViewById(R.id.pic_image_view)).getDrawable()).getBitmap();
 			Intent intent = new Intent(GeoCommentActivity.this,
 					EditCommentActivity.class);
 			intent.putExtra("commentId", id);
@@ -583,6 +586,7 @@ public class GeoCommentActivity extends Activity implements
 			bundle.putParcelable(Resource.USER_INFO, user);
 			bundle.putParcelable(Resource.USER_LOCATION_HISTORY,
 					locationHistory);
+			bundle.putParcelable("photo",photo);
 			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
 			intent.putExtras(bundle);
 			Log.d("User Name", user.getUserName());
