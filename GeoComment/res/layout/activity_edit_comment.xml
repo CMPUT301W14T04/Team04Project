@@ -38,7 +38,7 @@
         android:layout_alignLeft="@+id/edit_comment_box"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/edit_comment_box"
-        android:layout_below="@+id/edit_comment_box"
-        android:layout_marginTop="18dp"
+        android:layout_below="@+id/submit_edit_comment"
         android:contentDescription="Image View" />
+
 </RelativeLayout>
