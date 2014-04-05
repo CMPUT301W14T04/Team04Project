@@ -13,6 +13,8 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,19 +29,19 @@ import com.example.geocomment.model.favourites;
 import com.example.geocomment.util.Format;
 import com.example.geocomment.util.Resource;
 
-
 /**
  * 
- * This activity allow the user to see the top level comment at the top and its replies.
+ * This activity allow the user to see the top level comment at the top and its
+ * replies.
  * 
  * @author CMPUT 301 Team 04
- *
+ * 
  */
 public class CommentBrowseActivity extends Activity {
 
 	private TextView username;
 	private TextView date;
-//	private TextView likeNumber;
+	private Button likes;
 	private TextView text;
 	private TextView location;
 	private ImageView picture;
@@ -59,10 +61,11 @@ public class CommentBrowseActivity extends Activity {
 
 		username = (TextView) findViewById(R.id.usernameBrowse);
 		date = (TextView) findViewById(R.id.dateBrowse);
-//		likeNumber = (TextView) findViewById(R.id.likeNumber);
+		// likeNumber = (TextView) findViewById(R.id.likeNumber);
 		text = (TextView) findViewById(R.id.textBrowse);
 		location = (TextView) findViewById(R.id.locationBrowse);
 		picture = (ImageView) findViewById(R.id.topLevelPicture);
+		likes = (Button) findViewById(R.id.likeBrowse);
 		replies = (ListView) findViewById(R.id.repliesListViewBrowse);
 
 		repliesList = new TopLevelList();
@@ -74,7 +77,7 @@ public class CommentBrowseActivity extends Activity {
 
 		toplevel = (TopLevel) bundle.getParcelable("test");
 		user = (User) bundle.getParcelable("user");
-//		Log.e("the user", user.getUserName());
+		// Log.e("the user", user.getUserName());
 
 		/*
 		 * just variable that store info from comment object
@@ -87,7 +90,11 @@ public class CommentBrowseActivity extends Activity {
 		date.setText(displayDate);
 		text.setText(displayText);
 		location.setText(loca(toplevel.getaLocation()));
-		picture.setImageBitmap(toplevel.getaPicture());
+		likes.setText("Likes: " + toplevel.getLikes());
+
+		if (toplevel.getaPicture() != null) {
+			picture.setImageBitmap(toplevel.getaPicture());
+		}
 
 		replies.setAdapter(adapter);
 		repliesList.setAdapter(adapter);
@@ -95,6 +102,12 @@ public class CommentBrowseActivity extends Activity {
 		ElasticSearchOperations.searchReplies(repliesList,
 				CommentBrowseActivity.this, toplevel.getID());
 
+	}
+	
+	public void likeIncrement(View v) {
+		toplevel.setLikes(toplevel.getLikes() + 1);
+		((Button) v).setText("Like: " + toplevel.getLikes());
+		ElasticSearchOperations.pushComment(toplevel, 3);
 	}
 
 	/**
@@ -104,6 +117,7 @@ public class CommentBrowseActivity extends Activity {
 		super.onPause();
 		favourites.updateBrowse(repliesList.getList());
 	}
+
 	private void setupActionBar() {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -139,14 +153,17 @@ public class CommentBrowseActivity extends Activity {
 								+ "UserName", Toast.LENGTH_LONG).show();
 			} else
 				creatNewComment();
-			
+
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	//Thinking in use this method when the comment is create so the user do to have to wait till the geocoder find the location.
+	// Thinking in use this method when the comment is create so the user do to
+	// have to wait till the geocoder find the location.
 	/**
-	 * this method use the latitude and longitude of the comment to determine the city, and country using geocoder.
+	 * this method use the latitude and longitude of the comment to determine
+	 * the city, and country using geocoder.
+	 * 
 	 * @param location
 	 * @return
 	 */
@@ -163,20 +180,21 @@ public class CommentBrowseActivity extends Activity {
 			if (Geocoder.isPresent()) {
 				Toast.makeText(getApplicationContext(), "geocoder present",
 						Toast.LENGTH_SHORT).show();
-				try{
-				Address returnAddress = addresses.get(0);
+				try {
+					Address returnAddress = addresses.get(0);
 
-				String localityString = returnAddress.getLocality();
-				String city = returnAddress.getCountryName();
+					String localityString = returnAddress.getLocality();
+					String city = returnAddress.getCountryName();
 
-				local.append(localityString + ", ");
-				local.append(city + ".");
-				}catch(IndexOutOfBoundsException e)
-				{
-					Toast.makeText(this, "Error in Location", Toast.LENGTH_SHORT).show();
+					local.append(localityString + ", ");
+					local.append(city + ".");
+				} catch (IndexOutOfBoundsException e) {
+					Toast.makeText(this, "Error in Location",
+							Toast.LENGTH_SHORT).show();
 				}
-//				Toast.makeText(getApplicationContext(), zipcode, Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getApplicationContext(), zipcode,
+				// Toast.LENGTH_SHORT)
+				// .show();
 
 			} else {
 				Toast.makeText(getApplicationContext(), "geocoder not present",
@@ -194,38 +212,39 @@ public class CommentBrowseActivity extends Activity {
 		}
 		return local;
 	}
-	
+
 	public void creatNewComment() {
 		Intent intent = new Intent(CommentBrowseActivity.this,
 				CreateCommentActivity.class);
-		
-		if(user.getUserName()!=null){
-		Bundle bundle = new Bundle();
-		bundle.putParcelable(Resource.USER_INFO, user);
-//		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
-		bundle.putString("parentID", toplevel.getID());
-		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_REPLY);
-		intent.putExtras(bundle);
-		startActivityForResult(intent, 100);}
-		else 
-			Toast.makeText(this, "Make a username before comment", Toast.LENGTH_SHORT).show();
+
+		if (user.getUserName() != null) {
+			Bundle bundle = new Bundle();
+			bundle.putParcelable(Resource.USER_INFO, user);
+			// bundle.putParcelable(Resource.USER_LOCATION_HISTORY,
+			// locationHistory);
+			bundle.putString("parentID", toplevel.getID());
+			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_REPLY);
+			intent.putExtras(bundle);
+			startActivityForResult(intent, 100);
+		} else
+			Toast.makeText(this, "Make a username before comment",
+					Toast.LENGTH_SHORT).show();
 	}
-	
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-		switch(requestCode)
-		{
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		switch (requestCode) {
 		case 100:
-			if(data!=null){
-			Reply aTopLevel = data.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
-			repliesList.AddTopLevel(aTopLevel, 2);
-			Log.e("Comment ID in MAin", aTopLevel.getID());
-			}
-			else
+			if (data != null) {
+				Reply aTopLevel = data
+						.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
+				repliesList.AddTopLevel(aTopLevel, 2);
+				Log.e("Comment ID in MAin", aTopLevel.getID());
+			} else
 				Log.e("error in acti", "data = null");
 			break;
 		}
-}
+	}
 
 }

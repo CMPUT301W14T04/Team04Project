@@ -3,8 +3,6 @@ package com.example.geocomment;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +16,7 @@ import android.widget.TextView;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.TopLevel;
-import com.example.geocomment.model.User;
 import com.example.geocomment.util.Format;
-import com.example.geocomment.util.Resource;
 
 /**
  * 
@@ -127,17 +123,10 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						Button likes_button = (Button)v;
-						String s = likes_button.getText().toString();
-						int likes_number = Integer.parseInt(s.split(": ")[1]) + 1;
-						likes_button.setText("Likes: " + Integer.toString(likes_number));
-						Log.d("USER", comment_meta.getUser().getUserName());
-						Commentor Comment = new TopLevel(
-								comment_meta.getUser(), comment_meta.getDate(),
-								comment_meta.getaPicture(), comment_meta
-										.getTextComment(), comment_meta
-										.getUser().getUserLocation(),
-								comment_meta.getID(), likes_number);
-						ElasticSearchOperations.pushComment(Comment, 3);
+						int current_likes = comment_meta.getLikes();
+						comment_meta.setLikes(current_likes + 1);
+						likes_button.setText("Likes: " + comment_meta.getLikes());
+						ElasticSearchOperations.pushComment(comment_meta, 3);
 					}
 				});
 			}

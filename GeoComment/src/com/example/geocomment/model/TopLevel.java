@@ -77,6 +77,7 @@ public class TopLevel extends Comment {
 		dest.writeSerializable(timeStamp);
 		dest.writeString(ID);
 		dest.writeSerializable(aLocation);
+		dest.writeInt(likes);
 	}
 
 	/**
