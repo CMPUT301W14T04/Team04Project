@@ -11,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
 
-import com.example.geocomment.model.userProfile;
+import com.example.geocomment.model.UserProfile;
 import com.google.gson.Gson;
 
 public class ElasticSearchOpertationUser {
@@ -22,14 +22,14 @@ public class ElasticSearchOpertationUser {
 
 	private static Gson GSON;
 	
-	public static void pushUserProfile(final userProfile profile) {
+	public static void pushUserProfile(final UserProfile profile) {
 		
 		Thread thread = new Thread() {
 
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL);
+				HttpPost request = new HttpPost(SERVER_URL + profile.getUserID());
 
 				try {
 					request.setEntity(new StringEntity(GSON.toJson(profile)));
@@ -55,6 +55,5 @@ public class ElasticSearchOpertationUser {
 		};
 
 		thread.start();
-		
 	}
 }

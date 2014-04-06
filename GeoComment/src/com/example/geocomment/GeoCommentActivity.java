@@ -157,8 +157,8 @@ public class GeoCommentActivity extends Activity implements
 		// commentListView.setAdapter(adapter);
 		// commentList.setAdapter(adapter);
 		
-
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+		Log.e("elasticSearch", "finish afetr ok");
 		Toast.makeText(this, ""+commentList.getList().size(), Toast.LENGTH_SHORT).show();
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
@@ -235,6 +235,7 @@ public class GeoCommentActivity extends Activity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
+		Log.e("elasticSearch", "finish afetr ok");
 		double[] locations = { location.getLatitude(), location.getLongitude() };
 		// get a json string and check if the null or not
 		// if null create a new user without username.
@@ -264,7 +265,7 @@ public class GeoCommentActivity extends Activity implements
 			cacheSave();
 		}
 		commentList.clear();
-		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+//		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 	}
 
 	/*
@@ -277,13 +278,13 @@ public class GeoCommentActivity extends Activity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
-		/*for(Commentor c: commentList.getList()){
+		for(Commentor c: commentList.getList()){
 			for(Commentor c1: favourites.getFavouriteGeo()){
 				if(c.getID().equals(c1.getID())){
 					c.setFavourite(true);
 				}
 			}
-		}*/
+		}
 	}
 
 	@Override
@@ -301,7 +302,7 @@ public class GeoCommentActivity extends Activity implements
 	}
 
 	/**
-	 * This loads
+	 * This loadss
 	 * 
 	 * @param type
 	 * @return
@@ -334,6 +335,7 @@ public class GeoCommentActivity extends Activity implements
 				Type Type = new TypeToken<ArrayList<TopLevel>>() {
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
+				cacheList.addAll(listFav);
 				//Toast.makeText(this, gson.toJson(listFav), Toast.LENGTH_SHORT).show();
 				/*if(internet.isConnectedToInternet()==false){
 					String favReply=in.readLine();
@@ -396,7 +398,7 @@ public class GeoCommentActivity extends Activity implements
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
-				String fav = gson.toJson(favourites.returnFav()) + "\n";
+				String fav = gson.toJson(favourites.returnFav());
 				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				/*for(Commentor c:commentList.getFavList()){
@@ -497,13 +499,17 @@ public class GeoCommentActivity extends Activity implements
 				commentList.addTopLevelCollection(cacheLoad());
 				adapter = new CommentAdapter(getApplicationContext(),
 						R.layout.comment_row, commentList.getList());
+				Log.e("call", "Date cache");
+				commentListView.setAdapter(adapter);
+				commentList.setAdapter(adapter);
 			}
 			else{
 				adapter = new CommentAdapter(getApplicationContext(),
 						R.layout.comment_row, commentList.getList());
+				commentListView.setAdapter(adapter);
+				commentList.setAdapter(adapter);
 			}
-			commentListView.setAdapter(adapter);
-			commentList.setAdapter(adapter);
+
 			//cacheSave();
 			//cacheLoad();
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
