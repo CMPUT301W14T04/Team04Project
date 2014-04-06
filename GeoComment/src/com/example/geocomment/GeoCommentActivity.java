@@ -270,7 +270,7 @@ public class GeoCommentActivity extends Activity implements
 	protected void onPause() {
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
-		save(Resource.FAVOURITE_SAVE);
+		//save(Resource.FAVOURITE_SAVE);
 		if (internet.isConnectedToInternet() == true) {
 			cacheSave();
 		}
@@ -288,7 +288,7 @@ public class GeoCommentActivity extends Activity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 
-		load(Resource.FAVOURITE_LOAD);
+		//load(Resource.FAVOURITE_LOAD);
 		if(internet.isConnectedToInternet()==false){
 			cacheLoad();
 		}
