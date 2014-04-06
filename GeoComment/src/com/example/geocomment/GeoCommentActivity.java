@@ -295,15 +295,6 @@ public class GeoCommentActivity extends Activity implements
 				}
 			}
 		}*/
-
-		// Toast.makeText(this, gson.toJson(commentList.getList()),
-		// Toast.LENGTH_SHORT).show();
-		/*
-		 * for(Commentor c: commentList.getList()){ for(Commentor c1:
-		 * favourites.getFavouriteGeo()){ if(c.getID().equals(c1.getID())){
-		 * c.setFavourite(true); } } }
-		 */
-
 	}
 
 	@Override
@@ -370,6 +361,7 @@ public class GeoCommentActivity extends Activity implements
 				 * c1.setFavourite(true); } } }
 				 */
 				fis.close();
+				
 				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				favouriteLaunch(listFav);
 			} catch (FileNotFoundException e) {
@@ -418,7 +410,7 @@ public class GeoCommentActivity extends Activity implements
 			try {
 				if(gson==null){
 					constructGson();
-				}
+					}
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
@@ -426,11 +418,7 @@ public class GeoCommentActivity extends Activity implements
 
 				// Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
-				/*
-				 * for(Commentor c:commentList.getFavList()){
-				 * ElasticSearchOperations.searchReplies(replies,
-				 * GeoCommentActivity.this, c.getID()); }
-				 */
+		
 
 				fos.close();
 				if (internet.isConnectedToInternet()==true){
