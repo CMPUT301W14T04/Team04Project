@@ -6,9 +6,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.location.Location;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.util.GPSLocation;
 
 public class TopLevelList {
 
@@ -21,6 +25,8 @@ public class TopLevelList {
 	private List<Commentor> nonPicture;
 	private List<Commentor> dateList;
 	private List<Commentor> likesList;
+	GeoCommentActivity main;
+	GPSLocation gpsLocation;
 
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<Commentor>();
@@ -174,7 +180,64 @@ public class TopLevelList {
 
 	public void updateProxiMe() {
 		// TODO Auto-generated method stub
+		Collections.sort(topLevelList, new Comparator<Commentor>() {
+			public int compare(Commentor comment1, Commentor comment2) {
+				Location currentLocation = gpsLocation.getLocation();
 
+				Location location1 = new Location("Location");
+				location1.setLatitude(comment1.getaLocation()[1]);
+				location1.setLongitude(comment1.getaLocation()[0]);
+
+				Location location2 = new Location("Location");
+				location2.setLatitude(comment2.getaLocation()[1]);
+				location2.setLongitude(comment2.getaLocation()[0]);
+
+				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
+				if(difference < 0)
+					difference = Math.floor(difference);
+				else if(difference > 0)
+					difference = Math.ceil(difference);
+				return (int) difference;
+			}
+		});
+		for (Commentor c: topLevelList) {
+			if (!proxiMe.contains(c)) {
+				proxiMe.add(c);
+			}
+		}
+		this.adapter.notifyDataSetChanged();
+	}
+
+	public void updateProxiLoc() {
+		// TODO Auto-generated method stub
+		Collections.sort(topLevelList, new Comparator<Commentor>() {
+			public int compare(Commentor comment1, Commentor comment2) {
+				Location currentLocation = new Location("Location");
+				currentLocation.setLatitude(main.modifiedLocation[1]);
+				currentLocation.setLongitude(main.modifiedLocation[0]);
+
+				Location location1 = new Location("Location");
+				location1.setLatitude(comment1.getaLocation()[1]);
+				location1.setLongitude(comment1.getaLocation()[0]);
+
+				Location location2 = new Location("Location");
+				location2.setLatitude(comment2.getaLocation()[1]);
+				location2.setLongitude(comment2.getaLocation()[0]);
+
+				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
+				if(difference < 0)
+					difference = Math.floor(difference);
+				else if(difference > 0)
+					difference = Math.ceil(difference);
+				return (int) difference;
+			}
+		});
+		for (Commentor c: topLevelList) {
+			if (!proxiLoc.contains(c)) {
+				proxiLoc.add(c);
+			}
+		}
+		this.adapter.notifyDataSetChanged();
 	}
 
 	

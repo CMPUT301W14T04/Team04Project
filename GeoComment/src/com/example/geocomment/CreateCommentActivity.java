@@ -2,7 +2,6 @@ package com.example.geocomment;
 
 import java.util.Calendar;
 
-import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.model.Commentor;
@@ -273,6 +271,7 @@ public class CreateCommentActivity extends Activity {
 
 		alertDialogBuilder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
