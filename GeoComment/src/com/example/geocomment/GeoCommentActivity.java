@@ -61,12 +61,8 @@ import com.google.gson.reflect.TypeToken;
  */
 
 public class GeoCommentActivity extends Activity implements
-<<<<<<< HEAD
 		OnItemClickListener, OnItemSelectedListener {
-=======
-OnItemClickListener, OnItemSelectedListener {
 
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 	Gson gson;
 	Internet internet;
 	GPSLocation location;
@@ -116,12 +112,6 @@ OnItemClickListener, OnItemSelectedListener {
 			Type Type = new TypeToken<ArrayList<TopLevel>>() {
 			}.getType();
 			List<Commentor> listFav = gson.fromJson(readCache, Type);
-<<<<<<< HEAD
-=======
-			// for (int i=0;i<listFav.size();i++){
-			// cacheList.add(listFav.get(i));
-			// }
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 			fis.close();
 			return listFav;
 		} catch (FileNotFoundException e) {
@@ -177,21 +167,7 @@ OnItemClickListener, OnItemSelectedListener {
 				Toast.LENGTH_SHORT).show();
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
-		commentListView
-<<<<<<< HEAD
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-					@Override
-					public boolean onItemLongClick(AdapterView<?> arg0,
-							View arg1, int arg2, long arg3) {
-						// TODO Auto-generated method stub
-						return false;
-					}
-
-				});
-	
-=======
-		.setOnItemLongClickListener(new OnItemLongClickListener() {
+		commentListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0,
@@ -213,7 +189,6 @@ OnItemClickListener, OnItemSelectedListener {
 		 * Toast.makeText(this, commentList.getList().toString(),
 		 * Toast.LENGTH_SHORT).show(); cacheSave(); cacheLoad();
 		 */
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 	}
 
 	@Override
@@ -307,8 +282,11 @@ OnItemClickListener, OnItemSelectedListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-<<<<<<< HEAD
+
 		load(Resource.FAVOURITE_LOAD);
+		if(internet.isConnectedToInternet()==false){
+			cacheLoad();
+		}
 		//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
 		/*for(Commentor c: commentList.getList()){
 			for(Commentor c1: favourites.getFavouriteGeo()){
@@ -317,7 +295,7 @@ OnItemClickListener, OnItemSelectedListener {
 				}
 			}
 		}*/
-=======
+
 		// Toast.makeText(this, gson.toJson(commentList.getList()),
 		// Toast.LENGTH_SHORT).show();
 		/*
@@ -325,7 +303,7 @@ OnItemClickListener, OnItemSelectedListener {
 		 * favourites.getFavouriteGeo()){ if(c.getID().equals(c1.getID())){
 		 * c.setFavourite(true); } } }
 		 */
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
+
 	}
 
 	@Override
@@ -377,8 +355,7 @@ OnItemClickListener, OnItemSelectedListener {
 				Type Type = new TypeToken<ArrayList<TopLevel>>() {
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
-<<<<<<< HEAD
-=======
+
 				// Toast.makeText(this, gson.toJson(listFav),
 				// Toast.LENGTH_SHORT).show();
 				/*
@@ -392,7 +369,6 @@ OnItemClickListener, OnItemSelectedListener {
 				 * c1:commentList.getList()){ if (c1.getID().equals(c.getID())){
 				 * c1.setFavourite(true); } } }
 				 */
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 				fis.close();
 				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				favouriteLaunch(listFav);
@@ -438,24 +414,16 @@ OnItemClickListener, OnItemSelectedListener {
 			break;
 		case Resource.FAVOURITE_SAVE:
 			favourites.updateGeo(commentList.getList());
-<<<<<<< HEAD
 			this.deleteFile(Resource.FAVOURITE_FILE);
 			try {
 				if(gson==null){
 					constructGson();
 				}
-=======
-			;
-			try {
-				// TopLevelList replies=new TopLevelList();
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
 				String fav = gson.toJson(favourites.returnFav()) + "\n";
-<<<<<<< HEAD
-				fos.write(fav.getBytes());
-=======
+
 				// Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 				/*
@@ -463,7 +431,7 @@ OnItemClickListener, OnItemSelectedListener {
 				 * ElasticSearchOperations.searchReplies(replies,
 				 * GeoCommentActivity.this, c.getID()); }
 				 */
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
+
 				fos.close();
 				if (internet.isConnectedToInternet()==true){
 					ArrayList<Commentor> replies=new ArrayList<Commentor>();

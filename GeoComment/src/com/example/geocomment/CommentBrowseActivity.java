@@ -276,7 +276,6 @@ public class CommentBrowseActivity extends Activity {
 				Log.e("error in acti", "data = null");
 			break;
 		}
-<<<<<<< HEAD
 }
 	private void load(){
 		FileInputStream fis;
@@ -302,8 +301,6 @@ public class CommentBrowseActivity extends Activity {
 	
 	private void savedReplies(List<Reply> list){
 	//TO DO MAKE THIS BADBOY
-=======
->>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 	}
 
 }
