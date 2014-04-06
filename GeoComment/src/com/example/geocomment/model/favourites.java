@@ -18,7 +18,8 @@ public class favourites {
 		favouriteGeo.clear();
 		for(Commentor c: commentList){
 			if(c.isFavourite()==true){
-				favouriteGeo.add(c);
+				if(!favouriteGeo.contains(c));
+					favouriteGeo.add(c);
 			}
 		}
 	}
@@ -44,7 +45,10 @@ public class favourites {
 		return favourites;
 	}
 	
-	
+	public static void load(List<Commentor> list){
+		favouriteBrowse.addAll(list);
+	}
+
 	public static List<Commentor> getFavouriteGeo() {
 		return favouriteGeo;
 	}

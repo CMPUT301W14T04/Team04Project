@@ -51,6 +51,7 @@ public class CreateCommentActivity extends Activity {
 	double[] locationComment;
 
 	int type;
+	int likes = 0;
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
@@ -192,7 +193,7 @@ public class CreateCommentActivity extends Activity {
 						Toast.LENGTH_LONG).show();
 			} else {
 				Comment = new TopLevel(user, timeStamp, photo, text, location,
-						ID);
+						ID, likes);
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
 				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT,
@@ -217,7 +218,7 @@ public class CreateCommentActivity extends Activity {
 			} else {
 
 				Comment = new Reply(user, timeStamp, photo, text, location,
-						parentID, ID);
+						parentID, ID, likes);
 
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();

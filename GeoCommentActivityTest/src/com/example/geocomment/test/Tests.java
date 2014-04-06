@@ -12,6 +12,7 @@ import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
 import com.example.geocomment.util.GPSLocation;
 import com.example.geocomment.util.Internet;
+import com.example.geocomment.model.favourites;
 
 import android.app.Activity;
 import android.location.Location;
@@ -46,7 +47,7 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 		comment=new TopLevel(null, null, null, "hi", null, null);
 		comment1= new TopLevel(user,null,null,null,null, null);
 		comment2= new TopLevel(null,timeStamp,null,null,null,null);
-		comment3=new TopLevel(user, timeStamp, null, "hi", null, null);
+		comment3= new TopLevel(user, timeStamp, null, "hi", null, null);
 		comment4= new TopLevel(user,timeStamp,null,"chuck",null, null);
 		comment5= new TopLevel(user,timeStamp,null,"duck",null,null);
 		comment6= new TopLevel(user,timeStamp,null,"truck",null,null);
@@ -94,10 +95,10 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 	public void testTopLevelList(){
 		//this.adapter.notifyDataSetChanged(); THIS LINE IN TOPLEVEL CAUSES
 		//TEST TO FAIL CREATES A NULL POINTER EXCEPTION
-		commentList.AddTopLevel(comment3);
-		commentList.AddTopLevel(comment4);
-		commentList.AddTopLevel(comment5);
-		commentList.AddTopLevel(comment6);
+		commentList.AddTopLevel(comment3,1);
+		commentList.AddTopLevel(comment4,1);
+		commentList.AddTopLevel(comment5,1);
+		commentList.AddTopLevel(comment6,1);
 		list=commentList.getList();
 		assertEquals(list.get(3),comment3);
 		assertEquals(list.get(2),comment4);
@@ -109,6 +110,24 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 		list=commentList.getList();
 		assertEquals(0,list.size());
 		}
+	public void testFavourites(){
+		comment1.setFavourite(true);//CHECK FOR THIS IN THE TEST
+		assertEquals(true,comment1.isFavourite());
+		ArrayList<Commentor> test = new ArrayList<Commentor>();
+		test.add(comment1);
+		test.add(comment2);
+		test.add(comment3);
+		test.add(comment4);
+		test.add(comment5);
+		test.add(comment6);
+		for(int i=5;i>=3;i++){
+			test.get(i).setFavourite(true);
+		}
+		favourites.updateGeo(test);
+		assertEquals(favourites.getFavouriteGeo().get(0),comment);
+		assertEquals(favourites.getFavouriteGeo().get(1),comment);
+		assertEquals(favourites.getFavouriteGeo().get(2),comment);
+	}
 	
 	
 	

@@ -14,6 +14,7 @@ public class Resource {
 	public final static String GENERAL_INFO = "info.json";
 	public final static String LIST_STORE = "list.json";
 	public final static String CACHE_STORE = "cache.json";
+	public final static String FAVOURITE_REPLIES = "replies.json";
 
 	
 	
@@ -35,6 +36,7 @@ public class Resource {
 	
 	//getting resquest code from activities
 	public final static int RESQUEST_NEW_TOP_LEVEL = 20;
+	public final static int COMMENT_EDITED = 21;
 
 	
 	

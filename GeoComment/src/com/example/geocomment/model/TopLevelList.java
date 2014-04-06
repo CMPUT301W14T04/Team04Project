@@ -20,6 +20,7 @@ public class TopLevelList {
 	private List<Commentor> proxiLoc;
 	private List<Commentor> nonPicture;
 	private List<Commentor> dateList;
+	private List<Commentor> likesList;
 
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<Commentor>();
@@ -29,6 +30,7 @@ public class TopLevelList {
 		this.proxiMe = new ArrayList<Commentor>();
 		this.proxiLoc = new ArrayList<Commentor>();
 		this.dateList = new ArrayList<Commentor>();
+		this.likesList = new ArrayList<Commentor>();
 	}
 
 	/**
@@ -72,6 +74,9 @@ public class TopLevelList {
 	/**
 	 * clear top level comment collection
 	 */
+	public void addOne(Commentor c){
+		topLevelList.add(c);
+	}
 	public void clear() {
 		this.topLevelList.clear();
 		if (adapter != null){
@@ -134,7 +139,6 @@ public class TopLevelList {
 		}
 		this.adapter.notifyDataSetChanged();
 	}
-
 	
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
