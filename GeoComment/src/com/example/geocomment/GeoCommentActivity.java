@@ -61,8 +61,8 @@ import com.google.gson.reflect.TypeToken;
  */
 
 public class GeoCommentActivity extends Activity implements
-		OnItemClickListener, OnItemSelectedListener {
-	
+OnItemClickListener, OnItemSelectedListener {
+
 	Gson gson;
 	Internet internet;
 	GPSLocation location;
@@ -140,7 +140,7 @@ public class GeoCommentActivity extends Activity implements
 				.createFromResource(this, R.array.sorting_array,
 						android.R.layout.simple_spinner_item);
 		spinner_adapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sortList.setAdapter(spinner_adapter);
 		commentListView = (ListView) findViewById(R.id.commentListView);
 
@@ -150,7 +150,7 @@ public class GeoCommentActivity extends Activity implements
 		internet = new Internet(GeoCommentActivity.this);
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder
-				.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 
 		gson = gsonBuilder.create();
 
@@ -165,16 +165,16 @@ public class GeoCommentActivity extends Activity implements
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
 		commentListView
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
+		.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-					@Override
-					public boolean onItemLongClick(AdapterView<?> arg0,
-							View arg1, int arg2, long arg3) {
-						// TODO Auto-generated method stub
-						return false;
-					}
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0,
+					View arg1, int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				return false;
+			}
 
-				});
+		});
 		/*
 		 * if (internet.isConnectedToInternet()==false){ cacheLoad();
 		 * Toast.makeText(this,
@@ -499,7 +499,7 @@ public class GeoCommentActivity extends Activity implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		if (parent.getItemAtPosition(pos).equals("Date")) {
+		if (parent.getItemAtPosition(pos).equals("Home")) {
 			// commentList.updateDate();
 			if (internet.isConnectedToInternet() == false) {
 				Toast.makeText(this, "No internet from last visit",
@@ -522,15 +522,22 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, favourites.returnFav());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			/*
-			 * } else if (parent.getItemAtPosition(pos).equals("Date")) {
-			 * commentList.updateDate();
-			 * 
-			 * adapter = new CommentAdapter(getApplicationContext(),
-			 * R.layout.comment_row, commentList.getDateList());
-			 * commentListView.setAdapter(adapter);
-			 * commentList.setAdapter(adapter); save(Resource.FAVOURITE_SAVE);
-			 */
+
+		} else if (parent.getItemAtPosition(pos).equals("Date")) {
+			if (internet.isConnectedToInternet() == false) {
+				Toast.makeText(this, "No internet from last visit",
+						Toast.LENGTH_LONG).show();
+				commentList.clear();
+				commentList.addTopLevelCollection(cacheLoad());
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+			} else {
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+			}
+			commentListView.setAdapter(adapter);
+			commentList.setAdapter(adapter);
+
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 
@@ -585,7 +592,7 @@ public class GeoCommentActivity extends Activity implements
 					EditCommentActivity.class);
 			intent.putExtra("comment", new Gson().toJson(topLevel));
 			// THIS END//
-			
+
 			// COMMENTED CODE BELOW CAN BE DELETED BEGIN //
 			//Log.d("comment", new Gson().toJson(topLevel));
 			/*String text = ((TextView) info.targetView
@@ -613,7 +620,7 @@ public class GeoCommentActivity extends Activity implements
 			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
 			intent.putExtras(bundle);*/
 			// COMMENTED CODE BELOW CAN BE DELETED ENDS//
-			
+
 			String user_name = ((TextView) info.targetView
 					.findViewById(R.id.tvtitle)).getText().toString();
 			if (user_name.equals(user.getUserName())) {
@@ -650,7 +657,7 @@ public class GeoCommentActivity extends Activity implements
 
 	private void viewProfile(String aUser) {
 		Toast.makeText(getApplicationContext(), "LOL", Toast.LENGTH_SHORT)
-				.show();
+		.show();
 	}
 
 }
