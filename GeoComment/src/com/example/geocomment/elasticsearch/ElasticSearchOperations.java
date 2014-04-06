@@ -40,7 +40,7 @@ public class ElasticSearchOperations {
 	/**
 	 * Define the sever URL
 	 */
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments6/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments7/";
 	public static final String SERVER_URL_REPLY = "http://cmput301.softwareprocess.es:8080/testing/team04_replie1/";
 	// for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
@@ -257,7 +257,7 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 
-	public static void searchReplies1(final ArrayList<Commentor> model,
+/*	public static void searchReplies1(final ArrayList<Commentor> model,
 			final GeoCommentActivity activity, final String ID) {
 
 		if (GSON == null)
@@ -322,7 +322,7 @@ public class ElasticSearchOperations {
 			}
 		};
 		thread.start();
-	}
+	}*/
 	
 	/**
 	 * 
