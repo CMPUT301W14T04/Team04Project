@@ -9,7 +9,7 @@
     <string name="new_picture">New Picture</string>
 
     <string-array name="sorting_array">
-        <!-- <item>Home</item> -->
+        <item>Home</item>
         <item>Date</item>
         <item>Picture</item>
         <!--

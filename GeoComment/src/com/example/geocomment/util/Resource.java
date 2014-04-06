@@ -36,6 +36,7 @@ public class Resource {
 	
 	//getting resquest code from activities
 	public final static int RESQUEST_NEW_TOP_LEVEL = 20;
+	public final static int COMMENT_EDITED = 21;
 
 	
 	

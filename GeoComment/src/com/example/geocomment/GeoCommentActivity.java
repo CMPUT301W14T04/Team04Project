@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -29,6 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +39,6 @@ import android.widget.Toast;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.LocationList;
-import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
@@ -60,7 +61,12 @@ import com.google.gson.reflect.TypeToken;
  */
 
 public class GeoCommentActivity extends Activity implements
+<<<<<<< HEAD
 		OnItemClickListener, OnItemSelectedListener {
+=======
+OnItemClickListener, OnItemSelectedListener {
+
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 	Gson gson;
 	Internet internet;
 	GPSLocation location;
@@ -74,21 +80,20 @@ public class GeoCommentActivity extends Activity implements
 	Spinner sortList;
 	ListView commentListView;
 	ArrayList<Commentor> cacheList;
-	
-	
+
 	private void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		gson = builder.create();
 	}
-	
+
 	public void cacheSave() {
 		this.deleteFile(Resource.CACHE_STORE);
 		File folder = getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
 		FileOutputStream fos;
 		try {
-			if(gson==null)
+			if (gson == null)
 				constructGson();
 			fos = new FileOutputStream(cache);
 			String string = gson.toJson(commentList.getList()) + "\n";
@@ -111,6 +116,12 @@ public class GeoCommentActivity extends Activity implements
 			Type Type = new TypeToken<ArrayList<TopLevel>>() {
 			}.getType();
 			List<Commentor> listFav = gson.fromJson(readCache, Type);
+<<<<<<< HEAD
+=======
+			// for (int i=0;i<listFav.size();i++){
+			// cacheList.add(listFav.get(i));
+			// }
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 			fis.close();
 			return listFav;
 		} catch (FileNotFoundException e) {
@@ -134,7 +145,7 @@ public class GeoCommentActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		cacheList=new ArrayList<Commentor>();
+		cacheList = new ArrayList<Commentor>();
 		// initialization variables
 		sortList = (Spinner) findViewById(R.id.sortList);
 		sortList.setOnItemSelectedListener(this);
@@ -142,7 +153,7 @@ public class GeoCommentActivity extends Activity implements
 				.createFromResource(this, R.array.sorting_array,
 						android.R.layout.simple_spinner_item);
 		spinner_adapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sortList.setAdapter(spinner_adapter);
 		commentListView = (ListView) findViewById(R.id.commentListView);
 
@@ -151,22 +162,23 @@ public class GeoCommentActivity extends Activity implements
 		location = new GPSLocation(GeoCommentActivity.this);
 		internet = new Internet(GeoCommentActivity.this);
 		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
-		
+		gsonBuilder
+		.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 
 		gson = gsonBuilder.create();
-		
+
 		userPre = new UserPreference();
 
 		// commentListView.setAdapter(adapter);
 		// commentList.setAdapter(adapter);
-		
 
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
-		Toast.makeText(this, ""+commentList.getList().size(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "" + commentList.getList().size(),
+				Toast.LENGTH_SHORT).show();
 		commentListView.setOnItemClickListener(this);
 		registerForContextMenu(commentListView);
 		commentListView
+<<<<<<< HEAD
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 					@Override
@@ -178,6 +190,30 @@ public class GeoCommentActivity extends Activity implements
 
 				});
 	
+=======
+		.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0,
+					View arg1, int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+		});
+		/*
+		 * if (internet.isConnectedToInternet()==false){ cacheLoad();
+		 * Toast.makeText(this,
+		 * gson.toJson(cacheLoad()),Toast.LENGTH_SHORT).show(); }
+		 */
+		load(Resource.FAVOURITE_LOAD);
+		// Toast.makeText(this,
+		// gson.toJson(cacheList),Toast.LENGTH_SHORT).show();
+		/*
+		 * Toast.makeText(this, commentList.getList().toString(),
+		 * Toast.LENGTH_SHORT).show(); cacheSave(); cacheLoad();
+		 */
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 	}
 
 	@Override
@@ -255,7 +291,7 @@ public class GeoCommentActivity extends Activity implements
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
 		save(Resource.FAVOURITE_SAVE);
-		if(internet.isConnectedToInternet()==true){
+		if (internet.isConnectedToInternet() == true) {
 			cacheSave();
 		}
 		commentList.clear();
@@ -271,6 +307,7 @@ public class GeoCommentActivity extends Activity implements
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+<<<<<<< HEAD
 		load(Resource.FAVOURITE_LOAD);
 		//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
 		/*for(Commentor c: commentList.getList()){
@@ -280,6 +317,15 @@ public class GeoCommentActivity extends Activity implements
 				}
 			}
 		}*/
+=======
+		// Toast.makeText(this, gson.toJson(commentList.getList()),
+		// Toast.LENGTH_SHORT).show();
+		/*
+		 * for(Commentor c: commentList.getList()){ for(Commentor c1:
+		 * favourites.getFavouriteGeo()){ if(c.getID().equals(c1.getID())){
+		 * c.setFavourite(true); } } }
+		 */
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 	}
 
 	@Override
@@ -287,7 +333,7 @@ public class GeoCommentActivity extends Activity implements
 			long id) {
 
 		Commentor topLevel = commentList.getComment(position);
-		Intent intent = new Intent(this, CommentBrowseActivity.class);
+		Intent intent = new Intent(getApplicationContext(), CommentBrowseActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putParcelable("test", (TopLevel) topLevel);
 		bundle.putParcelable("user", user);
@@ -322,7 +368,8 @@ public class GeoCommentActivity extends Activity implements
 			return userInfo;
 		case Resource.FAVOURITE_LOAD:
 			try {
-				//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
+				// Toast.makeText(this, gson.toJson(commentList.getList()),
+				// Toast.LENGTH_SHORT).show();
 				fis = openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						fis));
@@ -330,6 +377,22 @@ public class GeoCommentActivity extends Activity implements
 				Type Type = new TypeToken<ArrayList<TopLevel>>() {
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
+<<<<<<< HEAD
+=======
+				// Toast.makeText(this, gson.toJson(listFav),
+				// Toast.LENGTH_SHORT).show();
+				/*
+				 * if(internet.isConnectedToInternet()==false){ String
+				 * favReply=in.readLine(); Type Reply = new
+				 * TypeToken<ArrayList<Reply>>() { }.getType(); List<Commentor>
+				 * favReplies=gson.fromJson(favReply, Reply); }
+				 */
+				/*
+				 * for (Commentor c : listFav) { for (Commentor
+				 * c1:commentList.getList()){ if (c1.getID().equals(c.getID())){
+				 * c1.setFavourite(true); } } }
+				 */
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 				fis.close();
 				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				favouriteLaunch(listFav);
@@ -375,16 +438,32 @@ public class GeoCommentActivity extends Activity implements
 			break;
 		case Resource.FAVOURITE_SAVE:
 			favourites.updateGeo(commentList.getList());
+<<<<<<< HEAD
 			this.deleteFile(Resource.FAVOURITE_FILE);
 			try {
 				if(gson==null){
 					constructGson();
 				}
+=======
+			;
+			try {
+				// TopLevelList replies=new TopLevelList();
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
 				String fav = gson.toJson(favourites.returnFav()) + "\n";
+<<<<<<< HEAD
 				fos.write(fav.getBytes());
+=======
+				// Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
+				fos.write(fav.getBytes());
+				/*
+				 * for(Commentor c:commentList.getFavList()){
+				 * ElasticSearchOperations.searchReplies(replies,
+				 * GeoCommentActivity.this, c.getID()); }
+				 */
+>>>>>>> 093d20a23b8bf5749e0a4163ef540239914b89c5
 				fos.close();
 				if (internet.isConnectedToInternet()==true){
 					ArrayList<Commentor> replies=new ArrayList<Commentor>();
@@ -436,7 +515,7 @@ public class GeoCommentActivity extends Activity implements
 		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
 		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
 		intent.putExtras(bundle);
-		startActivityForResult(intent, Resource.RESQUEST_NEW_TOP_LEVEL);
+		startActivityForResult(intent, Resource.COMMENT_EDITED);
 	}
 
 	/**
@@ -457,10 +536,9 @@ public class GeoCommentActivity extends Activity implements
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+		Log.d("REQUEST CODE", Integer.toString(requestCode));
 		switch (requestCode) {
 		case Resource.RESQUEST_NEW_TOP_LEVEL:
-
 			if (data != null) {
 				TopLevel aTopLevel = data
 						.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
@@ -469,6 +547,12 @@ public class GeoCommentActivity extends Activity implements
 			} else
 				Log.e("error in acti", "data = null");
 			break;
+		case Resource.COMMENT_EDITED:
+			Log.d("INSIDE COMMENT EDIT", "INSIDE COMMENT EDIT");
+			commentList.clear();
+			//commentList = new TopLevelList();
+			ElasticSearchOperations.searchALL(commentList,
+					GeoCommentActivity.this);
 		case 90:
 			if (data != null) {
 				String name = data.getStringExtra("setUsername");
@@ -486,37 +570,45 @@ public class GeoCommentActivity extends Activity implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		if (parent.getItemAtPosition(pos).equals("Date")) {
+		if (parent.getItemAtPosition(pos).equals("Home")) {
 			// commentList.updateDate();
-			if(internet.isConnectedToInternet()==false){
-				Toast.makeText(this, "No internet from last visit", Toast.LENGTH_LONG).show(); 
+			if (internet.isConnectedToInternet() == false) {
+				Toast.makeText(this, "No internet from last visit",
+						Toast.LENGTH_LONG).show();
 				commentList.clear();
 				commentList.addTopLevelCollection(cacheLoad());
 				adapter = new CommentAdapter(getApplicationContext(),
 						R.layout.comment_row, commentList.getList());
-			}
-			else{
+			} else {
 				adapter = new CommentAdapter(getApplicationContext(),
 						R.layout.comment_row, commentList.getList());
 			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			//cacheSave();
-			//cacheLoad();
+			// cacheSave();
+			// cacheLoad();
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
 			favourites.updateGeo(commentList.getList());
 			adapter = new CommentAdapter(getApplicationContext(),
-					R.layout.comment_row,favourites.returnFav());
+					R.layout.comment_row, favourites.returnFav());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-		/*} else if (parent.getItemAtPosition(pos).equals("Date")) {
-			commentList.updateDate();
 
-			adapter = new CommentAdapter(getApplicationContext(),
-					R.layout.comment_row, commentList.getDateList());
+		} else if (parent.getItemAtPosition(pos).equals("Date")) {
+			if (internet.isConnectedToInternet() == false) {
+				Toast.makeText(this, "No internet from last visit",
+						Toast.LENGTH_LONG).show();
+				commentList.clear();
+				commentList.addTopLevelCollection(cacheLoad());
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+			} else {
+				adapter = new CommentAdapter(getApplicationContext(),
+						R.layout.comment_row, commentList.getList());
+			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			save(Resource.FAVOURITE_SAVE);*/
+
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 
@@ -563,28 +655,47 @@ public class GeoCommentActivity extends Activity implements
 				.getMenuInfo();
 		switch (item.getItemId()) {
 		case R.id.edit:
-			// info.targetView.
-			String text = ((TextView) info.targetView
+			//THIS BEGIN//
+			//EDIT COMMENT CAN BE OPTIMIZED AND BY DE-SERIALIZING THE EXTRA BELOW//
+			//AND USING IT THROUGHOUT FROM ITS ACCESSOR METHODS//
+			Commentor topLevel = commentList.getComment(info.position);
+			Intent intent = new Intent(GeoCommentActivity.this,
+					EditCommentActivity.class);
+			intent.putExtra("comment", new Gson().toJson(topLevel));
+			// THIS END//
+
+			// COMMENTED CODE BELOW CAN BE DELETED BEGIN //
+			//Log.d("comment", new Gson().toJson(topLevel));
+			/*String text = ((TextView) info.targetView
 					.findViewById(R.id.comment)).getText().toString();
 			String id = ((TextView) info.targetView
 					.findViewById(R.id.commentId)).getText().toString();
 			String user_name = ((TextView) info.targetView
 					.findViewById(R.id.tvtitle)).getText().toString();
+			int likes = Integer.parseInt(((TextView) info.targetView
+					.findViewById(R.id.likes_button)).getText().toString()
+					.split(": ")[1]);
+			Bitmap photo = ((BitmapDrawable) ((ImageView) info.targetView
+					.findViewById(R.id.pic_image_view)).getDrawable())
+					.getBitmap();
 			Intent intent = new Intent(GeoCommentActivity.this,
 					EditCommentActivity.class);
 			intent.putExtra("commentId", id);
 			intent.putExtra("text", text);
-			intent.putExtra("user_name", user_name);
+			intent.putExtra("likes", likes);
 			Bundle bundle = new Bundle();
 			bundle.putParcelable(Resource.USER_INFO, user);
 			bundle.putParcelable(Resource.USER_LOCATION_HISTORY,
 					locationHistory);
+			bundle.putParcelable("photo", photo);
 			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
-			intent.putExtras(bundle);
-			Log.d("User Name", user.getUserName());
-			Log.d("user_name", user_name);
+			intent.putExtras(bundle);*/
+			// COMMENTED CODE BELOW CAN BE DELETED ENDS//
+
+			String user_name = ((TextView) info.targetView
+					.findViewById(R.id.tvtitle)).getText().toString();
 			if (user_name.equals(user.getUserName())) {
-				startActivityForResult(intent, Resource.RESQUEST_NEW_TOP_LEVEL);
+				startActivityForResult(intent, Resource.COMMENT_EDITED);
 			} else {
 				Toast.makeText(getApplicationContext(),
 						"You don't have permission to edit this comment!",
@@ -594,9 +705,10 @@ public class GeoCommentActivity extends Activity implements
 		case R.id.viewProfile:
 			int i = info.position;
 			List<Commentor> list = commentList.getList();
-			String userID =list.get(i).getUserID();
-//			Log.e("userID", userID);
-//			Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_SHORT).show();
+			String userID = list.get(i).getUserID();
+			// Log.e("userID", userID);
+			// Toast.makeText(getApplicationContext(), userID,
+			// Toast.LENGTH_SHORT).show();
 			viewProfile(userID);
 		default:
 			return super.onContextItemSelected(item);
@@ -613,11 +725,10 @@ public class GeoCommentActivity extends Activity implements
 			inflater.inflate(R.menu.comment_menu, menu);
 		}
 	}
-	
-	private void viewProfile(String aUser)
-	{
-		Toast.makeText(getApplicationContext(), "LOL", Toast.LENGTH_SHORT).show();
+
+	private void viewProfile(String aUser) {
+		Toast.makeText(getApplicationContext(), "LOL", Toast.LENGTH_SHORT)
+		.show();
 	}
-	
 
 }

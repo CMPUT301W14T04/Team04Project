@@ -22,10 +22,10 @@ public class Reply extends Comment {
 	 */
 
 	public Reply(User aUser, Calendar timeStamp, Bitmap aPicture,
-			String textComment, double[] aLocation, String parentID , String ID)
+			String textComment, double[] aLocation, String parentID , String ID, int likes)
 	{
 
-		super(aUser, timeStamp, aPicture, textComment, aLocation,ID);
+		super(aUser, timeStamp, aPicture, textComment, aLocation,ID, likes);
 		this.parentID=parentID;
 		this.ID =ID;
 	}
@@ -39,6 +39,7 @@ public class Reply extends Comment {
 		this.aUser = null;
 		this.timeStamp = null;
 		this.parentID=null;
+		this.likes = 0;
 	}
 
 
@@ -57,6 +58,7 @@ public class Reply extends Comment {
 		timeStamp = (Calendar) source.readSerializable();
 		parentID = source.readString();
 		ID = source.readString();
+		likes = source.readInt();
 	}
 	
 	@Override
@@ -84,6 +86,7 @@ public class Reply extends Comment {
 		dest.writeSerializable(timeStamp);
 		dest.writeString(parentID);
 		dest.writeString(ID);
+		dest.writeInt(likes);
 	}
 
 	/**

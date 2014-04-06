@@ -54,5 +54,12 @@ public interface Commentor {
 	public boolean isFavourite();
 	
 	public void setFavourite(boolean favourite);
-
+	
+	public int getLikes();
+	
+	public void setLikes(int likes);
+	
+	public User getUser();
+	
+	public void setUser(User aUser);
 }
