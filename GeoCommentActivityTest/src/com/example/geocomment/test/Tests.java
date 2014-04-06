@@ -44,13 +44,13 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 	public Tests() {
 		super(GeoCommentActivity.class);
 	
-		comment=new TopLevel(null, null, null, "hi", null, null);
-		comment1= new TopLevel(user,null,null,null,null, null);
-		comment2= new TopLevel(null,timeStamp,null,null,null,null);
-		comment3= new TopLevel(user, timeStamp, null, "hi", null, null);
-		comment4= new TopLevel(user,timeStamp,null,"chuck",null, null);
-		comment5= new TopLevel(user,timeStamp,null,"duck",null,null);
-		comment6= new TopLevel(user,timeStamp,null,"truck",null,null);
+		comment=new TopLevel(null, null, null, "hi", null, null, 0);
+		comment1= new TopLevel(user,null,null,null,null, null, 0);
+		comment2= new TopLevel(null,timeStamp,null,null,null,null, 0);
+		comment3= new TopLevel(user, timeStamp, null, "hi", null, null, 0);
+		comment4= new TopLevel(user,timeStamp,null,"chuck",null, null, 0);
+		comment5= new TopLevel(user,timeStamp,null,"duck",null,null, 0);
+		comment6= new TopLevel(user,timeStamp,null,"truck",null,null, 0);
 		
 	}	
 	protected void setUp() throws Exception {
@@ -86,7 +86,7 @@ public class Tests extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 		//Latitude 37.422006
 		//Longitutde -122.084095
 		//
-		//53.5244° N, 113.5244° W
+		//53.5244ï¿½ N, 113.5244ï¿½ W
 	}
 		
 	//TEST USER MODEL/ID

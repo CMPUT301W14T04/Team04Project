@@ -12,13 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -76,6 +81,8 @@ public class GeoCommentActivity extends Activity implements
 	Spinner sortList;
 	ListView commentListView;
 	ArrayList<Commentor> cacheList;
+	final Context context = this;
+	public double[] modifiedLocation;
 
 	private void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
@@ -268,7 +275,9 @@ public class GeoCommentActivity extends Activity implements
 	protected void onPause() {
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
+
 //		save(Resource.FAVOURITE_SAVE);
+
 		if (internet.isConnectedToInternet() == true) {
 			cacheSave();
 		}
@@ -287,7 +296,9 @@ public class GeoCommentActivity extends Activity implements
 		super.onResume();
 		ElasticSearchOperations.searchALL(commentList, this);
 
+
 //		load(Resource.FAVOURITE_LOAD);
+
 		if(internet.isConnectedToInternet()==false){
 			cacheLoad();
 		}
@@ -299,15 +310,6 @@ public class GeoCommentActivity extends Activity implements
 				}
 			}
 		}*/
-
-		// Toast.makeText(this, gson.toJson(commentList.getList()),
-		// Toast.LENGTH_SHORT).show();
-		/*
-		 * for(Commentor c: commentList.getList()){ for(Commentor c1:
-		 * favourites.getFavouriteGeo()){ if(c.getID().equals(c1.getID())){
-		 * c.setFavourite(true); } } }
-		 */
-
 	}
 
 	@Override
@@ -374,6 +376,7 @@ public class GeoCommentActivity extends Activity implements
 				 * c1.setFavourite(true); } } }
 				 */
 				fis.close();
+				
 				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				favouriteLaunch(listFav);
 			} catch (FileNotFoundException e) {
@@ -422,7 +425,7 @@ public class GeoCommentActivity extends Activity implements
 			try {
 				if(gson==null){
 					constructGson();
-				}
+					}
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
@@ -430,11 +433,7 @@ public class GeoCommentActivity extends Activity implements
 
 				// Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
-				/*
-				 * for(Commentor c:commentList.getFavList()){
-				 * ElasticSearchOperations.searchReplies(replies,
-				 * GeoCommentActivity.this, c.getID()); }
-				 */
+		
 
 				fos.close();
 				if (internet.isConnectedToInternet()==true){
@@ -606,12 +605,62 @@ public class GeoCommentActivity extends Activity implements
 			commentList.setAdapter(adapter);
 		} else if (parent.getItemAtPosition(pos).equals(
 				"Proximity to another location")) {
-
+			openDialogLocation();
+			//commentList.updateProxiLoc();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getProxiLocList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
 		}
+
+	}
+	
+	private void openDialogLocation() {
+		LayoutInflater li = LayoutInflater.from(context);
+		View locationChange = li.inflate(R.layout.location_dialog, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setTitle("Change Location");
+		alertDialogBuilder.setView(locationChange);
+
+		final EditText editLat = (EditText) locationChange
+				.findViewById(R.id.LatitudeChange);
+		final EditText editLog = (EditText) locationChange
+				.findViewById(R.id.longitudeChange);
+
+		alertDialogBuilder.setCancelable(false);
+		alertDialogBuilder.setNeutralButton("Change", new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String stringLat = editLat.getText().toString();
+				String stringLong = editLog.getText().toString();
+				if(!stringLat.isEmpty() && !stringLong.isEmpty()){
+				double lat = Double.parseDouble(stringLat);
+				double log = Double.parseDouble(stringLong);
+
+					modifiedLocation[0] = log;
+					modifiedLocation[1] = lat;
+					Log.e("Change Latitude", ""+modifiedLocation[0] + "-" + modifiedLocation[1]);}
+				else
+					Toast.makeText(getApplicationContext(), "error",
+							Toast.LENGTH_SHORT).show();	
+
+			}
+		});
+
+		alertDialogBuilder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
 
 	}
 
