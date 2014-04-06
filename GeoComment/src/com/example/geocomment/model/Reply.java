@@ -41,6 +41,8 @@ public class Reply extends Comment {
 		this.parentID=null;
 	}
 
+
+
 	/**
 	 * @param source
 	 */
@@ -111,6 +113,9 @@ public class Reply extends Comment {
 	public void setaPicture(String aPicture) {
 		// TODO Auto-generated method stub
 		
+	}
+	public String getParentID() {
+		return parentID;
 	}
 
 }

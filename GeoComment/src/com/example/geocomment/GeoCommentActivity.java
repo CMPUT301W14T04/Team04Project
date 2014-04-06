@@ -61,7 +61,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class GeoCommentActivity extends Activity implements
 		OnItemClickListener, OnItemSelectedListener {
-	 Gson gson;
+	Gson gson;
 	Internet internet;
 	GPSLocation location;
 
@@ -111,9 +111,6 @@ public class GeoCommentActivity extends Activity implements
 			Type Type = new TypeToken<ArrayList<TopLevel>>() {
 			}.getType();
 			List<Commentor> listFav = gson.fromJson(readCache, Type);
-//			for (int i=0;i<listFav.size();i++){
-//				cacheList.add(listFav.get(i));
-//			}
 			fis.close();
 			return listFav;
 		} catch (FileNotFoundException e) {
@@ -127,6 +124,12 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
+	public void favouriteLaunch(List<Commentor> list){
+		for(Commentor c: list){
+			c.setFavourite(true);
+		}
+		favourites.load(list);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -174,16 +177,7 @@ public class GeoCommentActivity extends Activity implements
 					}
 
 				});
-/*		if (internet.isConnectedToInternet()==false){
-			cacheLoad();
-			Toast.makeText(this, gson.toJson(cacheLoad()),Toast.LENGTH_SHORT).show();
-		}*/
-		load(Resource.FAVOURITE_LOAD);
-		//Toast.makeText(this, gson.toJson(cacheList),Toast.LENGTH_SHORT).show();
-		/*
-		  Toast.makeText(this, commentList.getList().toString(),
-		 * Toast.LENGTH_SHORT).show(); cacheSave(); cacheLoad();
-		 */
+	
 	}
 
 	@Override
@@ -265,7 +259,7 @@ public class GeoCommentActivity extends Activity implements
 			cacheSave();
 		}
 		commentList.clear();
-		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
+		//ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 	}
 
 	/*
@@ -277,6 +271,7 @@ public class GeoCommentActivity extends Activity implements
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		load(Resource.FAVOURITE_LOAD);
 		//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
 		/*for(Commentor c: commentList.getList()){
 			for(Commentor c1: favourites.getFavouriteGeo()){
@@ -335,21 +330,9 @@ public class GeoCommentActivity extends Activity implements
 				Type Type = new TypeToken<ArrayList<TopLevel>>() {
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
-				//Toast.makeText(this, gson.toJson(listFav), Toast.LENGTH_SHORT).show();
-				/*if(internet.isConnectedToInternet()==false){
-					String favReply=in.readLine();
-					Type Reply = new TypeToken<ArrayList<Reply>>() {
-					}.getType();
-					List<Commentor> favReplies=gson.fromJson(favReply, Reply);
-				}*/
-			/*	for (Commentor c : listFav) {
-					for (Commentor c1:commentList.getList()){
-						if (c1.getID().equals(c.getID())){
-							c1.setFavourite(true);
-						}
-					}
-				}*/
 				fis.close();
+				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
+				favouriteLaunch(listFav);
 			} catch (FileNotFoundException e) {
 				// TODOAuto-generated catch block
 				e.printStackTrace();
@@ -391,20 +374,33 @@ public class GeoCommentActivity extends Activity implements
 			}
 			break;
 		case Resource.FAVOURITE_SAVE:
-			favourites.updateGeo(commentList.getList());;
+			favourites.updateGeo(commentList.getList());
+			this.deleteFile(Resource.FAVOURITE_FILE);
 			try {
-				//TopLevelList replies=new TopLevelList();
+				if(gson==null){
+					constructGson();
+				}
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
 				String fav = gson.toJson(favourites.returnFav()) + "\n";
-				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
-				/*for(Commentor c:commentList.getFavList()){
-					ElasticSearchOperations.searchReplies(replies,
-							GeoCommentActivity.this, c.getID());
-				}*/
 				fos.close();
+				if (internet.isConnectedToInternet()==true){
+					ArrayList<Commentor> replies=new ArrayList<Commentor>();
+					fos = openFileOutput(Resource.FAVOURITE_REPLIES,
+							Context.MODE_PRIVATE);
+					for(Commentor c:favourites.returnFav()){
+						ElasticSearchOperations.searchReplies1(replies,
+								GeoCommentActivity.this, c.getID());
+						Toast.makeText(this, gson.toJson(replies), Toast.LENGTH_SHORT).show();
+					}
+					String favReplies=gson.toJson(replies);
+					//Toast.makeText(this, favReplies, Toast.LENGTH_SHORT).show();
+					fos.write(favReplies.getBytes());
+					fos.close();
+					
+				}
 
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block

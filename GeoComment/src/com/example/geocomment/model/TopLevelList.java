@@ -72,6 +72,9 @@ public class TopLevelList {
 	/**
 	 * clear top level comment collection
 	 */
+	public void addOne(Commentor c){
+		topLevelList.add(c);
+	}
 	public void clear() {
 		this.topLevelList.clear();
 		if (adapter != null){
