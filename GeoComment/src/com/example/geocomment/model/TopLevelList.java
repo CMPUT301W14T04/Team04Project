@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.util.GPSLocation;
 
 public class TopLevelList {
 
@@ -24,8 +25,8 @@ public class TopLevelList {
 	private List<Commentor> nonPicture;
 	private List<Commentor> dateList;
 	private List<Commentor> likesList;
-	private User user;
-	private GeoCommentActivity main;
+	GeoCommentActivity main;
+	GPSLocation gpsLocation;
 
 	public TopLevelList() {
 		this.topLevelList = new ArrayList<Commentor>();
@@ -181,9 +182,7 @@ public class TopLevelList {
 		// TODO Auto-generated method stub
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
 			public int compare(Commentor comment1, Commentor comment2) {
-				Location currentLocation = new Location("Location");
-				currentLocation.setLatitude(user.getUserLocation()[1]);
-				currentLocation.setLongitude(user.getUserLocation()[0]);
+				Location currentLocation = gpsLocation.getLocation();
 
 				Location location1 = new Location("Location");
 				location1.setLatitude(comment1.getaLocation()[1]);
