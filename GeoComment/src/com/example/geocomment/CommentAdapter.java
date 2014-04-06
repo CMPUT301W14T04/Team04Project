@@ -115,6 +115,7 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 			Button likes = (Button) convertView
 					.findViewById(R.id.likes_button);
+			//test
 			if (likes != null){
 				likes.setText("Likes: " + Integer.toString(comment_meta.getLikes()));
 				likes.setOnClickListener(new View.OnClickListener() {
