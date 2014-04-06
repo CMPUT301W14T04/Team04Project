@@ -1,10 +1,14 @@
 package com.example.geocomment;
 
+import com.example.geocomment.model.UserProfile;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
 public class ProfileActivity extends Activity {
+	
+	UserProfile profile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

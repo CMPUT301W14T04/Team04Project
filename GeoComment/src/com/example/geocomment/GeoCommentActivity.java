@@ -15,7 +15,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -30,7 +29,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,6 +41,7 @@ import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
 import com.example.geocomment.model.UserPreference;
+import com.example.geocomment.model.UserProfile;
 import com.example.geocomment.model.favourites;
 import com.example.geocomment.util.BitmapJsonConverter;
 import com.example.geocomment.util.GPSLocation;
@@ -72,6 +71,7 @@ public class GeoCommentActivity extends Activity implements
 	LocationList locationHistory;
 	UserPreference userPre;
 	CommentAdapter adapter;
+	UserProfile profile;
 
 	Spinner sortList;
 	ListView commentListView;
@@ -252,11 +252,14 @@ public class GeoCommentActivity extends Activity implements
 			userPre = new UserPreference(user.getUserName(), user.getID(),
 					locationHistory);
 			locationHistory.addLocation(location.getLocation());
+			profile = new UserProfile(user);
 			save(Resource.GENERAL_INFO_SAVE);
 		} else {
 			userPre = gson.fromJson(info, UserPreference.class);
 			user = new User(locations, userPre.getUserName(), userPre.getId());
 			locationHistory = userPre.getLocationList();
+			profile = new UserProfile(user);
+//			Log.e("Profile", profile.getUsername());
 		}
 
 	}
@@ -265,7 +268,7 @@ public class GeoCommentActivity extends Activity implements
 	protected void onPause() {
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
-		save(Resource.FAVOURITE_SAVE);
+//		save(Resource.FAVOURITE_SAVE);
 		if (internet.isConnectedToInternet() == true) {
 			cacheSave();
 		}
@@ -282,8 +285,9 @@ public class GeoCommentActivity extends Activity implements
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		ElasticSearchOperations.searchALL(commentList, this);
 
-		load(Resource.FAVOURITE_LOAD);
+//		load(Resource.FAVOURITE_LOAD);
 		if(internet.isConnectedToInternet()==false){
 			cacheLoad();
 		}
@@ -493,7 +497,9 @@ public class GeoCommentActivity extends Activity implements
 	public void openSettings() {
 		Intent intent = new Intent(GeoCommentActivity.this,
 				OptionActivity.class);
-		intent.putExtra("Username", user.getUserName());
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("Profile", profile);
+		intent.putExtras(bundle);
 		startActivityForResult(intent, 90);
 	}
 
