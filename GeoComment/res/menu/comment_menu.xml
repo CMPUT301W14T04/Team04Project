@@ -4,5 +4,8 @@
     <item
         android:id="@+id/edit"
         android:title="Edit"/> 
+        <item
+            android:id="@+id/viewProfile"
+            android:title="View Profile" />
 
 </menu>

@@ -9,17 +9,20 @@
     <string name="new_picture">New Picture</string>
 
     <string-array name="sorting_array">
-        <item>Home</item>
+        <!-- <item>Home</item> -->
         <item>Date</item>
         <item>Picture</item>
-        <!-- <item>Score</item>
+        <!--
+        <item>Score</item>
         <item>Proximity to me</item>
-        <item>Proximity to another location</item> -->
+        <item>Proximity to another location</item>
+        -->
         <item>Favourites</item>
     </string-array>
 
     <string name="title_activity_comment_browse">CommentBrowseActivity</string>
     <string name="title_activity_edit_comment">EditCommentActivity</string>
-    <string name= "reply_comment">Reply a comment</string>
+    <string name="reply_comment">Reply a comment</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

@@ -2,18 +2,26 @@ package com.example.geocomment;
 
 import java.util.Calendar;
 
+import android.R.string;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.model.Commentor;
@@ -32,6 +40,7 @@ import com.example.geocomment.util.Resource;
  */
 public class CreateCommentActivity extends Activity {
 
+	final Context context = this;
 	Button pushButton;
 	EditText textComment;
 
@@ -41,6 +50,7 @@ public class CreateCommentActivity extends Activity {
 	LocationList locationList;
 	Location location;
 	String parentID;
+	double[] locationComment;
 
 	int type;
 
@@ -61,6 +71,7 @@ public class CreateCommentActivity extends Activity {
 		 */
 		setupActionBar();
 
+		locationComment = null;
 		pushButton = (Button) findViewById(R.id.submit_comment);
 		textComment = (EditText) findViewById(R.id.comment_box);
 
@@ -75,6 +86,7 @@ public class CreateCommentActivity extends Activity {
 
 		imageView = (ImageView) findViewById(R.id.imageView1);
 		imageView.setImageBitmap(null);
+		locationComment = user.getUserLocation();
 	}
 
 	/**
@@ -111,12 +123,16 @@ public class CreateCommentActivity extends Activity {
 			 */
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.location_change:
+			openDialogLocation();
+
 		}
 		if (item.getItemId() == R.id.action_new_picture) {
 			Intent cameraIntent = new Intent(
 					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 			startActivityForResult(cameraIntent, CAMERA_REQUEST);
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -125,12 +141,13 @@ public class CreateCommentActivity extends Activity {
 	 * camera or gallery
 	 */
 
+	@Override
 	@SuppressWarnings("static-access")
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
 			// resize chosen photo
-			photo = photo.createScaledBitmap(photo, 100, 100, false);
+			photo = Bitmap.createScaledBitmap(photo, 100, 100, false);
 			// set photo for preview
 			imageView.setImageBitmap(photo);
 		}
@@ -176,8 +193,8 @@ public class CreateCommentActivity extends Activity {
 				Toast.makeText(this, "You can't submit an empty text",
 						Toast.LENGTH_LONG).show();
 			} else {
-				Comment = new TopLevel(user, timeStamp, photo, text,
-						location, ID);
+				Comment = new TopLevel(user, timeStamp, photo, text, location,
+						ID);
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
 				bundle.putParcelable(Resource.TOP_LEVEL_COMMENT,
@@ -215,6 +232,55 @@ public class CreateCommentActivity extends Activity {
 			}
 
 		}
+
+	}
+
+	private void openDialogLocation() {
+		LayoutInflater li = LayoutInflater.from(context);
+		View locationChange = li.inflate(R.layout.location_dialog, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setTitle("Change Location");
+		alertDialogBuilder.setView(locationChange);
+
+		final EditText editLat = (EditText) locationChange
+				.findViewById(R.id.LatitudeChange);
+		final EditText editLog = (EditText) locationChange
+				.findViewById(R.id.longitudeChange);
+
+		alertDialogBuilder.setCancelable(false);
+		alertDialogBuilder.setNeutralButton("Change", new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String stringLat = editLat.getText().toString();
+				String stringLong = editLog.getText().toString();
+				if(!stringLat.isEmpty() && !stringLong.isEmpty()){
+				double lat = Double.parseDouble(stringLat);
+				double log = Double.parseDouble(stringLong);
+
+					locationComment[0] = log;
+					locationComment[1] = lat;
+					Log.e("Change Latitude", ""+locationComment[0] + "-" + locationComment[1]);}
+				else
+					Toast.makeText(getApplicationContext(), "error",
+							Toast.LENGTH_SHORT).show();	
+
+			}
+		});
+
+		alertDialogBuilder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
 
 	}
 

@@ -38,7 +38,7 @@ public class ElasticSearchOperations {
 	/**
 	 * Define the sever URL
 	 */
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments2s/";
 	public static final String SERVER_URL_REPLY = "http://cmput301.softwareprocess.es:8080/testing/team04_replie1/";
 	// for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
@@ -103,6 +103,7 @@ public class ElasticSearchOperations {
 		};
 
 		thread.start();
+		
 	}
 
 	/**
@@ -146,7 +147,7 @@ public class ElasticSearchOperations {
 							new InputStreamReader(entity.getContent()));
 
 					String output = reader.readLine();
-					Log.e("paja", output);
+//					Log.e("paja", output);
 					while (output != null) {
 						responseJson += output;
 						output = reader.readLine();
@@ -171,6 +172,8 @@ public class ElasticSearchOperations {
 			}
 		};
 		thread.start();
+		
+//		Log.e("Finish Elastic", "Finish ElasticsearchSearcALl");
 	}
 
 	/**
