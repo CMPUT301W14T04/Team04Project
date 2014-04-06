@@ -11,12 +11,10 @@
     <string-array name="sorting_array">
         <item>Home</item>
         <item>Date</item>
-        <item>Picture</item>
-        <!--
-        <item>Score</item>
+        <item>Picture</item>        
         <item>Proximity to me</item>
         <item>Proximity to another location</item>
-        -->
+       
         <item>Favourites</item>
     </string-array>
 
