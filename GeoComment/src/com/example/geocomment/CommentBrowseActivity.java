@@ -1,11 +1,18 @@
 package com.example.geocomment;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -21,13 +28,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
+import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.Reply;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
 import com.example.geocomment.model.User;
 import com.example.geocomment.model.favourites;
+import com.example.geocomment.util.BitmapJsonConverter;
 import com.example.geocomment.util.Format;
+import com.example.geocomment.util.Internet;
 import com.example.geocomment.util.Resource;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * 
@@ -51,7 +64,15 @@ public class CommentBrowseActivity extends Activity {
 	private TopLevelList repliesList;
 	private CommentAdapter adapter;
 	private User user;
-
+	
+	private Internet internet;
+	private Gson gson;
+	
+	private void constructGson() {
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		gson = builder.create();
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,7 +88,8 @@ public class CommentBrowseActivity extends Activity {
 		picture = (ImageView) findViewById(R.id.topLevelPicture);
 		likes = (Button) findViewById(R.id.likeBrowse);
 		replies = (ListView) findViewById(R.id.repliesListViewBrowse);
-
+		
+		internet= new Internet(CommentBrowseActivity.this);
 		repliesList = new TopLevelList();
 		adapter = new CommentAdapter(getApplicationContext(),
 				R.layout.comment_row, repliesList.getList());
@@ -98,9 +120,18 @@ public class CommentBrowseActivity extends Activity {
 
 		replies.setAdapter(adapter);
 		repliesList.setAdapter(adapter);
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		
+
+		gson = gsonBuilder.create();
 
 		ElasticSearchOperations.searchReplies(repliesList,
 				CommentBrowseActivity.this, toplevel.getID());
+		if(internet.isConnectedToInternet()==false){
+			
+		}
 
 	}
 	
@@ -245,6 +276,31 @@ public class CommentBrowseActivity extends Activity {
 				Log.e("error in acti", "data = null");
 			break;
 		}
+}
+	private void load(){
+		FileInputStream fis;
+		try {
+			//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
+			fis = openFileInput(Resource.FAVOURITE_REPLIES);
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+				fis));
+			String fav = in.readLine();
+			Type Type = new TypeToken<ArrayList<Reply>>() {
+			}.getType();
+			List<Reply> listFav = gson.fromJson(fav, Type);
+			savedReplies(listFav);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODOAuto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void savedReplies(List<Reply> list){
+	//TO DO MAKE THIS BADBOY
 	}
 
 }
