@@ -200,5 +200,7 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 	
 	private void openProfile(){
 		
+		Intent intent = new Intent(); 
+		
 	}
 }
