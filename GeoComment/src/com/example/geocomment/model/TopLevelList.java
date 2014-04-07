@@ -90,26 +90,13 @@ public class TopLevelList {
 		}
 	}
 
-	
-	public List<Commentor> getList() {
-		
+	public List<Commentor> getList() {		
 		return Collections.unmodifiableList(topLevelList);
 	}
-
-
-	public List<Commentor> getDateList() {
-		return Collections.unmodifiableList(dateList);
-	}
-
 
 	public List<Commentor> getPictureList() {
 		// TODO Auto-generated method stub
 		return Collections.unmodifiableList(picture);
-	}
-
-	public List<Commentor> getScoreList() {
-		// TODO Auto-generated method stub
-		return Collections.unmodifiableList(score);
 	}
 
 	public List<Commentor> getProxiMeList() {
@@ -129,23 +116,10 @@ public class TopLevelList {
 	public Commentor getComment(int i) {
 		return topLevelList.get(i);
 	}
-
-	public void updateDate() {
-		// TODO Auto-generated method stub
-		Collections.sort(topLevelList, new Comparator<Commentor>() {
-			@Override
-			public int compare(Commentor comment1, Commentor comment2) {
-				return comment2.getDate().compareTo(comment1.getDate());
-			}
-		});
-		for (Commentor c: topLevelList) {
-			if (!dateList.contains(c)) {
-				dateList.add(c);
-			}
-		}
-		this.adapter.notifyDataSetChanged();
-	}
 	
+	/**
+	 * sort comments by picture
+	 */
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
 			if (c.getaPicture() != null & !picture.contains(c)) {
@@ -173,11 +147,9 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
-	public void updateSocre() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * sort comments by proximity to me
+	 */
 	public void updateProxiMe() {
 		// TODO Auto-generated method stub
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
@@ -221,6 +193,9 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * sort comments by proximity to another location
+	 */
 	public void updateProxiLoc() {
 		// TODO Auto-generated method stub
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
@@ -262,11 +237,5 @@ public class TopLevelList {
 		}
 		this.adapter.notifyDataSetChanged();
 	}
-
 	
-
-
-
-
-
 }
