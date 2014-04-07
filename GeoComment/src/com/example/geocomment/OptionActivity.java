@@ -137,6 +137,7 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		switch (position) {
 		case CHANGE_USERNAME_OPTION:
 			openDialogChangeUsername();
+			break;
 		case VIEW_PROFILE:
 			openProfile();
 			break;
@@ -200,7 +201,15 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 	
 	private void openProfile(){
 		
-		Intent intent = new Intent(); 
+		Intent intent = new Intent(OptionActivity.this,ProfileActivity.class); 
+		Bundle bundle = new Bundle();
+	
+		bundle.putParcelable("profile", profile);
+		bundle.putBoolean("online?", false);
+		
+		intent.putExtras(bundle);
+		
+		startActivity(intent);
 		
 	}
 }

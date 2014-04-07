@@ -202,6 +202,5 @@ public abstract class Comment implements Parcelable, Commentor {
 		// TODO Auto-generated method stub
 		this.likes = likes;
 	}
-
 	
 }

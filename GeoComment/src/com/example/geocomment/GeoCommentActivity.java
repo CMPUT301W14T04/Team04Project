@@ -249,7 +249,7 @@ public class GeoCommentActivity extends Activity implements
 			user = new User(locations, userPre.getUserName(), userPre.getId());
 			locationHistory = userPre.getLocationList();
 			profile = new UserProfile(user);
-			Log.e("Profile", profile.getUsername());
+//			Log.e("Profile", profile.getUsername());
 		}
 
 	}
@@ -710,12 +710,11 @@ public class GeoCommentActivity extends Activity implements
 			// startActivity(intent);
 		case R.id.viewProfile:
 			int i = info.position;
-			List<Commentor> list = commentList.getList();
-			String userID = list.get(i).getUserID();
+			Commentor comment = commentList.getComment(i);
 			// Log.e("userID", userID);
 			// Toast.makeText(getApplicationContext(), userID,
 			// Toast.LENGTH_SHORT).show();
-			viewProfile(userID);
+			viewProfile(comment);
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -732,9 +731,22 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
-	private void viewProfile(String aUser) {
-		Toast.makeText(getApplicationContext(), "LOL", Toast.LENGTH_SHORT)
-		.show();
+	private void viewProfile(Commentor comment) {
+		Intent intent = new Intent(GeoCommentActivity.this, ProfileActivity.class);
+		Bundle bundle = new Bundle();
+		
+		if(user.getID().equalsIgnoreCase(comment.getUserID()))
+		{
+			bundle.putBoolean("online?", false);
+			bundle.putParcelable("profile", profile);
+			}
+		else
+		{
+			bundle.putBoolean("online?", true);
+			bundle.putParcelable("user", comment.getUser());
+		}
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 
 }

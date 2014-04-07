@@ -20,10 +20,11 @@
         android:id="@+id/profileUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/profileQuote"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/profilePic"
-        android:layout_marginRight="48dp"
         android:text="Username"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -40,8 +41,9 @@
         android:id="@+id/profileContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/profileBio"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/profileBio" >
 
     </ListView>
@@ -50,11 +52,12 @@
         android:id="@+id/profileQuote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/profilePic"
-        android:layout_alignLeft="@+id/profileUsername"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_above="@+id/profileBio"
+        android:layout_alignRight="@+id/profileBio"
         android:layout_below="@+id/profileUsername"
+        android:layout_toRightOf="@+id/profilePic"
         android:text="This is a quote"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

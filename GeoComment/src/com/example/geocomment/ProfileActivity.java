@@ -1,17 +1,22 @@
 package com.example.geocomment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.geocomment.model.User;
 import com.example.geocomment.model.UserProfile;
 
 public class ProfileActivity extends Activity {
 	
 	UserProfile profile;
+	boolean isOtherUser = false;
+	User user;
 	
 	ImageView userPic;
 	TextView username;
@@ -29,6 +34,21 @@ public class ProfileActivity extends Activity {
 		quote = (TextView) findViewById(R.id.profileQuote);
 		bio = (TextView) findViewById(R.id.profileBio);
 		contact = (ListView) findViewById(R.id.profileContact);
+		
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		profile = (UserProfile) bundle.getParcelable("profile");
+		user = (User) bundle.getParcelable("user");
+		isOtherUser = bundle.getBoolean("online?");
+		
+		Toast.makeText(this, "" + isOtherUser, Toast.LENGTH_SHORT).show();
+		if(!isOtherUser){
+			username.setText(profile.getUsername());}
+		else 
+		{
+			username.setText(user.getUserName());
+			
+		}
 	}
 
 	@Override
@@ -37,5 +57,10 @@ public class ProfileActivity extends Activity {
 		getMenuInflater().inflate(R.menu.profile, menu);
 		return true;
 	}
+	
+	private  void ownProfile()
+	{
+	}
+	
 
 }
