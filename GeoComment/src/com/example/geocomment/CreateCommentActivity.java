@@ -84,11 +84,8 @@ public class CreateCommentActivity extends Activity {
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
-	// private static final int MAX_BITMAP_DIMENSIONS = 50;
 	private ImageView imageView = null;
 	Bitmap photo = null;
-
-	// String encodedImage = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -182,25 +179,6 @@ public class CreateCommentActivity extends Activity {
 	}
 
 	/**
-	 * this function encodes the photo to string so the picture can be stored on
-	 * the server with the rest of the comment information, and so it can later
-	 * be retrieved by all users of the application
-	 * 
-	 * @param photo
-	 * @return
-	 */
-	// public JsonElement getStringFromBitmap(Bitmap photo) {
-	// final int COMPRESSION_QUALITY = 100;
-	// ByteArrayOutputStream byteArrayBitmapStream = new
-	// ByteArrayOutputStream();
-	// photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
-	// byteArrayBitmapStream);
-	// byte[] b = byteArrayBitmapStream.toByteArray();
-	// encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-	// return new JsonPrimitive(encodedImage);
-	// }
-
-	/**
 	 * submitComment puts the comment into a top level array so it can later be
 	 * uploaded to the server. If the comment that the user is trying to add is
 	 * empty, the user will get an error and will be prompted to type something
@@ -211,6 +189,9 @@ public class CreateCommentActivity extends Activity {
 	 * @param view
 	 */
 	public void submitComment(View view) {
+		/*
+		 * If the comment being made is a top level comment
+		 */
 		if (type == Resource.TYPE_TOP_LEVEL) {
 			Calendar timeStamp = Calendar.getInstance();
 			String text = textComment.getText().toString();
@@ -218,7 +199,7 @@ public class CreateCommentActivity extends Activity {
 			double[] location = user.getUserLocation();
 
 			if (text.isEmpty()) {
-				Toast.makeText(this, "You can't submit an empty text",
+				Toast.makeText(this, "You can't submit an empty comment. Please enter a comment.",
 						Toast.LENGTH_LONG).show();
 			} else {
 				Comment = new TopLevel(user, timeStamp, photo, text, location,
@@ -235,6 +216,9 @@ public class CreateCommentActivity extends Activity {
 
 		}
 
+		/*
+		 * If the comment being made is a reply
+		 */
 		if (type == Resource.TYPE_REPLY) {
 			Calendar timeStamp = Calendar.getInstance();
 			String text = textComment.getText().toString();
@@ -242,10 +226,10 @@ public class CreateCommentActivity extends Activity {
 			double[] location = user.getUserLocation();
 
 			if (text.isEmpty()) {
-				Toast.makeText(this, "You can't submit an empty text",
+				Toast.makeText(this, "You can't submit an empty comment. Please enter a comment.",
 						Toast.LENGTH_LONG).show();
 			} else {
-
+				
 				Comment = new Reply(user, timeStamp, photo, text, location,
 						parentID, ID, likes);
 
