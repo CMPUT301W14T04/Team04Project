@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
@@ -27,68 +27,42 @@ of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the FreeBSD Project.
 */
 
-package com.example.geocomment.model;
+package com.example.geocomment;
 
-import java.util.Calendar;
 
-import android.graphics.Bitmap;
+import android.content.Intent;
+import android.os.Bundle;
+import com.example.geocomment.util.Resource;
+import com.example.geocomment.model.User;
+import com.example.geocomment.model.LocationList;
 
-public interface Commentor {
-	
-	public String getUserName(); 
-
+public class GeoCommentActivityProduct {
 	/**
-	 * @return User ID
+	 * This pases all the data from one activity to another This includes the username, the ID, and the location of the comment
 	 */
-	public String getUserID() ;
+	public void creatNewComment(User user, LocationList locationHistory,
+			GeoCommentActivity geoCommentActivity) {
+		Intent intent = new Intent(geoCommentActivity,
+				CreateCommentActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(Resource.USER_INFO, user);
+		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
+		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
+		intent.putExtras(bundle);
+		geoCommentActivity.startActivityForResult(intent,
+				Resource.RESQUEST_NEW_TOP_LEVEL);
+	}
 
-	/**
-	 * @return the textComment
-	 */
-	public String getTextComment() ;
-	/**
-	 * @param textComment
-	 *            the textComment to set
-	 */
-	public void setTextComment(String textComment) ;
-
-	/**
-	 * @return the aPicture
-	 */
-	public Bitmap getaPicture();
-
-	/**
-	 * @param aPicture
-	 *            the aPicture to set
-	 */
-	public void setaPicture(String aPicture) ;
-
-	/**
-	 * @param timeStamp
-	 */
-	public void setTimeStamp(Calendar timeStamp) ;
-
-	/**
-	 * @return
-	 */
-	public Calendar getDate() ;
-	
-	public String getID();
-
-	/**
-	 * @return the aLocation
-	 */
-	public double[] getaLocation();
-
-	public boolean isFavourite();
-	
-	public void setFavourite(boolean favourite);
-	
-	public int getLikes();
-	
-	public void setLikes(int likes);
-	
-	public User getUser();
-	
-	public void setUser(User aUser);
+	public void editComment(User user, LocationList locationHistory,
+			GeoCommentActivity geoCommentActivity) {
+		Intent intent = new Intent(geoCommentActivity,
+				EditCommentActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(Resource.USER_INFO, user);
+		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
+		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
+		intent.putExtras(bundle);
+		geoCommentActivity.startActivityForResult(intent,
+				Resource.COMMENT_EDITED);
+	}
 }

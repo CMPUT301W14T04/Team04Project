@@ -1,3 +1,32 @@
+/*
+Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies,
+either expressed or implied, of the FreeBSD Project.
+*/
+
 package com.example.geocomment.model;
 
 import java.util.ArrayList;
@@ -180,17 +209,35 @@ public class TopLevelList {
 
 	public void updateProxiMe() {
 		// TODO Auto-generated method stub
-		Collections.sort(topLevelList, new Comparator<Commentor>() {
+		for (Commentor c: topLevelList) {
+			if (!proxiMe.contains(c)) {
+				proxiMe.add(c);
+			}
+		}
+		Collections.sort(proxiMe, new Comparator<Commentor>() {
 			public int compare(Commentor comment1, Commentor comment2) {
-				Location currentLocation = gpsLocation.getLocation();
+				//Location currentLocation = gpsLocation.getLocation();
+				Location currentLocation = new Location("Location");
+				currentLocation.setLatitude(0);
+				currentLocation.setLongitude(0);
 
 				Location location1 = new Location("Location");
-				location1.setLatitude(comment1.getaLocation()[1]);
-				location1.setLongitude(comment1.getaLocation()[0]);
+				if (comment1.getaLocation() != null) {
+					location1.setLatitude(comment1.getaLocation()[0]);
+					location1.setLongitude(comment1.getaLocation()[1]);
+				} else {
+					location1.setLatitude(0);
+					location1.setLongitude(0);
+				}
 
 				Location location2 = new Location("Location");
-				location2.setLatitude(comment2.getaLocation()[1]);
-				location2.setLongitude(comment2.getaLocation()[0]);
+				if (comment2.getaLocation() != null) {
+					location2.setLatitude(comment2.getaLocation()[0]);
+					location2.setLongitude(comment2.getaLocation()[1]);
+				} else {
+					location2.setLatitude(0);
+					location2.setLongitude(0);
+				}
 
 				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
 				if(difference < 0)
@@ -200,11 +247,7 @@ public class TopLevelList {
 				return (int) difference;
 			}
 		});
-		for (Commentor c: topLevelList) {
-			if (!proxiMe.contains(c)) {
-				proxiMe.add(c);
-			}
-		}
+		
 		this.adapter.notifyDataSetChanged();
 	}
 
@@ -213,16 +256,26 @@ public class TopLevelList {
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
 			public int compare(Commentor comment1, Commentor comment2) {
 				Location currentLocation = new Location("Location");
-				currentLocation.setLatitude(main.modifiedLocation[1]);
-				currentLocation.setLongitude(main.modifiedLocation[0]);
+				currentLocation.setLatitude(main.modifiedLocation[0]);
+				currentLocation.setLongitude(main.modifiedLocation[1]);
 
 				Location location1 = new Location("Location");
-				location1.setLatitude(comment1.getaLocation()[1]);
-				location1.setLongitude(comment1.getaLocation()[0]);
+				if (comment1.getaLocation() != null) {
+					location1.setLatitude(comment1.getaLocation()[0]);
+					location1.setLongitude(comment1.getaLocation()[1]);
+				} else {
+					location1.setLatitude(0);
+					location1.setLongitude(0);
+				}
 
 				Location location2 = new Location("Location");
-				location2.setLatitude(comment2.getaLocation()[1]);
-				location2.setLongitude(comment2.getaLocation()[0]);
+				if (comment2.getaLocation() != null) {
+					location2.setLatitude(comment2.getaLocation()[0]);
+					location2.setLongitude(comment2.getaLocation()[1]);
+				} else {
+					location2.setLatitude(0);
+					location2.setLongitude(0);
+				}
 
 				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
 				if(difference < 0)

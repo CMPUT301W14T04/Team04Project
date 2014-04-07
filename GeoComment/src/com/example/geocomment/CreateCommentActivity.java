@@ -1,3 +1,32 @@
+/**
+Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies,
+either expressed or implied, of the FreeBSD Project.
+*/
+
 package com.example.geocomment;
 
 import java.util.Calendar;
@@ -55,11 +84,8 @@ public class CreateCommentActivity extends Activity {
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
-	// private static final int MAX_BITMAP_DIMENSIONS = 50;
 	private ImageView imageView = null;
 	Bitmap photo = null;
-
-	// String encodedImage = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -145,31 +171,16 @@ public class CreateCommentActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
-			// resize chosen photo
+			/**
+			 * resize chosen photo
+			 */
 			photo = Bitmap.createScaledBitmap(photo, 200, 200, false);
-			// set photo for preview
+			/**
+			 * set photo for preview
+			 */
 			imageView.setImageBitmap(photo);
 		}
 	}
-
-	/**
-	 * this function encodes the photo to string so the picture can be stored on
-	 * the server with the rest of the comment information, and so it can later
-	 * be retrieved by all users of the application
-	 * 
-	 * @param photo
-	 * @return
-	 */
-	// public JsonElement getStringFromBitmap(Bitmap photo) {
-	// final int COMPRESSION_QUALITY = 100;
-	// ByteArrayOutputStream byteArrayBitmapStream = new
-	// ByteArrayOutputStream();
-	// photo.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
-	// byteArrayBitmapStream);
-	// byte[] b = byteArrayBitmapStream.toByteArray();
-	// encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-	// return new JsonPrimitive(encodedImage);
-	// }
 
 	/**
 	 * submitComment puts the comment into a top level array so it can later be
@@ -182,6 +193,9 @@ public class CreateCommentActivity extends Activity {
 	 * @param view
 	 */
 	public void submitComment(View view) {
+		/**
+		 * If the comment being made is a top level comment
+		 */
 		if (type == Resource.TYPE_TOP_LEVEL) {
 			Calendar timeStamp = Calendar.getInstance();
 			String text = textComment.getText().toString();
@@ -189,7 +203,7 @@ public class CreateCommentActivity extends Activity {
 			double[] location = user.getUserLocation();
 
 			if (text.isEmpty()) {
-				Toast.makeText(this, "You can't submit an empty text",
+				Toast.makeText(this, "You can't submit an empty comment. Please enter a comment.",
 						Toast.LENGTH_LONG).show();
 			} else {
 				Comment = new TopLevel(user, timeStamp, photo, text, location,
@@ -206,6 +220,9 @@ public class CreateCommentActivity extends Activity {
 
 		}
 
+		/**
+		 * If the comment being made is a reply to a top level comment
+		 */
 		if (type == Resource.TYPE_REPLY) {
 			Calendar timeStamp = Calendar.getInstance();
 			String text = textComment.getText().toString();
@@ -213,10 +230,10 @@ public class CreateCommentActivity extends Activity {
 			double[] location = user.getUserLocation();
 
 			if (text.isEmpty()) {
-				Toast.makeText(this, "You can't submit an empty text",
+				Toast.makeText(this, "You can't submit an empty comment. Please enter a comment.",
 						Toast.LENGTH_LONG).show();
 			} else {
-
+				
 				Comment = new Reply(user, timeStamp, photo, text, location,
 						parentID, ID, likes);
 
@@ -276,10 +293,14 @@ public class CreateCommentActivity extends Activity {
 						dialog.cancel();
 					}
 				});
-		// create alert dialog
+		/**
+		 * create alert dialog
+		 */
 		AlertDialog alertDialog = alertDialogBuilder.create();
 
-		// show it
+		/**
+		 * show it
+		 */
 		alertDialog.show();
 
 	}
