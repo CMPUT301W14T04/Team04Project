@@ -783,16 +783,7 @@ public class GeoCommentActivity extends Activity implements
 		Intent intent = new Intent(GeoCommentActivity.this, ProfileActivity.class);
 		Bundle bundle = new Bundle();
 		
-		if(user.getID().equalsIgnoreCase(comment.getUserID()))
-		{
-			bundle.putBoolean("online?", false);
-			bundle.putParcelable("profile", profile);
-			}
-		else
-		{
-			bundle.putBoolean("online?", true);
-			bundle.putParcelable("user", comment.getUser());
-		}
+		bundle.putParcelable("user", comment.getUser());
 		intent.putExtras(bundle);
 		startActivity(intent);
 	}

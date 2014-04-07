@@ -37,6 +37,7 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 	private final int CHANGE_USERNAME_OPTION = 0;
 	private final int VIEW_PROFILE = 1;
 	private final int EDIT_PROFILE = 2;
+	private final int DONE_PROFILE = 3;
 
 	String username;
 	UserProfile profile;
@@ -56,6 +57,7 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		options.add("Change Usernae");
 		options.add("View profile");
 		options.add("Edit profile");
+		options.add("Done");
 
 		settings = (ListView) findViewById(R.id.ListViewSettings);
 		settings.setAdapter(new ArrayAdapter(this,
@@ -145,6 +147,9 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		case EDIT_PROFILE:
 			openEdit();
 			break;
+		case DONE_PROFILE:
+			done();
+			break;
 		default:
 			Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
 
@@ -173,12 +178,6 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 					profile.setUsername(stringuser);
 					Toast.makeText(OptionActivity.this, "New Username made",
 							Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent();
-					Bundle bundle = new Bundle();
-					bundle.putParcelable("profile", profile);
-					intent.putExtras(bundle);
-					setResult(90, intent);
-					finish();
 				} else
 					Toast.makeText(getApplicationContext(), "error",
 							Toast.LENGTH_SHORT).show();
@@ -205,13 +204,17 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 
 		Intent intent = new Intent(OptionActivity.this, ProfileActivity.class);
 		Bundle bundle = new Bundle();
+		
+		if(profile.getUsername()!=null){
 
 		bundle.putParcelable("profile", profile);
 		bundle.putBoolean("online?", false);
 
 		intent.putExtras(bundle);
 
-		startActivity(intent);
+		startActivity(intent);}
+		else
+			Toast.makeText(this, "Create a new Username", Toast.LENGTH_SHORT).show();
 
 	}
 
@@ -222,6 +225,16 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		bundle.putParcelable("edit profile", profile);
 		intent.putExtras(bundle);
 		startActivityForResult(intent, 1);
+	}
+	
+	private void done()
+	{
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("profile", profile);
+		intent.putExtras(bundle);
+		setResult(90, intent);
+		finish();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

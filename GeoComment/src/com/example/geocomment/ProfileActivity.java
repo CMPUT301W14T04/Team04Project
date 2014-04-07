@@ -9,14 +9,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.geocomment.elasticsearch.ElasticSearchOpertationUser;
 import com.example.geocomment.model.User;
 import com.example.geocomment.model.UserProfile;
 
 public class ProfileActivity extends Activity {
 	
 	UserProfile profile;
-	boolean isOtherUser = false;
 	User user;
 	
 	ImageView userPic;
@@ -25,7 +23,6 @@ public class ProfileActivity extends Activity {
 	TextView bio;
 	ListView contact;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,30 +39,26 @@ public class ProfileActivity extends Activity {
 		Bundle bundle = intent.getExtras();
 		profile = (UserProfile) bundle.getParcelable("profile");
 		user = (User) bundle.getParcelable("user");
-		isOtherUser = bundle.getBoolean("online?");
 		
-//		Toast.makeText(this, "" + isOtherUser, Toast.LENGTH_SHORT).show();
-		if(!isOtherUser){
-			username.setText(profile.getUsername());}
-		else 
+		if(profile==null)
 		{
-			UserProfile guest = ElasticSearchOpertationUser.searchProfile(this, user.getID());
 			username.setText(user.getUserName());
-			
 		}
-		if(profile!=null){
-		if(profile.getQuote()!=null)
-			quote.setText("\""+profile.getQuote()+ "\"");
 		else
-			quote.setText("NO QUOTE YET");
-		if(profile.getPic()!=null)
-			userPic.setImageBitmap(profile.getPic());
-		if(profile.getBiography()!=null)
-			bio.setText(profile.getBiography());
-		else
-			bio.setText("No Bio yet");
-//		contact.setAdapter(new ArrayAdapter(this,
-//				android.R.layout.simple_list_item_1, profile.getSocial()));
+		{
+			username.setText(profile.getUsername());
+			if(!profile.getBiography().isEmpty())
+				bio.setText(profile.getBiography());
+			else
+				bio.setText("Not bio added yets");
+			if(profile.getPic()!=null)
+				userPic.setImageBitmap(profile.getPic());
+			if(!profile.getQuote().isEmpty())
+				quote.setText("\""+profile.getQuote()+"\"");
+			else
+				quote.setText("Not Quote added Yet");
+		
+			contact.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1,profile.getSocial()));
 		}
 		
 	
