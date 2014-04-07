@@ -131,51 +131,51 @@ public class EditProfile extends Activity {
 
 	}
 
-	public void editContact(View view) {
-		LayoutInflater li = LayoutInflater.from(this);
-		View locationChange = li.inflate(R.layout.text_dialog, null);
-
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle("Add contact info");
-		alertDialogBuilder.setView(locationChange);
-
-		final EditText bio = (EditText) locationChange
-				.findViewById(R.id.editText);
-		bio.setInputType(InputType.TYPE_CLASS_TEXT
-				| InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-				| InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-		bio.setHint("New contact info");
-
-		alertDialogBuilder.setCancelable(false);
-		alertDialogBuilder.setNeutralButton("Add", new OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				String newbio = bio.getText().toString();
-				if (!newbio.isEmpty()) {
-					profile.addSocial(newbio);
-					Toast.makeText(getApplicationContext(), "New Social added",
-							Toast.LENGTH_SHORT).show();
-				} else
-					Toast.makeText(getApplicationContext(), "Error",
-							Toast.LENGTH_SHORT).show();
-
-			}
-
-		});
-		alertDialogBuilder.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-
-		// show it
-		alertDialog.show();
-	}
+//	public void editContact(View view) {
+//		LayoutInflater li = LayoutInflater.from(this);
+//		View locationChange = li.inflate(R.layout.text_dialog, null);
+//
+//		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//		alertDialogBuilder.setTitle("Add contact info");
+//		alertDialogBuilder.setView(locationChange);
+//
+//		final EditText bio = (EditText) locationChange
+//				.findViewById(R.id.editText);
+//		bio.setInputType(InputType.TYPE_CLASS_TEXT
+//				| InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+//				| InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+//		bio.setHint("New contact info");
+//
+//		alertDialogBuilder.setCancelable(false);
+//		alertDialogBuilder.setNeutralButton("Add", new OnClickListener() {
+//
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				String newbio = bio.getText().toString();
+//				if (!newbio.isEmpty()) {
+//					profile.addSocial(newbio);
+//					Toast.makeText(getApplicationContext(), "New Social added",
+//							Toast.LENGTH_SHORT).show();
+//				} else
+//					Toast.makeText(getApplicationContext(), "Error",
+//							Toast.LENGTH_SHORT).show();
+//
+//			}
+//
+//		});
+//		alertDialogBuilder.setNegativeButton("Cancel",
+//				new DialogInterface.OnClickListener() {
+//					@Override
+//					public void onClick(DialogInterface dialog, int id) {
+//						dialog.cancel();
+//					}
+//				});
+//		// create alert dialog
+//		AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//		// show it
+//		alertDialog.show();
+//	}
 	
 	public void editQuote (View view)
 	{

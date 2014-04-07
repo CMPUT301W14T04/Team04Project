@@ -12,7 +12,7 @@ public class UserProfile implements Parcelable {
 	
 	private User aUser;
 	private String biography;
-	private List<String> social;
+//	private List<String> social;
 	private Bitmap pic;
 	private String quote;
 	
@@ -22,7 +22,7 @@ public class UserProfile implements Parcelable {
 		Log.i("User profile", "parcel");
 		this.biography= source.readString();
 		this.aUser = (User) source.readValue(User.class.getClassLoader());
-		this.social=source.readArrayList(getClass().getClassLoader());
+//		this.social=source.readArrayList(getClass().getClassLoader());
 		this.pic= (Bitmap) source.readValue(getClass().getClassLoader());
 		this.quote = source.readString();
 	}
@@ -33,7 +33,7 @@ public class UserProfile implements Parcelable {
 		this.biography=null;
 		this.pic=null;
 		this.quote=null;
-		this.social = new ArrayList<String>();
+//		this.social = new ArrayList<String>();
 	}
 	/**
 	 * @return the biography
@@ -47,23 +47,23 @@ public class UserProfile implements Parcelable {
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
-	/**
-	 * @return the social
-	 */
-	public List<String> getSocial() {
-		return social;
-	}
-	/**
-	 * @param social the social to set
-	 */
-	public void setSocial(List<String> social) {
-		this.social = social;
-	}
-	
-	public void addSocial (String social)
-	{
-		this.social.add(social);
-	}
+//	/**
+//	 * @return the social
+//	 */
+//	public List<String> getSocial() {
+//		return social;
+//	}
+//	/**
+//	 * @param social the social to set
+//	 */
+//	public void setSocial(List<String> social) {
+//		this.social = social;
+//	}
+//	
+//	public void addSocial (String social)
+//	{
+//		this.social.add(social);
+//	}
 	/**
 	 * @return the pic
 	 */
@@ -105,6 +105,11 @@ public class UserProfile implements Parcelable {
 	{
 		this.aUser.setUserName(name);
 	}
+	
+	public User getUser()
+	{
+		return this.aUser;
+	}
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
@@ -116,7 +121,7 @@ public class UserProfile implements Parcelable {
 		Log.e("parceable", "UserProfile" + flags);
 		dest.writeString(biography);
 		dest.writeValue(aUser);
-		dest.writeList(social);
+//		dest.writeList(social);
 		dest.writeValue(pic);
 		dest.writeString(quote);
 	}

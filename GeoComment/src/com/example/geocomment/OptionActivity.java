@@ -229,7 +229,7 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		if (requestCode == 1) {
 
 			profile = data.getParcelableExtra("profile1");
-			Toast.makeText(getApplicationContext(), ""+profile.getSocial().size(), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), ""+profile.getSocial().size(), Toast.LENGTH_SHORT).show();
 			ElasticSearchOpertationUser.pushUserProfile(profile);
 		}
 

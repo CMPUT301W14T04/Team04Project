@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.example.geocomment.CommentBrowseActivity;
+import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.ProfileActivity;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.TopLevel;
@@ -28,7 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class ElasticSearchOpertationUser {
 	
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_users/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_users1/";
 
 	public static final String LOG_TAG = "ElasticSearch";
 
@@ -107,7 +108,7 @@ public class ElasticSearchOpertationUser {
 							new InputStreamReader(entity.getContent()));
 
 					String output = reader.readLine();
-					Log.e("Replies search", output);
+					Log.e("User profile", output);
 					while (output != null) {
 						responseJson += output;
 						output = reader.readLine();
@@ -125,19 +126,13 @@ public class ElasticSearchOpertationUser {
 					@Override
 					public void run() {
 						profile = (UserProfile) returnedData.getSources();
-						this.notify();
+						this.notifyAll();
 					}
 				};
 				activity.runOnUiThread(updateModel);
 			}
 		};
 		thread.start();
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return profile;
 	}
 	

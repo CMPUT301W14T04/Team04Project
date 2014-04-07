@@ -49,16 +49,11 @@ public class ProfileActivity extends Activity {
 			username.setText(profile.getUsername());}
 		else 
 		{
-			profile = ElasticSearchOpertationUser.searchProfile(this, user.getID());
-			try {
-				this.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			UserProfile guest = ElasticSearchOpertationUser.searchProfile(this, user.getID());
 			username.setText(user.getUserName());
 			
 		}
+		if(profile!=null){
 		if(profile.getQuote()!=null)
 			quote.setText("\""+profile.getQuote()+ "\"");
 		else
@@ -69,9 +64,9 @@ public class ProfileActivity extends Activity {
 			bio.setText(profile.getBiography());
 		else
 			bio.setText("No Bio yet");
-		contact.setAdapter(new ArrayAdapter(this,
-				android.R.layout.simple_list_item_1, profile.getSocial()));
-		
+//		contact.setAdapter(new ArrayAdapter(this,
+//				android.R.layout.simple_list_item_1, profile.getSocial()));
+		}
 		
 	
 	}
