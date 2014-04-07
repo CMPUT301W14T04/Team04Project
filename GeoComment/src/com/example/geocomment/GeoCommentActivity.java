@@ -132,12 +132,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
-	public void favouriteLaunch(List<Commentor> list){
-		for(Commentor c: list){
-			c.setFavourite(true);
-		}
-		favourites.load(list);
-	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -166,9 +161,7 @@ public class GeoCommentActivity extends Activity implements
 
 		userPre = new UserPreference();
 
-		// commentListView.setAdapter(adapter);
-		// commentList.setAdapter(adapter);
-
+		
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		Toast.makeText(this, "" + commentList.getList().size(),
 				Toast.LENGTH_SHORT).show();
@@ -184,20 +177,10 @@ public class GeoCommentActivity extends Activity implements
 			}
 
 		});
-		/*
-		 * if (internet.isConnectedToInternet()==false){ cacheLoad();
-		 * Toast.makeText(this,
-		 * gson.toJson(cacheLoad()),Toast.LENGTH_SHORT).show(); }
-		 */
+		
 		load(Resource.FAVOURITE_LOAD);
-		// Toast.makeText(this,
-		// gson.toJson(cacheList),Toast.LENGTH_SHORT).show();
-		/*
-		 * Toast.makeText(this, commentList.getList().toString(),
-		 * Toast.LENGTH_SHORT).show(); cacheSave(); cacheLoad();
-		 */
+		
 	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -376,9 +359,8 @@ public class GeoCommentActivity extends Activity implements
 				 * c1.setFavourite(true); } } }
 				 */
 				fis.close();
-				
-				//Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
-				favouriteLaunch(listFav);
+		
+				favourites.load(listFav);
 			} catch (FileNotFoundException e) {
 				// TODOAuto-generated catch block
 				e.printStackTrace();
@@ -431,12 +413,11 @@ public class GeoCommentActivity extends Activity implements
 
 				String fav = gson.toJson(favourites.returnFav()) + "\n";
 
-				// Toast.makeText(this, fav, Toast.LENGTH_SHORT).show();
 				fos.write(fav.getBytes());
 		
 
 				fos.close();
-				if (internet.isConnectedToInternet()==true){
+			/*	if (internet.isConnectedToInternet()==true){
 					ArrayList<Commentor> replies=new ArrayList<Commentor>();
 					fos = openFileOutput(Resource.FAVOURITE_REPLIES,
 							Context.MODE_PRIVATE);
@@ -449,8 +430,9 @@ public class GeoCommentActivity extends Activity implements
 					//Toast.makeText(this, favReplies, Toast.LENGTH_SHORT).show();
 					fos.write(favReplies.getBytes());
 					fos.close();
-
-				}
+<<<<<<< HEAD
+					
+				}*/
 
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block

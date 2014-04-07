@@ -22,7 +22,6 @@ public class TopLevel extends Comment {
 	public TopLevel(User aUser, Calendar timeStamp, Bitmap aPicture,
 			String textComment, double[] aLocation, String ID, int likes) {
 		super(aUser, timeStamp, aPicture, textComment, aLocation, ID, likes);
-		Log.d("TopLevel", ID);
 		this.ID = ID;
 	}
 
