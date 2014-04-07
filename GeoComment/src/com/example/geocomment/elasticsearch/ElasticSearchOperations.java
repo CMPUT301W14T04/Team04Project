@@ -66,6 +66,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class ElasticSearchOperations {
 
+	private ElasticSearchOperationsProduct elasticSearchOperationsProduct = new ElasticSearchOperationsProduct();
 	/**
 	 * Define the sever URL
 	 */
@@ -74,7 +75,7 @@ public class ElasticSearchOperations {
 	// for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
 
-	private static Gson GSON;
+	public static Gson GSON;
 
 	/**
 	 * This method push a TopLevel comment to the sever.
@@ -147,72 +148,7 @@ public class ElasticSearchOperations {
 	public static void searchALL(final TopLevelList model,
 			final GeoCommentActivity activity) {
 
-		if (GSON == null)
-			constructGson();
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search");
-				String query = "{\"query\": {\"matchAll\": {}}}";
-				String responseJson = "";
-
-				try {
-					request.setEntity(new StringEntity(query));
-				} catch (UnsupportedEncodingException exception) {
-					Log.w(LOG_TAG,
-							"Error encoding search query: "
-									+ exception.getMessage());
-					return;
-				}
-
-				try {
-					HttpResponse response = client.execute(request);
-					Log.i(LOG_TAG, "Response: "
-							+ response.getStatusLine().toString());
-
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(entity.getContent()));
-
-					String output = reader.readLine();
-//					Log.e("paja", output);
-					while (output != null) {
-						responseJson += output;
-						output = reader.readLine();
-					}
-				} catch (IOException exception) {
-					Log.w(LOG_TAG, "Error receiving search query response: "
-							+ exception.getMessage());
-					return;
-				}
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopLevel>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Commentor> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
-				Runnable updateModel = new Runnable() {
-					@Override
-					public void run() {
-						model.clear();
-						model.addTopLevelCollection(returnedData.getSources());
-					}
-				};
-				activity.runOnUiThread(updateModel);
-			}
-		};
-		thread.start();
-		if(!thread.isAlive())
-		{
-			Log.i("Thread is Alive", "true");
-		}
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ElasticSearchOperationsProduct.searchALL(model, activity);
 		
 //		Log.e("Finish Elastic", "Finish ElasticsearchSearcALl");
 	}
@@ -227,63 +163,7 @@ public class ElasticSearchOperations {
 	public static void searchReplies(final TopLevelList model,
 			final CommentBrowseActivity activity, final String ID) {
 
-		if (GSON == null)
-			constructGson();
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL_REPLY + "_search");
-				String query = "{\"query\": {\"match\": {\"parentID\" :\"*"
-						+ ID + "*\" }}}";
-				String responseJson = "";
-
-				try {
-					request.setEntity(new StringEntity(query));
-				} catch (UnsupportedEncodingException exception) {
-					Log.w(LOG_TAG,
-							"Error encoding search query: "
-									+ exception.getMessage());
-					return;
-				}
-
-				try {
-					HttpResponse response = client.execute(request);
-					Log.i(LOG_TAG, "Response: "
-							+ response.getStatusLine().toString());
-
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(entity.getContent()));
-
-					String output = reader.readLine();
-					Log.e("Replies search", output);
-					while (output != null) {
-						responseJson += output;
-						output = reader.readLine();
-					}
-				} catch (IOException exception) {
-					Log.w(LOG_TAG, "Error receiving search query response: "
-							+ exception.getMessage());
-					return;
-				}
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopLevel>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Commentor> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
-				Runnable updateModel = new Runnable() {
-					@Override
-					public void run() {
-						model.clear();
-						model.addTopLevelCollection(returnedData.getSources());
-					}
-				};
-				activity.runOnUiThread(updateModel);
-			}
-		};
-		thread.start();
+		ElasticSearchOperationsProduct.searchReplies(model, activity, ID);
 	}
 
 /*	public static void searchReplies1(final ArrayList<Commentor> model,
@@ -357,7 +237,7 @@ public class ElasticSearchOperations {
 	 * 
 	 * This method construct a custom Gson for picture.
 	 */
-	private static void constructGson() {
+	public static void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		GSON = builder.create();
