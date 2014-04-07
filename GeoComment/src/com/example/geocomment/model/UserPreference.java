@@ -5,13 +5,15 @@ public class UserPreference {
 	private String userName;
 	private String id;
 	private LocationList locationList;
+	private UserProfile profile;
 
 	public UserPreference(String userName, String id,
-			LocationList locationList) {
+			LocationList locationList, UserProfile profile) {
 
 		this.userName=userName;
 		this.id=id;
 		this.locationList=locationList;
+		this.profile=profile;
 	}
 	public UserPreference()
 	{
@@ -38,13 +40,18 @@ public class UserPreference {
 	public LocationList getLocationList() {
 		return locationList;
 	}
-	
-	@Override
-	public String toString() {
-		return "UserPreference [userName=" + userName + ", id=" + id
-				+ ", locationList=" + locationList + "]";
+	/**
+	 * @return the profile
+	 */
+	public UserProfile getProfile() {
+		return profile;
 	}
-
+	/**
+	 * @param profile the profile to set
+	 */
+	public void setProfile(UserProfile profile) {
+		this.profile = profile;
+	}
 
 
 }

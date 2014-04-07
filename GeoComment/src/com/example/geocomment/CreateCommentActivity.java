@@ -146,7 +146,7 @@ public class CreateCommentActivity extends Activity {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
 			// resize chosen photo
-			photo = Bitmap.createScaledBitmap(photo, 100, 100, false);
+			photo = Bitmap.createScaledBitmap(photo, 200, 200, false);
 			// set photo for preview
 			imageView.setImageBitmap(photo);
 		}

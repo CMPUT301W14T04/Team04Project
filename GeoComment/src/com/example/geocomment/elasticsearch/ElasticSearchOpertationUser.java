@@ -37,6 +37,8 @@ public class ElasticSearchOpertationUser {
 	private static UserProfile profile;
 	
 	public static void pushUserProfile(final UserProfile profile) {
+		if (GSON == null)
+			constructGson();
 		
 		Thread thread = new Thread() {
 
@@ -123,6 +125,7 @@ public class ElasticSearchOpertationUser {
 					@Override
 					public void run() {
 						profile = (UserProfile) returnedData.getSources();
+						this.notify();
 					}
 				};
 				activity.runOnUiThread(updateModel);

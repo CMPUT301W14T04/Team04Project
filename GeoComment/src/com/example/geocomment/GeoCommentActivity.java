@@ -90,6 +90,13 @@ public class GeoCommentActivity extends Activity implements
 		gson = builder.create();
 	}
 
+	
+	/*
+	 * This function takes the last
+	 * comments gotten from elastic search and 
+	 * saves them into memory just incase
+	 * the user has not internet the next time they access the app
+	 */
 	public void cacheSave() {
 		this.deleteFile(Resource.CACHE_STORE);
 		File folder = getCacheDir();
@@ -107,6 +114,11 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
+	/*
+	 * This function loads the comments
+	 * saved from the last time the user had internet
+	 * and shows it them in the event they have no internet available
+	 */
 	public List<Commentor> cacheLoad() {
 		File folder = getCacheDir();
 		File cache = new File(folder, Resource.CACHE_STORE);
@@ -238,18 +250,19 @@ public class GeoCommentActivity extends Activity implements
 		if (info == null) {
 
 			user = new User(locations, null, Resource.generateID());
+			profile = new UserProfile(user);
 			locationHistory.addLocation(location.getLocation());
 			userPre = new UserPreference(user.getUserName(), user.getID(),
-					locationHistory);
+					locationHistory,profile);
 			locationHistory.addLocation(location.getLocation());
-			profile = new UserProfile(user);
 			save(Resource.GENERAL_INFO_SAVE);
 		} else {
 			userPre = gson.fromJson(info, UserPreference.class);
 			user = new User(locations, userPre.getUserName(), userPre.getId());
 			locationHistory = userPre.getLocationList();
-			profile = new UserProfile(user);
-//			Log.e("Profile", profile.getUsername());
+			profile = userPre.getProfile();
+			//Log.e("Profile", profile.getUsername());
+
 		}
 
 	}
@@ -333,6 +346,12 @@ public class GeoCommentActivity extends Activity implements
 				e.printStackTrace();
 			}
 			return userInfo;
+			
+		/*
+		 * This function loads the saved favourites
+		 * so that the user can read them regardless
+		 * of network connectivity
+		 */
 		case Resource.FAVOURITE_LOAD:
 			try {
 				// Toast.makeText(this, gson.toJson(commentList.getList()),
@@ -401,6 +420,11 @@ public class GeoCommentActivity extends Activity implements
 				e.printStackTrace();
 			}
 			break;
+			/*
+			 * This function takes the favourites list and
+			 * saves into memory so that the user can access
+			 * them regardless of network connectivity
+			 */
 		case Resource.FAVOURITE_SAVE:
 			favourites.updateGeo(commentList.getList());
 			this.deleteFile(Resource.FAVOURITE_FILE);
@@ -515,7 +539,7 @@ public class GeoCommentActivity extends Activity implements
 				user.setUserName(profile.getUsername());
 				Log.e("USERNAME CHANGES TO", profile.getUsername());
 				userPre = new UserPreference(user.getUserName(), user.getID(),
-						locationHistory);
+						locationHistory,profile);
 				save(Resource.GENERAL_INFO_SAVE);
 			}
 			break;
@@ -523,6 +547,8 @@ public class GeoCommentActivity extends Activity implements
 
 	}
 
+	
+	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
@@ -541,15 +567,22 @@ public class GeoCommentActivity extends Activity implements
 			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			// cacheSave();
-			// cacheLoad();
+			
+			/*
+			 * This option shows the comments that
+			 * the user has favourited
+			 */
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
 			favourites.updateGeo(commentList.getList());
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, favourites.returnFav());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-
+			
+			/*
+			 * This option shows the user
+			 * all the comments sorted by date
+			 */
 		} else if (parent.getItemAtPosition(pos).equals("Date")) {
 			if (internet.isConnectedToInternet() == false) {
 				Toast.makeText(this, "No internet from last visit",
@@ -564,7 +597,11 @@ public class GeoCommentActivity extends Activity implements
 			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-
+			
+			/*
+			 * this option shows the user
+			 * all the comments sorted by picture
+			 */
 		} else if (parent.getItemAtPosition(pos).equals("Picture")) {
 			commentList.updatePicture();
 
@@ -579,6 +616,11 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getScoreList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
+			/*
+			 * this option shows the user
+			 * all the comments sorted by location
+			 * relative to them
+			 */
 		} else if (parent.getItemAtPosition(pos).equals("Proximity to me")) {
 			commentList.updateProxiMe();
 
@@ -586,6 +628,12 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getProxiMeList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
+			
+			/*
+			 * this option shows the user
+			 * all the comments sorted by location
+			 * relative to another location
+			 */
 		} else if (parent.getItemAtPosition(pos).equals(
 				"Proximity to another location")) {
 			openDialogLocation();

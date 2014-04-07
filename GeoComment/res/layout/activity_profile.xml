@@ -25,17 +25,8 @@
         android:layout_alignTop="@+id/profilePic"
         android:text="Username"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/profileBio"
-        android:layout_width="wrap_content"
-        android:layout_height="150dip"
-        android:layout_alignLeft="@+id/profilePic"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/profilePic"
-        android:text="Bio"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/profileContact"
@@ -58,6 +49,27 @@
         android:layout_toRightOf="@+id/profilePic"
         android:text="This is a quote"
         android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="italic"  />
+
+    <TextView
+        android:id="@+id/profileBio"
+        android:layout_width="wrap_content"
+        android:layout_height="150dip"
+        android:layout_alignLeft="@+id/profilePic"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:text="Bio"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/profilePic"
+        android:layout_below="@+id/profilePic"
+        android:text="BIO:"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge"  />
 
 </RelativeLayout>

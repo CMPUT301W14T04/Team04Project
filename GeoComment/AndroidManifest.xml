@@ -61,6 +61,14 @@
             android:name="com.example.geocomment.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
+        <activity
+            android:name="com.example.geocomment.EditProfile"
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName="com.example.geocomment.OptionActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.geocomment.OptionActivity" />
+        </activity>
     </application>
 
 </manifest>

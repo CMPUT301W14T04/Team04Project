@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.geocomment.EditProfile$PlaceholderFragment" >
+
+    <ImageView
+        android:id="@+id/editProfilePic"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/face"
+        android:contentDescription="User picture" />
+
+    <Button
+        android:id="@+id/editChangePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/editProfilePic"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/editProfilePic"
+        android:text="Change Picture" 
+        android:onClick="editPic"/>
+
+    <Button
+        android:id="@+id/editNewBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editQuote"
+        android:layout_alignRight="@+id/editQuote"
+        android:layout_below="@+id/editProfilePic"
+        android:layout_marginTop="62dp"
+        android:text="Edit Biography" 
+        android:onClick="editBio"/>
+
+    <Button
+        android:id="@+id/editContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editQuote"
+        android:layout_centerHorizontal="true"
+        android:text="edit Contact Information" 
+        android:onClick="editContact"/>
+
+    <Button
+        android:id="@+id/editQuote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editContact"
+        android:layout_alignRight="@+id/editContact"
+        android:layout_below="@+id/editNewBio"
+        android:text="Edit Quote" 
+        android:onClick="editQuote"/>
+
+    <Button
+        android:id="@+id/editAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editProfilePic"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="26dp"
+        android:layout_toLeftOf="@+id/editCancel"
+        android:text="Ok" 
+        android:onClick="editOk"/>
+
+    <Button
+        android:id="@+id/editCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editAccept"
+        android:layout_alignBottom="@+id/editAccept"
+        android:layout_alignLeft="@+id/editChangePic"
+        android:layout_alignRight="@+id/editChangePic"
+        android:text="Cancel" 
+        android:onClick="editCancel"/>
+
+</RelativeLayout>

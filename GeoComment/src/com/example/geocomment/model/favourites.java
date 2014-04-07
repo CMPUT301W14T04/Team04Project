@@ -16,6 +16,12 @@ public class favourites {
 	static List<Commentor> favouriteStore = new ArrayList<Commentor>();
 	static List<Commentor> favourites = new ArrayList<Commentor>();
 	
+	
+	/*
+	 * Takes the favourited comments retrieved from
+	 * elastic search and stores them in a list
+	 * to show when requested
+	 */
 	public static void updateGeo(List<Commentor> commentList){
 		favouriteGeo.clear();
 		favourites.clear();
@@ -28,7 +34,10 @@ public class favourites {
 		}
 	}
 	
-	
+	/*
+	 * Takes the favourited replies and stores them
+	 * to be shown upon request
+	 */
 	public static void updateBrowse(List<Commentor> commentList){
 		for(Commentor c: favouriteBrowse){
 			if(c.isFavourite()==false){
@@ -42,6 +51,11 @@ public class favourites {
 		}
 	}
 	
+	
+	/*
+	 * Returns the list of favourited replies and comments
+	 * to show to the user on the adapter
+	 */
 	public static List<Commentor> returnFav(){
 		favourites.clear();
 		favourites.addAll(favouriteBrowse);

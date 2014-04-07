@@ -22,7 +22,7 @@ public class UserProfile implements Parcelable {
 		Log.i("User profile", "parcel");
 		this.biography= source.readString();
 		this.aUser = (User) source.readValue(User.class.getClassLoader());
-		this.social =(ArrayList<String>) source.readValue(getClass().getClassLoader());
+		this.social=source.readArrayList(getClass().getClassLoader());
 		this.pic= (Bitmap) source.readValue(getClass().getClassLoader());
 		this.quote = source.readString();
 	}
@@ -30,7 +30,7 @@ public class UserProfile implements Parcelable {
 	public UserProfile(User aUser)
 	{
 		this.aUser=aUser;
-		this.biography="Tell No Tales";
+		this.biography=null;
 		this.pic=null;
 		this.quote=null;
 		this.social = new ArrayList<String>();
@@ -58,6 +58,11 @@ public class UserProfile implements Parcelable {
 	 */
 	public void setSocial(List<String> social) {
 		this.social = social;
+	}
+	
+	public void addSocial (String social)
+	{
+		this.social.add(social);
 	}
 	/**
 	 * @return the pic
@@ -111,7 +116,7 @@ public class UserProfile implements Parcelable {
 		Log.e("parceable", "UserProfile" + flags);
 		dest.writeString(biography);
 		dest.writeValue(aUser);
-		dest.writeValue(social);
+		dest.writeList(social);
 		dest.writeValue(pic);
 		dest.writeString(quote);
 	}
