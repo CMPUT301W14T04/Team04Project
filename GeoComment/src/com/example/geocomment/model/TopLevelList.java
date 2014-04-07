@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -53,7 +54,6 @@ public class TopLevelList {
 	private List<Commentor> proxiLoc;
 	private List<Commentor> nonPicture;
 	private List<Commentor> dateList;
-	private List<Commentor> likesList;
 	GeoCommentActivity main;
 	GPSLocation gpsLocation;
 
@@ -65,7 +65,7 @@ public class TopLevelList {
 		this.proxiMe = new ArrayList<Commentor>();
 		this.proxiLoc = new ArrayList<Commentor>();
 		this.dateList = new ArrayList<Commentor>();
-		this.likesList = new ArrayList<Commentor>();
+		new ArrayList<Commentor>();
 	}
 
 	/**
@@ -215,11 +215,15 @@ public class TopLevelList {
 			}
 		}
 		Collections.sort(proxiMe, new Comparator<Commentor>() {
+			private Context context;
+
 			public int compare(Commentor comment1, Commentor comment2) {
-				//Location currentLocation = gpsLocation.getLocation();
 				Location currentLocation = new Location("Location");
-				currentLocation.setLatitude(0);
-				currentLocation.setLongitude(0);
+				gpsLocation = new GPSLocation(context);
+				currentLocation = gpsLocation.getLocation();
+				if (currentLocation == null) {
+					return 0;
+				}
 
 				Location location1 = new Location("Location");
 				if (comment1.getaLocation() != null) {
@@ -253,9 +257,15 @@ public class TopLevelList {
 
 	public void updateProxiLoc() {
 		// TODO Auto-generated method stub
-		Collections.sort(topLevelList, new Comparator<Commentor>() {
+		for (Commentor c: topLevelList) {
+			if (!proxiLoc.contains(c)) {
+				proxiLoc.add(c);
+			}
+		}
+		Collections.sort(proxiLoc, new Comparator<Commentor>() {
 			public int compare(Commentor comment1, Commentor comment2) {
 				Location currentLocation = new Location("Location");
+				main = new GeoCommentActivity();
 				currentLocation.setLatitude(main.modifiedLocation[0]);
 				currentLocation.setLongitude(main.modifiedLocation[1]);
 
@@ -285,18 +295,7 @@ public class TopLevelList {
 				return (int) difference;
 			}
 		});
-		for (Commentor c: topLevelList) {
-			if (!proxiLoc.contains(c)) {
-				proxiLoc.add(c);
-			}
-		}
 		this.adapter.notifyDataSetChanged();
 	}
-
-	
-
-
-
-
 
 }
