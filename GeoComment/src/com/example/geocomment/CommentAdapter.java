@@ -56,8 +56,6 @@ import com.example.geocomment.util.Format;
  */
 public class CommentAdapter extends ArrayAdapter<Commentor> {
 
-	// private byte[] decodedString = null;
-	// private Bitmap decodedByte = null;
 	Context mContext;
 
 	public CommentAdapter(Context context, int resource, List<Commentor> list) {
@@ -83,8 +81,8 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 		final Commentor comment_meta = this.getItem(position);
 
 		/*
-		 * This creates a link to the favourite button and implements an on
-		 * clicklistner
+		 * This creates a link to the favorite button and implements an 
+		 * onClickListener
 		 */
 		final ImageButton image = (ImageButton) convertView
 				.findViewById(R.id.imageButton1);
