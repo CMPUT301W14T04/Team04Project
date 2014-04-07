@@ -95,6 +95,11 @@ public class UserProfile implements Parcelable {
 	public String getUsername() {
 		return aUser.getUserName();
 	}
+	
+	public void setUsername(String name)
+	{
+		this.aUser.setUserName(name);
+	}
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub

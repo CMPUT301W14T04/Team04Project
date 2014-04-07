@@ -63,7 +63,9 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		settings.setOnItemClickListener(this);
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
-		profile = (UserProfile) bundle.getParcelable("profile");
+		profile = (UserProfile) bundle.getParcelable("Profile");
+		
+		Toast.makeText(this, profile.getUsername(), Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -136,6 +138,7 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		case CHANGE_USERNAME_OPTION:
 			openDialogChangeUsername();
 		case VIEW_PROFILE:
+			openProfile();
 			break;
 		case EDIT_PROFILE:
 			break;
@@ -164,11 +167,13 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 			public void onClick(DialogInterface dialog, int which) {
 				String stringuser = newusername.getText().toString();
 				if (!stringuser.isEmpty()) {
-					username = stringuser;
+					profile.setUsername(stringuser);
 					Toast.makeText(OptionActivity.this, "New Username made",
 							Toast.LENGTH_SHORT).show();
 					Intent intent = new Intent();
-					intent.putExtra("setUsername", username);
+					Bundle bundle = new Bundle();
+					bundle.putParcelable("profile", profile);
+					intent.putExtras(bundle);
 					setResult(90, intent);
 					finish();
 				} else
@@ -191,5 +196,9 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		// show it
 		alertDialog.show();
 
+	}
+	
+	private void openProfile(){
+		
 	}
 }

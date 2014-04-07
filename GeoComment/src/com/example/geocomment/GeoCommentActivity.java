@@ -266,7 +266,7 @@ public class GeoCommentActivity extends Activity implements
 			user = new User(locations, userPre.getUserName(), userPre.getId());
 			locationHistory = userPre.getLocationList();
 			profile = new UserProfile(user);
-//			Log.e("Profile", profile.getUsername());
+			Log.e("Profile", profile.getUsername());
 		}
 
 	}
@@ -528,9 +528,10 @@ public class GeoCommentActivity extends Activity implements
 					GeoCommentActivity.this);
 		case 90:
 			if (data != null) {
-				String name = data.getStringExtra("setUsername");
-				user.setUserName(name);
-				Log.e("USERNAME CHANGES TO", name);
+				profile = data.getParcelableExtra("profile");
+				
+				user.setUserName(profile.getUsername());
+				Log.e("USERNAME CHANGES TO", profile.getUsername());
 				userPre = new UserPreference(user.getUserName(), user.getID(),
 						locationHistory);
 				save(Resource.GENERAL_INFO_SAVE);
