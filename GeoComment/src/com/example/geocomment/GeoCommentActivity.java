@@ -96,6 +96,7 @@ import com.google.gson.reflect.TypeToken;
 public class GeoCommentActivity extends Activity implements
 		OnItemClickListener, OnItemSelectedListener {
 
+	private GeoCommentActivityProduct geoCommentActivityProduct = new GeoCommentActivityProduct();
 	Gson gson;
 	Internet internet;
 	GPSLocation location;
@@ -120,7 +121,7 @@ public class GeoCommentActivity extends Activity implements
 	}
 
 	
-	/*
+	/**
 	 * This function takes the last
 	 * comments gotten from elastic search and 
 	 * saves them into memory just incase
@@ -143,7 +144,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
-	/*
+	/**
 	 * This function loads the comments
 	 * saved from the last time the user had internet
 	 * and shows it them in the event they have no internet available
@@ -224,7 +225,9 @@ public class GeoCommentActivity extends Activity implements
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/**
+		 * Inflate the menu; this adds items to the action bar if it is present.
+		 */
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -243,7 +246,7 @@ public class GeoCommentActivity extends Activity implements
 								+ "you need to identificate yourself with an "
 								+ "UserName", Toast.LENGTH_LONG).show();
 			} else
-				creatNewComment();
+				geoCommentActivityProduct.creatNewComment(user, locationHistory, this);
 			return true;
 		case R.id.settings:
 			openSettings();
@@ -273,8 +276,10 @@ public class GeoCommentActivity extends Activity implements
 	protected void onStart() {
 		super.onStart();
 		double[] locations = { location.getLatitude(), location.getLongitude() };
-		// get a json string and check if the null or not
-		// if null create a new user without username.
+		/**
+		 * get a json string and check if the null or not
+		 * if null create a new user without username.
+		 */
 		String info = load(Resource.GENERAL_INFO_LOAD);
 		if (info == null) {
 
@@ -290,7 +295,6 @@ public class GeoCommentActivity extends Activity implements
 			user = new User(locations, userPre.getUserName(), userPre.getId());
 			locationHistory = userPre.getLocationList();
 			profile = userPre.getProfile();
-			//Log.e("Profile", profile.getUsername());
 
 		}
 
@@ -301,13 +305,10 @@ public class GeoCommentActivity extends Activity implements
 		super.onPause();
 		save(Resource.GENERAL_INFO_SAVE);
 
-//		save(Resource.FAVOURITE_SAVE);
-
 		if (internet.isConnectedToInternet() == true) {
 			cacheSave();
 		}
 		commentList.clear();
-		//ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 	}
 
 	/*
@@ -321,20 +322,9 @@ public class GeoCommentActivity extends Activity implements
 		super.onResume();
 		ElasticSearchOperations.searchALL(commentList, this);
 
-
-//		load(Resource.FAVOURITE_LOAD);
-
 		if(internet.isConnectedToInternet()==false){
 			cacheLoad();
 		}
-		//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
-		/*for(Commentor c: commentList.getList()){
-			for(Commentor c1: favourites.getFavouriteGeo()){
-				if(c.getID().equals(c1.getID())){
-					c.setFavourite(true);
-				}
-			}
-		}*/
 	}
 
 	@Override
@@ -383,8 +373,6 @@ public class GeoCommentActivity extends Activity implements
 		 */
 		case Resource.FAVOURITE_LOAD:
 			try {
-				// Toast.makeText(this, gson.toJson(commentList.getList()),
-				// Toast.LENGTH_SHORT).show();
 				fis = openFileInput(Resource.FAVOURITE_FILE);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						fis));
@@ -393,19 +381,6 @@ public class GeoCommentActivity extends Activity implements
 				}.getType();
 				List<Commentor> listFav = gson.fromJson(fav, Type);
 
-				// Toast.makeText(this, gson.toJson(listFav),
-				// Toast.LENGTH_SHORT).show();
-				/*
-				 * if(internet.isConnectedToInternet()==false){ String
-				 * favReply=in.readLine(); Type Reply = new
-				 * TypeToken<ArrayList<Reply>>() { }.getType(); List<Commentor>
-				 * favReplies=gson.fromJson(favReply, Reply); }
-				 */
-				/*
-				 * for (Commentor c : listFav) { for (Commentor
-				 * c1:commentList.getList()){ if (c1.getID().equals(c.getID())){
-				 * c1.setFavourite(true); } } }
-				 */
 				fis.close();
 		
 				favourites.load(listFav);
@@ -496,32 +471,6 @@ public class GeoCommentActivity extends Activity implements
 			}
 			break;
 		}
-	}
-
-	/**
-	 * This pases all the data from one activity to another This includes the
-	 * username, the ID, and the location of the comment
-	 */
-	public void creatNewComment() {
-		Intent intent = new Intent(GeoCommentActivity.this,
-				CreateCommentActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putParcelable(Resource.USER_INFO, user);
-		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
-		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
-		intent.putExtras(bundle);
-		startActivityForResult(intent, Resource.RESQUEST_NEW_TOP_LEVEL);
-	}
-
-	public void editComment() {
-		Intent intent = new Intent(GeoCommentActivity.this,
-				EditCommentActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putParcelable(Resource.USER_INFO, user);
-		bundle.putParcelable(Resource.USER_LOCATION_HISTORY, locationHistory);
-		bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
-		intent.putExtras(bundle);
-		startActivityForResult(intent, Resource.COMMENT_EDITED);
 	}
 
 	/**
@@ -745,35 +694,6 @@ public class GeoCommentActivity extends Activity implements
 			Intent intent = new Intent(GeoCommentActivity.this,
 					EditCommentActivity.class);
 			intent.putExtra("comment", new Gson().toJson(topLevel));
-			// THIS END//
-
-			// COMMENTED CODE BELOW CAN BE DELETED BEGIN //
-			//Log.d("comment", new Gson().toJson(topLevel));
-			/*String text = ((TextView) info.targetView
-					.findViewById(R.id.comment)).getText().toString();
-			String id = ((TextView) info.targetView
-					.findViewById(R.id.commentId)).getText().toString();
-			String user_name = ((TextView) info.targetView
-					.findViewById(R.id.tvtitle)).getText().toString();
-			int likes = Integer.parseInt(((TextView) info.targetView
-					.findViewById(R.id.likes_button)).getText().toString()
-					.split(": ")[1]);
-			Bitmap photo = ((BitmapDrawable) ((ImageView) info.targetView
-					.findViewById(R.id.pic_image_view)).getDrawable())
-					.getBitmap();
-			Intent intent = new Intent(GeoCommentActivity.this,
-					EditCommentActivity.class);
-			intent.putExtra("commentId", id);
-			intent.putExtra("text", text);
-			intent.putExtra("likes", likes);
-			Bundle bundle = new Bundle();
-			bundle.putParcelable(Resource.USER_INFO, user);
-			bundle.putParcelable(Resource.USER_LOCATION_HISTORY,
-					locationHistory);
-			bundle.putParcelable("photo", photo);
-			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_TOP_LEVEL);
-			intent.putExtras(bundle);*/
-			// COMMENTED CODE BELOW CAN BE DELETED ENDS//
 
 			String user_name = ((TextView) info.targetView
 					.findViewById(R.id.tvtitle)).getText().toString();
@@ -789,9 +709,7 @@ public class GeoCommentActivity extends Activity implements
 		case R.id.viewProfile:
 			int i = info.position;
 			Commentor comment = commentList.getComment(i);
-			// Log.e("userID", userID);
-			// Toast.makeText(getApplicationContext(), userID,
-			// Toast.LENGTH_SHORT).show();
+
 			viewProfile(comment);
 		default:
 			return super.onContextItemSelected(item);
