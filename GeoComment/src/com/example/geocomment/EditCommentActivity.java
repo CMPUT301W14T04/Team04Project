@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
@@ -54,6 +54,12 @@ import com.example.geocomment.model.User;
 import com.example.geocomment.util.Resource;
 import com.google.gson.Gson;
 
+/**
+ * This method lets the user edit his own comment. 
+ * The username of the user must match the username of 
+ * the comment in order for an edit to be made.
+ */
+
 public class EditCommentActivity extends Activity {
 	protected String commentId;
 	protected String text = "";
@@ -71,7 +77,6 @@ public class EditCommentActivity extends Activity {
 
 	protected static final int CAMERA_REQUEST = 0;
 	protected static final int GALLARY_REQUEST = 1;
-	// private static final int MAX_BITMAP_DIMENSIONS = 50;
 	private ImageView imageView = null;
 	Bitmap photo = null;
 	TextView editText;
@@ -97,7 +102,9 @@ public class EditCommentActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/**
+		 * Inflate the menu; this adds items to the action bar if it is present.
+		 */
 		getMenuInflater().inflate(R.menu.edit_comment, menu);
 		return true;
 	}
@@ -136,14 +143,25 @@ public class EditCommentActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
-			// resize chosen photo
+			/**
+			 * resize chosen photo
+			 */
 			photo = Bitmap.createScaledBitmap(photo, 100, 100, false);
-			// set photo for preview
+			/**
+			 * set photo for preview
+			 */
 			Log.d("Image", "set photo for preview");
 			imageView.setImageBitmap(photo);
 		}
 	}
 
+	/**
+	 * Submitting an edited comment to the server.
+	 * Clickign the submit button changes the information
+	 * on the server. The text of the comment is changed, as
+	 * is the date. The date becomes the date that the comment 
+	 * was edited.
+	 */
 	public void submitEdit(View view) {
 		Log.d("Submit Edit Clicked", "Submit Edit Clicked");
 		Calendar timeStamp = Calendar.getInstance();
@@ -151,7 +169,7 @@ public class EditCommentActivity extends Activity {
 		String ID = commentId;
 		double[] location = user.getUserLocation();
 		if (text.isEmpty()) {
-			Toast.makeText(this, "You can't submit a blank comment",
+			Toast.makeText(this, "You can't submit a blank comment. Please enter a comment",
 					Toast.LENGTH_LONG).show();
 		} else {
 			Comment = new TopLevel(user, timeStamp, photo, text, location,
@@ -162,20 +180,4 @@ public class EditCommentActivity extends Activity {
 			finish();
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onBackPressed()
-	 */
-	/*@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		Intent next_intent = new Intent(EditCommentActivity.this,
-				GeoCommentActivity.class);
-		startActivity(next_intent);
-		finish();
-	}*/
-
 }

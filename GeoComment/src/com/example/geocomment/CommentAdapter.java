@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
@@ -80,7 +80,7 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 		final Commentor comment_meta = this.getItem(position);
 
-		/*
+		/**
 		 * This creates a link to the favorite button and implements an 
 		 * onClickListener
 		 */
@@ -115,13 +115,17 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 			if (comment != null)
 				comment.setText(comment_meta.getTextComment());
 
-			/** Set comment id into a hidden textview BEGIN **/
+			/** 
+			 * Set comment id into a hidden textview BEGIN 
+			 */
 			TextView commentId = (TextView) convertView
 					.findViewById(R.id.commentId);
 			if (commentId != null) {
 				commentId.setText(comment_meta.getID());
 			}
-			/** Set comment id into a hidden textview ENDs **/
+			/** 
+			 * Set comment id into a hidden textview ENDs 
+			 */
 
 			ImageView picImageView = (ImageView) convertView
 					.findViewById(R.id.pic_image_view);
@@ -142,7 +146,9 @@ public class CommentAdapter extends ArrayAdapter<Commentor> {
 
 			Button likes = (Button) convertView
 					.findViewById(R.id.likes_button);
-			//test
+			/**
+			 * test
+			 */
 			if (likes != null){
 				likes.setText("Likes: " + Integer.toString(comment_meta.getLikes()));
 				likes.setOnClickListener(new View.OnClickListener() {

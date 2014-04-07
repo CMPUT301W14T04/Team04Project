@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
@@ -96,7 +96,7 @@ public class CommentBrowseActivity extends Activity {
 	
 	private Internet internet;
 
-	/*
+	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 * Creates all the information that comes with a comment, such as
 	 * username, date, text comment, location, picture, the number of likes
@@ -106,7 +106,9 @@ public class CommentBrowseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment_browse);
-		// Show the Up button in the action bar.
+		/**
+		 * Show the Up button in the action bar.
+		 */
 		setupActionBar();
 
 		username = (TextView) findViewById(R.id.usernameBrowse);
@@ -128,7 +130,7 @@ public class CommentBrowseActivity extends Activity {
 		toplevel = (TopLevel) bundle.getParcelable("test");
 		user = (User) bundle.getParcelable("user");
 
-		/*
+		/**
 		 * just variable that store info from comment object
 		 */
 		String displayUsername = toplevel.getUserName();
@@ -159,7 +161,7 @@ public class CommentBrowseActivity extends Activity {
 
 	}
 	
-	/*
+	/**
 	 * Increments the like button when it is pressed
 	 */
 	public void likeIncrement(View v) {
@@ -185,7 +187,9 @@ public class CommentBrowseActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/**
+		 * Inflate the menu; this adds items to the action bar if it is present.
+		 */
 		getMenuInflater().inflate(R.menu.comment_browse, menu);
 		return true;
 	}
@@ -194,13 +198,13 @@ public class CommentBrowseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
+			/**
+			 * This ID represents the Home or Up button. In the case of this
+			 * activity, the Up button is shown. Use NavUtils to allow users
+			 * to navigate up one level in the application structure. For
+			 * more details, see the Navigation pattern on Android Design:
+			 * http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			*/
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.reply_comment:
@@ -217,8 +221,11 @@ public class CommentBrowseActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	// Thinking in use this method when the comment is create so the user do to
-	// have to wait till the geocoder find the location.
+	/**
+	 *  Thinking in use this method when the comment is create so the user do to
+	 *  have to wait till the geocoder find the location.
+	 */
+	
 	/**
 	 * this method use the latitude and longitude of the comment to determine
 	 * the city, and country using geocoder.
@@ -263,7 +270,7 @@ public class CommentBrowseActivity extends Activity {
 		return local;
 	}
 
-	/*
+	/**
 	 * Creates a new comment, does not let the user create a 
 	 * comment if the user does not have a username
 	 */

@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
@@ -171,9 +171,13 @@ public class CreateCommentActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 			photo = (Bitmap) data.getExtras().get("data");
-			// resize chosen photo
+			/**
+			 * resize chosen photo
+			 */
 			photo = Bitmap.createScaledBitmap(photo, 200, 200, false);
-			// set photo for preview
+			/**
+			 * set photo for preview
+			 */
 			imageView.setImageBitmap(photo);
 		}
 	}
@@ -189,7 +193,7 @@ public class CreateCommentActivity extends Activity {
 	 * @param view
 	 */
 	public void submitComment(View view) {
-		/*
+		/**
 		 * If the comment being made is a top level comment
 		 */
 		if (type == Resource.TYPE_TOP_LEVEL) {
@@ -216,8 +220,8 @@ public class CreateCommentActivity extends Activity {
 
 		}
 
-		/*
-		 * If the comment being made is a reply
+		/**
+		 * If the comment being made is a reply to a top level comment
 		 */
 		if (type == Resource.TYPE_REPLY) {
 			Calendar timeStamp = Calendar.getInstance();
@@ -289,10 +293,14 @@ public class CreateCommentActivity extends Activity {
 						dialog.cancel();
 					}
 				});
-		// create alert dialog
+		/**
+		 * create alert dialog
+		 */
 		AlertDialog alertDialog = alertDialogBuilder.create();
 
-		// show it
+		/**
+		 * show it
+		 */
 		alertDialog.show();
 
 	}
