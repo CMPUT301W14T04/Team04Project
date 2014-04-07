@@ -183,15 +183,28 @@ public class TopLevelList {
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
 			public int compare(Commentor comment1, Commentor comment2) {
 				Location currentLocation = gpsLocation.getLocation();
+				if(currentLocation == null){
+					return 0;
+				}
 
 				Location location1 = new Location("Location");
-				location1.setLatitude(comment1.getaLocation()[1]);
-				location1.setLongitude(comment1.getaLocation()[0]);
+				if (comment1.getaLocation() != null) {
+					location1.setLatitude(comment1.getaLocation()[1]);
+					location1.setLongitude(comment1.getaLocation()[0]);
+				} else {
+					location1.setLatitude(0);
+					location1.setLongitude(0);
+				}
 
 				Location location2 = new Location("Location");
-				location2.setLatitude(comment2.getaLocation()[1]);
-				location2.setLongitude(comment2.getaLocation()[0]);
-
+				if (comment1.getaLocation() != null) {
+					location2.setLatitude(comment2.getaLocation()[1]);
+					location2.setLongitude(comment2.getaLocation()[0]);
+				} else {
+					location2.setLatitude(0);
+					location2.setLongitude(0);
+				}
+				
 				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
 				if(difference < 0)
 					difference = Math.floor(difference);
@@ -217,12 +230,22 @@ public class TopLevelList {
 				currentLocation.setLongitude(main.modifiedLocation[0]);
 
 				Location location1 = new Location("Location");
-				location1.setLatitude(comment1.getaLocation()[1]);
-				location1.setLongitude(comment1.getaLocation()[0]);
+				if (comment1.getaLocation() != null) {
+					location1.setLatitude(comment1.getaLocation()[1]);
+					location1.setLongitude(comment1.getaLocation()[0]);
+				} else {
+					location1.setLatitude(0);
+					location1.setLongitude(0);
+				}
 
 				Location location2 = new Location("Location");
-				location2.setLatitude(comment2.getaLocation()[1]);
-				location2.setLongitude(comment2.getaLocation()[0]);
+				if (comment1.getaLocation() != null) {
+					location2.setLatitude(comment2.getaLocation()[1]);
+					location2.setLongitude(comment2.getaLocation()[0]);
+				} else {
+					location2.setLatitude(0);
+					location2.setLongitude(0);
+				}
 
 				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
 				if(difference < 0)
