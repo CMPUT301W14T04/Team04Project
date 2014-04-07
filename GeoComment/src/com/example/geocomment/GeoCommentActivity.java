@@ -756,6 +756,7 @@ public class GeoCommentActivity extends Activity implements
 						Toast.LENGTH_LONG).show();
 			}
 			// startActivity(intent);
+			break;
 		case R.id.viewProfile:
 			int i = info.position;
 			Commentor comment = commentList.getComment(i);
@@ -766,6 +767,7 @@ public class GeoCommentActivity extends Activity implements
 		default:
 			return super.onContextItemSelected(item);
 		}
+		return false;
 	}
 
 	@Override
