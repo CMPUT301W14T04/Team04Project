@@ -66,13 +66,13 @@ public class CommentBrowseActivity extends Activity {
 	private User user;
 	
 	private Internet internet;
-	private Gson gson;
-	
-	private void constructGson() {
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
-		gson = builder.create();
-	}
+
+	/*
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 * Creates all the information that comes with a comment, such as
+	 * username, date, text comment, location, picture, the number of likes
+	 * the comment has and all the replies the comment has
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,7 +82,6 @@ public class CommentBrowseActivity extends Activity {
 
 		username = (TextView) findViewById(R.id.usernameBrowse);
 		date = (TextView) findViewById(R.id.dateBrowse);
-		// likeNumber = (TextView) findViewById(R.id.likeNumber);
 		text = (TextView) findViewById(R.id.textBrowse);
 		location = (TextView) findViewById(R.id.locationBrowse);
 		picture = (ImageView) findViewById(R.id.topLevelPicture);
@@ -99,7 +98,6 @@ public class CommentBrowseActivity extends Activity {
 
 		toplevel = (TopLevel) bundle.getParcelable("test");
 		user = (User) bundle.getParcelable("user");
-		// Log.e("the user", user.getUserName());
 
 		/*
 		 * just variable that store info from comment object
@@ -123,9 +121,6 @@ public class CommentBrowseActivity extends Activity {
 		
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
-		
-
-		gson = gsonBuilder.create();
 
 		ElasticSearchOperations.searchReplies(repliesList,
 				CommentBrowseActivity.this, toplevel.getID());
@@ -135,6 +130,9 @@ public class CommentBrowseActivity extends Activity {
 
 	}
 	
+	/*
+	 * Increments the like button when it is pressed
+	 */
 	public void likeIncrement(View v) {
 		toplevel.setLikes(toplevel.getLikes() + 1);
 		((Button) v).setText("Like: " + toplevel.getLikes());
@@ -180,9 +178,9 @@ public class CommentBrowseActivity extends Activity {
 			if (user.getUserName() == null) {
 				Toast.makeText(
 						this,
-						"Before you share your exp with other,"
-								+ "you need to identificate yourself with an "
-								+ "UserName", Toast.LENGTH_LONG).show();
+						"Before you share your experience with others,"
+								+ "you need to create a "
+								+ "username", Toast.LENGTH_LONG).show();
 			} else
 				creatNewComment();
 
@@ -210,8 +208,6 @@ public class CommentBrowseActivity extends Activity {
 			addresses = geo.getFromLocation(lat, lon, 1);
 			local = new StringBuilder();
 			if (Geocoder.isPresent()) {
-				Toast.makeText(getApplicationContext(), "geocoder present",
-						Toast.LENGTH_SHORT).show();
 				try {
 					Address returnAddress = addresses.get(0);
 
@@ -224,19 +220,12 @@ public class CommentBrowseActivity extends Activity {
 					Toast.makeText(this, "Error in Location",
 							Toast.LENGTH_SHORT).show();
 				}
-				// Toast.makeText(getApplicationContext(), zipcode,
-				// Toast.LENGTH_SHORT)
-				// .show();
 
 			} else {
-				Toast.makeText(getApplicationContext(), "geocoder not present",
+				Toast.makeText(getApplicationContext(), "Geocoder not present",
 						Toast.LENGTH_SHORT).show();
 			}
 
-			// } else {
-			// Toast.makeText(getApplicationContext(),
-			// "address not available", Toast.LENGTH_SHORT).show();
-			// }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 
@@ -245,6 +234,10 @@ public class CommentBrowseActivity extends Activity {
 		return local;
 	}
 
+	/*
+	 * Creates a new comment, does not let the user create a 
+	 * comment if the user does not have a username
+	 */
 	public void creatNewComment() {
 		Intent intent = new Intent(CommentBrowseActivity.this,
 				CreateCommentActivity.class);
@@ -252,14 +245,12 @@ public class CommentBrowseActivity extends Activity {
 		if (user.getUserName() != null) {
 			Bundle bundle = new Bundle();
 			bundle.putParcelable(Resource.USER_INFO, user);
-			// bundle.putParcelable(Resource.USER_LOCATION_HISTORY,
-			// locationHistory);
 			bundle.putString("parentID", toplevel.getID());
 			bundle.putInt(Resource.TOP_LEVEL_COMMENT, Resource.TYPE_REPLY);
 			intent.putExtras(bundle);
 			startActivityForResult(intent, 100);
 		} else
-			Toast.makeText(this, "Make a username before comment",
+			Toast.makeText(this, "Please make a username before creating a comment",
 					Toast.LENGTH_SHORT).show();
 	}
 
@@ -272,36 +263,11 @@ public class CommentBrowseActivity extends Activity {
 				Reply aTopLevel = data
 						.getParcelableExtra(Resource.TOP_LEVEL_COMMENT);
 				repliesList.AddTopLevel(aTopLevel, 2);
-				Log.e("Comment ID in MAin", aTopLevel.getID());
+				Log.e("Comment ID in Main", aTopLevel.getID());
 			} else
-				Log.e("error in acti", "data = null");
+				Log.e("error in action", "data = null");
 			break;
 		}
 }
-	private void load(){
-		FileInputStream fis;
-		try {
-			//Toast.makeText(this, gson.toJson(commentList.getList()), Toast.LENGTH_SHORT).show();
-			fis = openFileInput(Resource.FAVOURITE_REPLIES);
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-				fis));
-			String fav = in.readLine();
-			Type Type = new TypeToken<ArrayList<Reply>>() {
-			}.getType();
-			List<Reply> listFav = gson.fromJson(fav, Type);
-			savedReplies(listFav);
-			fis.close();
-		} catch (FileNotFoundException e) {
-			// TODOAuto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private void savedReplies(List<Reply> list){
-	//TO DO MAKE THIS BADBOY
-	}
 
 }
