@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
