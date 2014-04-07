@@ -1,4 +1,4 @@
-/*
+/**
 Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
 All rights reserved.
 
@@ -51,6 +51,10 @@ import com.example.geocomment.elasticsearch.ElasticSearchOpertationUser;
 import com.example.geocomment.model.UserProfile;
 import com.google.gson.Gson;
 
+/**
+ * This method lets the user edit their profile.
+ * The user can add a quote, a picture or their biography.
+ */
 public class EditProfile extends Activity {
 	protected static final int CAMERA_REQUEST = 0;
 
@@ -89,17 +93,20 @@ public class EditProfile extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
+		/**
+		 * Inflate the menu; this adds items to the action bar if it is present.
+		 */
 		getMenuInflater().inflate(R.menu.edit_profile, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		/**
+		 * Handle action bar item clicks here. The action bar will
+		 * automatically handle clicks on the Home/Up button, so long
+		 * as you specify a parent activity in AndroidManifest.xml.
+		 */
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -107,12 +114,23 @@ public class EditProfile extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Lets the user edit their profile picture in their
+	 * profile.
+	 * 
+	 * @param view
+	 */
 	public void editPic(View view) {
 		Intent cameraIntent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 		startActivityForResult(cameraIntent, CAMERA_REQUEST);
 	}
 
+	/**
+	 * Lets the user edit their biography in their profile
+	 * 
+	 * @param view
+	 */
 	public void editBio(View view) {
 		LayoutInflater li = LayoutInflater.from(this);
 		View locationChange = li.inflate(R.layout.text_dialog, null);
@@ -136,10 +154,10 @@ public class EditProfile extends Activity {
 				String newbio = bio.getText().toString();
 				if (!newbio.isEmpty()) {
 					profile.setBiography(newbio);
-					Toast.makeText(getApplicationContext(), "New Bio",
+					Toast.makeText(getApplicationContext(), "New biography added",
 							Toast.LENGTH_SHORT).show();
 				} else
-					Toast.makeText(getApplicationContext(), "Error",
+					Toast.makeText(getApplicationContext(), "Error!",
 							Toast.LENGTH_SHORT).show();
 
 			}
@@ -152,60 +170,23 @@ public class EditProfile extends Activity {
 						dialog.cancel();
 					}
 				});
-		// create alert dialog
+		/**
+		 * create alert dialog
+		 */
 		AlertDialog alertDialog = alertDialogBuilder.create();
 
-		// show it
+		/**
+		 * // show it
+		 */
 		alertDialog.show();
 
 	}
-
-//	public void editContact(View view) {
-//		LayoutInflater li = LayoutInflater.from(this);
-//		View locationChange = li.inflate(R.layout.text_dialog, null);
-//
-//		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-//		alertDialogBuilder.setTitle("Add contact info");
-//		alertDialogBuilder.setView(locationChange);
-//
-//		final EditText bio = (EditText) locationChange
-//				.findViewById(R.id.editText);
-//		bio.setInputType(InputType.TYPE_CLASS_TEXT
-//				| InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-//				| InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-//		bio.setHint("New contact info");
-//
-//		alertDialogBuilder.setCancelable(false);
-//		alertDialogBuilder.setNeutralButton("Add", new OnClickListener() {
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				String newbio = bio.getText().toString();
-//				if (!newbio.isEmpty()) {
-//					profile.addSocial(newbio);
-//					Toast.makeText(getApplicationContext(), "New Social added",
-//							Toast.LENGTH_SHORT).show();
-//				} else
-//					Toast.makeText(getApplicationContext(), "Error",
-//							Toast.LENGTH_SHORT).show();
-//
-//			}
-//
-//		});
-//		alertDialogBuilder.setNegativeButton("Cancel",
-//				new DialogInterface.OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int id) {
-//						dialog.cancel();
-//					}
-//				});
-//		// create alert dialog
-//		AlertDialog alertDialog = alertDialogBuilder.create();
-//
-//		// show it
-//		alertDialog.show();
-//	}
 	
+	/**
+	 * Lets the user edit their quote in their profile.
+	 * 
+	 * @param view
+	 */
 	public void editQuote (View view)
 	{
 		
@@ -228,10 +209,10 @@ public class EditProfile extends Activity {
 				String newbio = bio.getText().toString();
 				if (!newbio.isEmpty()) {
 					profile.setQuote(newbio);
-					Toast.makeText(getApplicationContext(), "New Quote",
+					Toast.makeText(getApplicationContext(), "New quote added",
 							Toast.LENGTH_SHORT).show();
 				} else
-					Toast.makeText(getApplicationContext(), "Error",
+					Toast.makeText(getApplicationContext(), "Error!",
 							Toast.LENGTH_SHORT).show();
 
 			}
@@ -244,18 +225,20 @@ public class EditProfile extends Activity {
 						dialog.cancel();
 					}
 				});
-		// create alert dialog
+		/**
+		 * create alert dialog
+		 */
 		AlertDialog alertDialog = alertDialogBuilder.create();
 
-		// show it
+		/**
+		 * show it
+		 */
 		alertDialog.show();
 		
 	}
 	
 	public void editOk(View view)
 	{
-		
-//		ElasticSearchOpertationUser.pushUserProfile(profile);
 		Intent intent = new Intent();
 		intent.putExtra("profile1", profile);
 		setResult(1, intent);
@@ -268,10 +251,13 @@ public class EditProfile extends Activity {
 			Toast.makeText(getApplicationContext(), "Pic taken",
 					Toast.LENGTH_SHORT).show();
 			photo = (Bitmap) data.getExtras().getParcelable("data");
-			// resize chosen photo
+			/**
+			 * resize chosen photo
+			 */
 			photo = Bitmap.createScaledBitmap(photo, 100, 100, false);
-			// set photo for preview
-			// pic.setImageBitmap(photo);
+			/**
+			 * set photo for preview
+			 */
 			profile.setPic(photo);
 			if (pic != null)
 				pic.setImageBitmap(profile.getPic());
