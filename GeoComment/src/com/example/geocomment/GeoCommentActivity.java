@@ -615,7 +615,7 @@ public class GeoCommentActivity extends Activity implements
 		} else if (parent.getItemAtPosition(pos).equals(
 				"Proximity to another location")) {
 			openDialogLocation();
-			commentList.updateProxiLoc();
+			//commentList.updateProxiLoc();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getProxiLocList());
 			commentListView.setAdapter(adapter);
