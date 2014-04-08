@@ -96,8 +96,6 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		profile = (UserProfile) bundle.getParcelable("Profile");
-
-//		Toast.makeText(this, profile.getBiography(), Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -186,6 +184,9 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 
 	}
 
+	/**
+	 * Lets the user change their username
+	 */
 	private void openDialogChangeUsername() {
 		LayoutInflater li = LayoutInflater.from(this);
 		View locationChange = li.inflate(R.layout.change_username, null);
@@ -271,7 +272,6 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 		if (requestCode == 1) {
 			if(data!=null){
 			profile = data.getParcelableExtra("profile1");
-//			Toast.makeText(getApplicationContext(), ""+profile.getSocial().size(), Toast.LENGTH_SHORT).show();
 			ElasticSearchOpertationUser.pushUserProfile(profile);}
 			else
 				Toast.makeText(getApplicationContext(), "Edit cancelled", Toast.LENGTH_SHORT).show();

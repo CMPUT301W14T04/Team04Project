@@ -38,7 +38,8 @@ import com.example.geocomment.model.LocationList;
 
 public class GeoCommentActivityProduct {
 	/**
-	 * This pases all the data from one activity to another This includes the username, the ID, and the location of the comment
+	 * This pases all the data from one activity to another 
+	 * This includes the username, the ID, and the location of the comment
 	 */
 	public void creatNewComment(User user, LocationList locationHistory,
 			GeoCommentActivity geoCommentActivity) {
@@ -53,6 +54,12 @@ public class GeoCommentActivityProduct {
 				Resource.RESQUEST_NEW_TOP_LEVEL);
 	}
 
+	/**
+	 * This lets the user edit their comment
+	 * @param user
+	 * @param locationHistory
+	 * @param geoCommentActivity
+	 */
 	public void editComment(User user, LocationList locationHistory,
 			GeoCommentActivity geoCommentActivity) {
 		Intent intent = new Intent(geoCommentActivity,

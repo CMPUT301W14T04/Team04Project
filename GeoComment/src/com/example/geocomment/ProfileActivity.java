@@ -41,6 +41,13 @@ import android.widget.TextView;
 import com.example.geocomment.model.User;
 import com.example.geocomment.model.UserProfile;
 
+/**
+ * This class contains all the information needed
+ * to create a profile for a user
+ * 
+ * @author nadine
+ *
+ */
 public class ProfileActivity extends Activity {
 	
 	UserProfile profile;

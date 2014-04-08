@@ -176,6 +176,10 @@ OnItemClickListener, OnItemSelectedListener {
 	}
 
 
+	/**
+	 * This tells the program what should be created
+	 * when the application is opened by the user
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -343,7 +347,8 @@ OnItemClickListener, OnItemSelectedListener {
 	}
 
 	/**
-	 * This loads
+	 * This loads both the favorites and the general information
+	 * of the user
 	 * 
 	 * @param type
 	 * @return
@@ -399,7 +404,7 @@ OnItemClickListener, OnItemSelectedListener {
 	}
 
 	/**
-	 * This method save in file information
+	 * This method saves information in a file
 	 * 
 	 * @param type
 	 *            all the type are define in the {@link Resource} class
@@ -446,22 +451,6 @@ OnItemClickListener, OnItemSelectedListener {
 
 
 				fos.close();
-				/*	if (internet.isConnectedToInternet()==true){
-					ArrayList<Commentor> replies=new ArrayList<Commentor>();
-					fos = openFileOutput(Resource.FAVOURITE_REPLIES,
-							Context.MODE_PRIVATE);
-					for(Commentor c:favourites.returnFav()){
-						ElasticSearchOperations.searchReplies1(replies,
-								GeoCommentActivity.this, c.getID());
-						Toast.makeText(this, gson.toJson(replies), Toast.LENGTH_SHORT).show();
-					}
-					String favReplies=gson.toJson(replies);
-					//Toast.makeText(this, favReplies, Toast.LENGTH_SHORT).show();
-					fos.write(favReplies.getBytes());
-					fos.close();
-<<<<<<< HEAD
-
-				}*/
 
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -508,7 +497,6 @@ OnItemClickListener, OnItemSelectedListener {
 		case Resource.COMMENT_EDITED:
 			Log.d("INSIDE COMMENT EDIT", "INSIDE COMMENT EDIT");
 			commentList.clear();
-			//commentList = new TopLevelList();
 			ElasticSearchOperations.searchALL(commentList,
 					GeoCommentActivity.this);
 		case 90:
@@ -532,7 +520,6 @@ OnItemClickListener, OnItemSelectedListener {
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
 		if (parent.getItemAtPosition(pos).equals("Home")) {
-			// commentList.updateDate();
 			if (internet.isConnectedToInternet() == false) {
 				Toast.makeText(this, "No internet from last visit",
 						Toast.LENGTH_LONG).show();
@@ -549,7 +536,7 @@ OnItemClickListener, OnItemSelectedListener {
 
 			/*
 			 * This option shows the comments that
-			 * the user has favourited
+			 * the user has favorited
 			 */
 		} else if (parent.getItemAtPosition(pos).equals("Favourites")) {
 			favourites.updateGeo(commentList.getList());
@@ -694,7 +681,6 @@ OnItemClickListener, OnItemSelectedListener {
 						"You don't have permission to edit this comment!",
 						Toast.LENGTH_LONG).show();
 			}
-			// startActivity(intent);
 			break;
 		case R.id.viewProfile:
 			int i = info.position;

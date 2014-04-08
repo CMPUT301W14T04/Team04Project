@@ -71,6 +71,11 @@ public class EditProfile extends Activity {
 	
 	Gson gson;
 
+	/**
+	 * This method implements when a user who already exists in 
+	 * the system with a username wants to create a profile containing
+	 * their information
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -182,6 +187,11 @@ public class EditProfile extends Activity {
 
 	}
 
+	/**
+	 * This creates the view for when the user wants to 
+	 * edit their profile
+	 * @param view
+	 */
 	public void editContact(View view) {
 		LayoutInflater li = LayoutInflater.from(this);
 		View locationChange = li.inflate(R.layout.text_dialog, null);
@@ -292,6 +302,12 @@ public class EditProfile extends Activity {
 		
 	}
 	
+	/**
+	 * This lets the user cancel out of the screen
+	 * if they decide they don't want to edit their
+	 * profile
+	 * @param view
+	 */
 	public void editCancel(View view)
 	{
 		finish();
@@ -299,7 +315,7 @@ public class EditProfile extends Activity {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-			Toast.makeText(getApplicationContext(), "Pic taken",
+			Toast.makeText(getApplicationContext(), "Picture taken",
 					Toast.LENGTH_SHORT).show();
 			photo = (Bitmap) data.getExtras().getParcelable("data");
 			/**
