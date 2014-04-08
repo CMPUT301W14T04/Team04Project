@@ -71,8 +71,8 @@ public class ElasticSearchOperations {
 	/**
 	 * Define the sever URL
 	 */
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments9/";
-	public static final String SERVER_URL_REPLY = "http://cmput301.softwareprocess.es:8080/testing/team04_replie1/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t04/commentss/";
+	public static final String SERVER_URL_REPLY = "http://cmput301.softwareprocess.es:8080/cmput301w14t04/team04_replie1/";
 	// for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
 

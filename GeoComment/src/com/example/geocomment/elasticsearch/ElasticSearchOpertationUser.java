@@ -58,7 +58,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class ElasticSearchOpertationUser {
 	
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_users1/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t04/team04_users1/";
 
 	public static final String LOG_TAG = "ElasticSearch";
 
