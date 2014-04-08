@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.geocomment.GeoCommentActivity;
-import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
@@ -41,12 +40,17 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	protected void setUp() throws Exception{
 		super.setUp();
 		activity = getActivity();
+		double[] vancouver={49.15,-123.6};
+		double[] newyork={40.71448,-74.00598};
+		double[] calgary={51.03,-114.04};
+		double[] LA={34.90,-119.1367};
+		double[] edmonton={53.32,-113.30};
 		comment=new TopLevel(user, timeStamp, null, "hi", null, "0", 0);
-		comment1= new TopLevel(user,timeStamp,null,"test",null, "1", 0);
-		comment2= new TopLevel(user,timeStamp,null,"another",null,"2", 0);
-		comment3= new TopLevel(user, timeStamp, null, "hi", null, "3", 0);
-		comment4= new TopLevel(user,timeStamp,null,"chuck",null, "4", 0);
-		comment5= new TopLevel(user,timeStamp,null,"duck",null,"5", 0);
+		comment1= new TopLevel(user,timeStamp,null,"test",vancouver, "1", 0);
+		comment2= new TopLevel(user,timeStamp,null,"another",newyork,"2", 0);
+		comment3= new TopLevel(user, timeStamp, null, "hi", calgary, "3", 0);
+		comment4= new TopLevel(user,timeStamp,null,"chuck",LA, "4", 0);
+		comment5= new TopLevel(user,timeStamp,null,"duck",edmonton,"5", 0);
 		comment6= new TopLevel(user,timeStamp,null,"truck",null,"6", 0);
 	}
 	
@@ -76,7 +80,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		
 		assertEquals("hi", comment.getTextComment());
 		assertEquals("elbohtim",comment.getUserName());
-		assertEquals(timeStamp1,comment.getDate());
+		assertEquals(timeStamp,comment.getDate());
 	}
 	
 	/*
@@ -139,6 +143,25 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		comment1.setTextComment("This has been changed");
 		assertEquals("This has been changed",comment1.getTextComment());
 		
+	}
+	
+	/*
+	 * Testing sort by proxiamity to me requirement
+	 */
+	public void testLocation(){
+		TopLevelList top = new TopLevelList();
+		top.AddTopLevel(comment1, 1);
+		top.AddTopLevel(comment2, 1);
+		top.AddTopLevel(comment3, 1);
+		top.AddTopLevel(comment4, 1);
+		top.AddTopLevel(comment5, 1);
+		
+		top.updateProxiMe();
+		assertEquals(comment5,top.getProxiMeList().get(3));
+		assertEquals(comment3,top.getProxiMeList().get(2));
+		assertEquals(comment1,top.getProxiMeList().get(1));
+		assertEquals(comment2,top.getProxiMeList().get(4));
+		assertEquals(comment4,top.getProxiMeList().get(0));
 	}
 	
 	

@@ -248,7 +248,7 @@ public class TopLevelList {
 			}
 		});
 		
-		this.adapter.notifyDataSetChanged();
+		//this.adapter.notifyDataSetChanged();
 	}
 
 	public void updateProxiLoc() {
