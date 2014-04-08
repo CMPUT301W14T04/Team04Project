@@ -62,7 +62,7 @@ public class BitmapJsonConverter implements JsonDeserializer<Bitmap>,
 		return new JsonPrimitive(base64Encoded);
 	}
 
-	/*
+	/**
 	 *Takes a JSON Element and deserializes it back into a Bitmap 
 	 */
 	@Override

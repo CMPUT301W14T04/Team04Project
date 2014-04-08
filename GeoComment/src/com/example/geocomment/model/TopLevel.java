@@ -58,6 +58,9 @@ public class TopLevel extends Comment {
 		super(textComment,ID);
 	}
 	
+	/**
+	 * Initializes the top level information
+	 */
 	public TopLevel() {
 
 		super();
@@ -133,11 +136,5 @@ public class TopLevel extends Comment {
 
 	}
 
-	/**
-	 * build a new topLevel commment
-	 * 
-	 * @author Guillermo Ramirez
-	 * 
-	 */
 
 }

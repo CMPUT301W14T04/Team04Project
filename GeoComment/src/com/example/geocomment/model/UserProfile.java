@@ -37,6 +37,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+/**
+ * Lets the user create a profile
+ *
+ */
 public class UserProfile implements Parcelable {
 	
 	private User aUser;

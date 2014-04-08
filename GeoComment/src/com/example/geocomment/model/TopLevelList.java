@@ -44,6 +44,11 @@ import com.example.geocomment.GeoCommentActivity;
 import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.util.GPSLocation;
 
+/**
+ * Creates a list that contains all the top
+ * level comments
+ *
+ */
 public class TopLevelList {
 
 	private List<Commentor> topLevelList;
@@ -81,7 +86,6 @@ public class TopLevelList {
 			ElasticSearchOperations.pushComment(comment,1);
 		else
 			ElasticSearchOperations.pushComment(comment, 2);
-		//this.adapter.notifyDataSetChanged();
 	}
 
 	/**
@@ -141,6 +145,9 @@ public class TopLevelList {
 		return topLevelList.get(i);
 	}
 
+	/**
+	 * Lets the user update their picture
+	 */
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
 			if (c.getaPicture() != null & !picture.contains(c)) {
@@ -166,6 +173,9 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * Proximity to me for sorting
+	 */
 	public void updateProxiMe() {
 		// TODO Auto-generated method stub
 		for (Commentor c: topLevelList) {
@@ -214,6 +224,9 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * Proximity to another location sorting
+	 */
 	public void updateProxiLoc() {
 		// TODO Auto-generated method stub
 		for (Commentor c: topLevelList) {

@@ -33,6 +33,10 @@ import java.util.Calendar;
 
 import android.graphics.Bitmap;
 
+/**
+ * Getters and setters for the comments
+ *
+ */
 public interface Commentor {
 	
 	public String getUserName(); 

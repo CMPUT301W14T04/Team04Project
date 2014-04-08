@@ -36,6 +36,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+/**
+ * Comment class creates a comment, and all the 
+ * inforamtion that comes with the comment, such as 
+ * the picture, date, location, number of likes and the 
+ * ID's. All the getters and setters are in this classS
+ *
+ */
 @SuppressLint("ParcelCreator")
 public abstract class Comment implements Parcelable, Commentor {
 

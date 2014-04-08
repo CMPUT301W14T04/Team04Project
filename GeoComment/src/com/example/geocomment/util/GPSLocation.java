@@ -40,6 +40,13 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Gets the location of the user using Google
+ * This is later used for sorting an also
+ * to display the location of the user when they make
+ * a comment
+ *
+ */
 public class GPSLocation extends Service implements LocationListener
 {
 

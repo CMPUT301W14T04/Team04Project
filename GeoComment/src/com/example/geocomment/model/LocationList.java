@@ -36,6 +36,12 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Returns a list of locations. lets 
+ * a user modify a location, or use their
+ * current location as default
+ *
+ */
 public class LocationList implements Parcelable {
 
 	private List<double[]> locationHistory;

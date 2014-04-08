@@ -37,6 +37,11 @@ import android.widget.ArrayAdapter;
 import com.example.geocomment.CommentBrowseActivity;
 import com.example.geocomment.GeoCommentActivity;
 
+/**
+ * makes an array list that contains all the 
+ * favorites
+ *
+ */
 public class favourites {
 	GeoCommentActivity activity;
 	CommentBrowseActivity activity1;

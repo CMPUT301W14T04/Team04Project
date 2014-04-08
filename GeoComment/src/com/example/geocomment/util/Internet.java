@@ -33,7 +33,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
-
+/** 
+ * Checks if the internet is working
+ *
+ */
 public class Internet
 {
 	private final String NOT_CONNECTION = "Unable to connect";

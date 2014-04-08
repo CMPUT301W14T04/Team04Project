@@ -36,6 +36,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+/**
+ * Lets the user reply to comment.
+ * Replies are saved and accessed when
+ * the user wants to view them.
+ *
+ */
 public class Reply extends Comment {
 	
 	private String parentID;
@@ -59,6 +65,9 @@ public class Reply extends Comment {
 		this.ID =ID;
 	}
 
+	/**
+	 * Initializes all parameters of the replies
+	 */
 	public Reply()
 	{
 

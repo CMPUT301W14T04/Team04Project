@@ -29,7 +29,11 @@ either expressed or implied, of the FreeBSD Project.
 
 package com.example.geocomment.model;
 
-
+/**
+ * Sets the user preferences, such as the username, the
+ * user ID, and their profile information
+ *
+ */
 public class UserPreference {
 	private String userName;
 	private String id;

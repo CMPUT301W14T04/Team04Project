@@ -32,6 +32,10 @@ package com.example.geocomment.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * The user class
+ *
+ */
 public class User implements Parcelable {
 
 	private String userName;
