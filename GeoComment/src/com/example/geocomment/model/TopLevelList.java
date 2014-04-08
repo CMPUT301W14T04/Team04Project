@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the FreeBSD Project.
-*/
+ */
 
 package com.example.geocomment.model;
 
@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -48,12 +49,10 @@ public class TopLevelList {
 	private List<Commentor> topLevelList;
 	private ArrayAdapter<Commentor> adapter;
 	private List<Commentor> picture;
-	private List<Commentor> score;
 	private List<Commentor> proxiMe;
 	private List<Commentor> proxiLoc;
 	private List<Commentor> nonPicture;
 	private List<Commentor> dateList;
-	private List<Commentor> likesList;
 	GeoCommentActivity main;
 	GPSLocation gpsLocation;
 
@@ -61,11 +60,10 @@ public class TopLevelList {
 		this.topLevelList = new ArrayList<Commentor>();
 		this.picture = new ArrayList<Commentor>();
 		this.nonPicture = new ArrayList<Commentor>();
-		this.score = new ArrayList<Commentor>();
 		this.proxiMe = new ArrayList<Commentor>();
 		this.proxiLoc = new ArrayList<Commentor>();
 		this.dateList = new ArrayList<Commentor>();
-		this.likesList = new ArrayList<Commentor>();
+		new ArrayList<Commentor>();
 	}
 
 	/**
@@ -95,7 +93,7 @@ public class TopLevelList {
 	 */
 	public void addTopLevelCollection(Collection<Commentor> pots) {
 		this.topLevelList.addAll(pots);
-			Collections.sort(topLevelList, new Comparator<Commentor>() {
+		Collections.sort(topLevelList, new Comparator<Commentor>() {
 			@Override
 			public int compare(Commentor comment1, Commentor comment2) {
 				return comment2.getDate().compareTo(comment1.getDate());
@@ -119,26 +117,17 @@ public class TopLevelList {
 		}
 	}
 
-	
-	public List<Commentor> getList() {
-		
+	public List<Commentor> getList() {	
 		return Collections.unmodifiableList(topLevelList);
 	}
-
 
 	public List<Commentor> getDateList() {
 		return Collections.unmodifiableList(dateList);
 	}
 
-
 	public List<Commentor> getPictureList() {
 		// TODO Auto-generated method stub
 		return Collections.unmodifiableList(picture);
-	}
-
-	public List<Commentor> getScoreList() {
-		// TODO Auto-generated method stub
-		return Collections.unmodifiableList(score);
 	}
 
 	public List<Commentor> getProxiMeList() {
@@ -172,9 +161,9 @@ public class TopLevelList {
 				dateList.add(c);
 			}
 		}
-		this.adapter.notifyDataSetChanged();
+		//this.adapter.notifyDataSetChanged();
 	}
-	
+
 	public void updatePicture() {
 		for (Commentor c: topLevelList) {
 			if (c.getaPicture() != null & !picture.contains(c)) {
@@ -202,11 +191,6 @@ public class TopLevelList {
 		this.adapter.notifyDataSetChanged();
 	}
 
-	public void updateSocre() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void updateProxiMe() {
 		// TODO Auto-generated method stub
 		for (Commentor c: topLevelList) {
@@ -215,11 +199,18 @@ public class TopLevelList {
 			}
 		}
 		Collections.sort(proxiMe, new Comparator<Commentor>() {
+			private Context context;
+
 			public int compare(Commentor comment1, Commentor comment2) {
-				//Location currentLocation = gpsLocation.getLocation();
 				Location currentLocation = new Location("Location");
-				currentLocation.setLatitude(0);
-				currentLocation.setLongitude(0);
+				gpsLocation = new GPSLocation(context);
+				if (gpsLocation.getLocation() != null) {
+					currentLocation = gpsLocation.getLocation();
+				} else {
+					currentLocation.setLatitude(0);
+					currentLocation.setLongitude(0);
+				}
+
 
 				Location location1 = new Location("Location");
 				if (comment1.getaLocation() != null) {
@@ -239,7 +230,7 @@ public class TopLevelList {
 					location2.setLongitude(0);
 				}
 
-				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
+				double difference = location1.distanceTo(currentLocation) - location2.distanceTo(currentLocation);
 				if(difference < 0)
 					difference = Math.floor(difference);
 				else if(difference > 0)
@@ -247,15 +238,21 @@ public class TopLevelList {
 				return (int) difference;
 			}
 		});
-		
-		this.adapter.notifyDataSetChanged();
+
+		//this.adapter.notifyDataSetChanged();
 	}
 
 	public void updateProxiLoc() {
 		// TODO Auto-generated method stub
-		Collections.sort(topLevelList, new Comparator<Commentor>() {
+		for (Commentor c: topLevelList) {
+			if (!proxiLoc.contains(c)) {
+				proxiLoc.add(c);
+			}
+		}
+		Collections.sort(proxiLoc, new Comparator<Commentor>() {
 			public int compare(Commentor comment1, Commentor comment2) {
 				Location currentLocation = new Location("Location");
+				main = new GeoCommentActivity();
 				currentLocation.setLatitude(main.modifiedLocation[0]);
 				currentLocation.setLongitude(main.modifiedLocation[1]);
 
@@ -277,7 +274,7 @@ public class TopLevelList {
 					location2.setLongitude(0);
 				}
 
-				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
+				double difference = (location1.distanceTo(currentLocation) - location2.distanceTo(currentLocation));
 				if(difference < 0)
 					difference = Math.floor(difference);
 				else if(difference > 0)
@@ -285,18 +282,7 @@ public class TopLevelList {
 				return (int) difference;
 			}
 		});
-		for (Commentor c: topLevelList) {
-			if (!proxiLoc.contains(c)) {
-				proxiLoc.add(c);
-			}
-		}
 		this.adapter.notifyDataSetChanged();
 	}
-
-	
-
-
-
-
 
 }

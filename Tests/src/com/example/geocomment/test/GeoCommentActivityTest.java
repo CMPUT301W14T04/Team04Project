@@ -1,3 +1,31 @@
+/**
+Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies,
+either expressed or implied, of the FreeBSD Project.
+*/
 package com.example.geocomment.test;
 
 import java.util.ArrayList;
@@ -8,7 +36,6 @@ import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.geocomment.GeoCommentActivity;
-import com.example.geocomment.elasticsearch.ElasticSearchOperations;
 import com.example.geocomment.model.Commentor;
 import com.example.geocomment.model.TopLevel;
 import com.example.geocomment.model.TopLevelList;
@@ -20,10 +47,8 @@ import com.example.geocomment.util.Internet;
 
 public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 {
-	Calendar timeStamp = Calendar.getInstance();
-	Calendar timeStamp1 = Calendar.getInstance();
+	Calendar timeStamp = Calendar.getInstance();		
 	Activity activity;
-
 	TopLevel comment;
 	TopLevel comment1;
 	TopLevel comment2;
@@ -31,6 +56,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	TopLevel comment4;
 	TopLevel comment5;
 	TopLevel comment6;
+
 	TopLevelList commentList= new TopLevelList();
 	User user = new User(null, "elbohtim", "1");
 	
@@ -41,16 +67,22 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	protected void setUp() throws Exception{
 		super.setUp();
 		activity = getActivity();
+
+		double[] LA={34.90,-119.1367};
+		double[] newyork={40.71448,-74.00598};
+		double[] vancouver={49.15,-123.6};
+		double[] calgary={51.03,-114.04};
+		double[] edmonton={53.32,-113.30};
 		comment=new TopLevel(user, timeStamp, null, "hi", null, "0", 0);
-		comment1= new TopLevel(user,timeStamp,null,"test",null, "1", 0);
-		comment2= new TopLevel(user,timeStamp,null,"another",null,"2", 0);
-		comment3= new TopLevel(user, timeStamp, null, "hi", null, "3", 0);
-		comment4= new TopLevel(user,timeStamp,null,"chuck",null, "4", 0);
-		comment5= new TopLevel(user,timeStamp,null,"duck",null,"5", 0);
+		comment1= new TopLevel(user,timeStamp,null,"test",LA, "1", 0);
+		comment2= new TopLevel(user,timeStamp,null,"another",newyork,"2", 0);
+		comment3= new TopLevel(user, timeStamp, null, "hi", vancouver, "3", 0);
+		comment4= new TopLevel(user,timeStamp,null,"chuck",calgary, "4", 0);
+		comment5= new TopLevel(user,timeStamp,null,"duck",edmonton,"5", 0);
 		comment6= new TopLevel(user,timeStamp,null,"truck",null,"6", 0);
 	}
 	
-	/*
+	/**
 	 * Checks if there is an internet connection present
 	 */
 	
@@ -59,7 +91,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		assertEquals(true, internet.isConnectedToInternet() );
 	}
 	
-	/*
+	/**
 	 * Tests that the gpslocation is the correct gps location
 	 */
 	 
@@ -69,17 +101,17 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		assertEquals(53,(int)location.getLatitude());//numbers are too specific to get to test double
 	}
 	
-	/*
+	/**
 	 * Tests that the comments are returning the correct texts
 	 */
 	public void testComments(){
 		
 		assertEquals("hi", comment.getTextComment());
 		assertEquals("elbohtim",comment.getUserName());
-		assertEquals(timeStamp1,comment.getDate());
+		assertEquals(timeStamp,comment.getDate());
 	}
 	
-	/*
+	/**
 	 * Test that the toplevellist model is taking in new comments and
 	 * putting them at the beginning of the list
 	 * and then clears the list and checks that it is empty
@@ -104,7 +136,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		}
 	
 	
-	/*
+	/**
 	 * Tests that a comment has been set to favourite
 	 * then sets more comments to be favourited then
 	 * returns a list of favourite comments
@@ -132,13 +164,55 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	}
 	
 	
-	/*
+	/**
 	 * Tests that the comment text can be changed
 	 */
 	public void testEditComment(){
 		comment1.setTextComment("This has been changed");
 		assertEquals("This has been changed",comment1.getTextComment());
 		
+	}
+	
+	/**
+	 * Testing sort by proximity to me requirement
+	 * this.adapter in toplevelist fails test
+	 */
+	public void testLocation(){
+		TopLevelList top = new TopLevelList();
+		top.AddTopLevel(comment1, 1);
+		top.AddTopLevel(comment2, 1);
+		top.AddTopLevel(comment3, 1);
+		top.AddTopLevel(comment4, 1);
+		top.AddTopLevel(comment5, 1);
+		
+		top.updateProxiMe();
+		assertEquals(comment1,top.getProxiMeList().get(4));
+		assertEquals(comment2,top.getProxiMeList().get(3));
+		assertEquals(comment3,top.getProxiMeList().get(2));
+		assertEquals(comment4,top.getProxiMeList().get(1));
+		assertEquals(comment5,top.getProxiMeList().get(0));
+	}
+	
+	/**
+	 * Testing the dates sort
+	 * this.adapter in toplevellist fails test
+	 */
+	
+	public void testDate(){
+				
+		TopLevelList top = new TopLevelList();
+		top.AddTopLevel(comment5, 1);
+		top.AddTopLevel(comment4, 1);
+		top.AddTopLevel(comment3, 1);
+		top.AddTopLevel(comment2, 1);
+		top.AddTopLevel(comment1, 1);
+		
+		top.updateDate();
+		assertEquals(comment1,top.getDateList().get(0));
+		assertEquals(comment2,top.getDateList().get(1));
+		assertEquals(comment3,top.getDateList().get(2));
+		assertEquals(comment4,top.getDateList().get(3));
+		assertEquals(comment5,top.getDateList().get(4));
 	}
 	
 	

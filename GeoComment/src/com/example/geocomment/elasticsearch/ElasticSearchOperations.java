@@ -71,7 +71,7 @@ public class ElasticSearchOperations {
 	/**
 	 * Define the sever URL
 	 */
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments8/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/testing/team04_mycomments9/";
 	public static final String SERVER_URL_REPLY = "http://cmput301.softwareprocess.es:8080/testing/team04_replie1/";
 	// for Log method.
 	public static final String LOG_TAG = "ElasticSearch";
@@ -164,72 +164,6 @@ public class ElasticSearchOperations {
 		ElasticSearchOperationsProduct.searchReplies(model, activity, ID);
 	}
 
-/*	public static void searchReplies1(final ArrayList<Commentor> model,
-			final GeoCommentActivity activity, final String ID) {
-
-		if (GSON == null)
-			constructGson();
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL_REPLY + "_search");
-				String query = "{\"query\": {\"match\": {\"parentID\" :\"*"
-						+ ID + "*\" }}}";
-				String responseJson = "";
-
-				try {
-					request.setEntity(new StringEntity(query));
-				} catch (UnsupportedEncodingException exception) {
-					Log.w(LOG_TAG,
-							"Error encoding search query: "
-									+ exception.getMessage());
-					return;
-				}
-
-				try {
-					HttpResponse response = client.execute(request);
-					Log.i(LOG_TAG, "Response: "
-							+ response.getStatusLine().toString());
-
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(entity.getContent()));
-
-					String output = reader.readLine();
-					Log.e("Replies search", output);
-					while (output != null) {
-						responseJson += output;
-						output = reader.readLine();
-					}
-				} catch (IOException exception) {
-					Log.w(LOG_TAG, "Error receiving search query response: "
-							+ exception.getMessage());
-					return;
-				}
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopLevel>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Commentor> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
-				Runnable updateModel = new Runnable() {
-					@Override
-					public void run() {
-						//model.clear();
-
-						Log.i("BEFORE", "Response: "
-								+ GSON.toJson(model));
-						model.addAll(returnedData.getSources());
-						Log.i("AFTER", "Response: "
-								+ GSON.toJson(model));
-					}
-				};
-				activity.runOnUiThread(updateModel);
-			}
-		};
-		thread.start();
-	}*/
 	
 	/**
 	 * 

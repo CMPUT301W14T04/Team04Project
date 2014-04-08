@@ -587,13 +587,6 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getPictureList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-		} else if (parent.getItemAtPosition(pos).equals("Score")) {
-			commentList.updateSocre();
-
-			adapter = new CommentAdapter(getApplicationContext(),
-					R.layout.comment_row, commentList.getScoreList());
-			commentListView.setAdapter(adapter);
-			commentList.setAdapter(adapter);
 			/*
 			 * this option shows the user
 			 * all the comments sorted by location
@@ -615,7 +608,7 @@ public class GeoCommentActivity extends Activity implements
 		} else if (parent.getItemAtPosition(pos).equals(
 				"Proximity to another location")) {
 			openDialogLocation();
-			commentList.updateProxiLoc();
+			//commentList.updateProxiLoc();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getProxiLocList());
 			commentListView.setAdapter(adapter);
