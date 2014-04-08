@@ -230,7 +230,11 @@ public class TopLevelList {
 					location2.setLongitude(0);
 				}
 
-				double difference = Math.abs(location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
+				double difference = location1.distanceTo(currentLocation) - location2.distanceTo(currentLocation);
+				if(difference < 0)
+					difference = Math.floor(difference);
+				else if(difference > 0)
+					difference = Math.ceil(difference);
 				return (int) difference;
 			}
 		});
@@ -270,7 +274,7 @@ public class TopLevelList {
 					location2.setLongitude(0);
 				}
 
-				double difference = (location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation));
+				double difference = (location1.distanceTo(currentLocation) - location2.distanceTo(currentLocation));
 				if(difference < 0)
 					difference = Math.floor(difference);
 				else if(difference > 0)
