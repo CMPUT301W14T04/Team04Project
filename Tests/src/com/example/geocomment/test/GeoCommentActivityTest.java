@@ -1,5 +1,6 @@
 package com.example.geocomment.test;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,10 +20,8 @@ import com.example.geocomment.util.Internet;
 
 public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<GeoCommentActivity>
 {
-	Calendar timeStamp = Calendar.getInstance();
-	Calendar timeStamp1 = Calendar.getInstance();
+	Calendar timeStamp = Calendar.getInstance();		
 	Activity activity;
-
 	TopLevel comment;
 	TopLevel comment1;
 	TopLevel comment2;
@@ -40,16 +39,17 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	protected void setUp() throws Exception{
 		super.setUp();
 		activity = getActivity();
-		double[] vancouver={49.15,-123.6};
-		double[] newyork={40.71448,-74.00598};
-		double[] calgary={51.03,-114.04};
+
 		double[] LA={34.90,-119.1367};
+		double[] newyork={40.71448,-74.00598};
+		double[] vancouver={49.15,-123.6};
+		double[] calgary={51.03,-114.04};
 		double[] edmonton={53.32,-113.30};
 		comment=new TopLevel(user, timeStamp, null, "hi", null, "0", 0);
-		comment1= new TopLevel(user,timeStamp,null,"test",vancouver, "1", 0);
+		comment1= new TopLevel(user,timeStamp,null,"test",LA, "1", 0);
 		comment2= new TopLevel(user,timeStamp,null,"another",newyork,"2", 0);
-		comment3= new TopLevel(user, timeStamp, null, "hi", calgary, "3", 0);
-		comment4= new TopLevel(user,timeStamp,null,"chuck",LA, "4", 0);
+		comment3= new TopLevel(user, timeStamp, null, "hi", vancouver, "3", 0);
+		comment4= new TopLevel(user,timeStamp,null,"chuck",calgary, "4", 0);
 		comment5= new TopLevel(user,timeStamp,null,"duck",edmonton,"5", 0);
 		comment6= new TopLevel(user,timeStamp,null,"truck",null,"6", 0);
 	}
@@ -146,7 +146,8 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	}
 	
 	/*
-	 * Testing sort by proxiamity to me requirement
+	 * Testing sort by proximity to me requirement
+	 * this.adapter in toplevelist fails test
 	 */
 	public void testLocation(){
 		TopLevelList top = new TopLevelList();
@@ -157,11 +158,33 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		top.AddTopLevel(comment5, 1);
 		
 		top.updateProxiMe();
-		assertEquals(comment5,top.getProxiMeList().get(3));
+		assertEquals(comment1,top.getProxiMeList().get(4));
+		assertEquals(comment2,top.getProxiMeList().get(3));
 		assertEquals(comment3,top.getProxiMeList().get(2));
-		assertEquals(comment1,top.getProxiMeList().get(1));
-		assertEquals(comment2,top.getProxiMeList().get(4));
-		assertEquals(comment4,top.getProxiMeList().get(0));
+		assertEquals(comment4,top.getProxiMeList().get(1));
+		assertEquals(comment5,top.getProxiMeList().get(0));
+	}
+	
+	/*
+	 * Testing the dates sort
+	 * this.adapter in toplevellist fails test
+	 */
+	
+	public void testDate(){
+				
+		TopLevelList top = new TopLevelList();
+		top.AddTopLevel(comment5, 1);
+		top.AddTopLevel(comment4, 1);
+		top.AddTopLevel(comment3, 1);
+		top.AddTopLevel(comment2, 1);
+		top.AddTopLevel(comment1, 1);
+		
+		top.updateDate();
+		assertEquals(comment1,top.getDateList().get(0));
+		assertEquals(comment2,top.getDateList().get(1));
+		assertEquals(comment3,top.getDateList().get(2));
+		assertEquals(comment4,top.getDateList().get(3));
+		assertEquals(comment5,top.getDateList().get(4));
 	}
 	
 	

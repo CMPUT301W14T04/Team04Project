@@ -172,7 +172,7 @@ public class TopLevelList {
 				dateList.add(c);
 			}
 		}
-		this.adapter.notifyDataSetChanged();
+		//this.adapter.notifyDataSetChanged();
 	}
 	
 	public void updatePicture() {
