@@ -92,7 +92,6 @@ public class TopLevelList {
 	public void addTopLevelCollection(Collection<Commentor> pots) {
 		this.topLevelList.addAll(pots);
 		Collections.sort(topLevelList, new Comparator<Commentor>() {
-			@Override
 			public int compare(Commentor comment1, Commentor comment2) {
 				return comment2.getDate().compareTo(comment1.getDate());
 			}
@@ -147,7 +146,6 @@ public class TopLevelList {
 			if (c.getaPicture() != null & !picture.contains(c)) {
 				picture.add(c);
 				Collections.sort(picture, new Comparator<Commentor>() {
-					@Override
 					public int compare(Commentor comment1, Commentor comment2) {
 						return comment2.getDate().compareTo(comment1.getDate());
 					}
@@ -156,7 +154,6 @@ public class TopLevelList {
 					& !nonPicture.contains(c)) {
 				nonPicture.add(c);
 				Collections.sort(nonPicture, new Comparator<Commentor>() {
-					@Override
 					public int compare(Commentor comment1, Commentor comment2) {
 						return comment2.getDate().compareTo(comment1.getDate());
 					}
@@ -174,50 +171,47 @@ public class TopLevelList {
 		for (Commentor c: topLevelList) {
 			if (!proxiMe.contains(c)) {
 				proxiMe.add(c);
+				Collections.sort(proxiMe, new Comparator<Commentor>() {
+					private Context context;
+					public int compare(Commentor comment1, Commentor comment2) {
+						Location currentLocation = new Location("Location");
+						gpsLocation = new GPSLocation(context);
+						if (gpsLocation.getLocation() != null) {
+							currentLocation = gpsLocation.getLocation();
+						} else {
+							currentLocation.setLatitude(0);
+							currentLocation.setLongitude(0);
+						}
+
+						Location location1 = new Location("Location");
+						if (comment1.getaLocation() != null) {
+							location1.setLatitude(comment1.getaLocation()[0]);
+							location1.setLongitude(comment1.getaLocation()[1]);
+						} else {
+							location1.setLatitude(0);
+							location1.setLongitude(0);
+						}
+
+						Location location2 = new Location("Location");
+						if (comment2.getaLocation() != null) {
+							location2.setLatitude(comment2.getaLocation()[0]);
+							location2.setLongitude(comment2.getaLocation()[1]);
+						} else {
+							location2.setLatitude(0);
+							location2.setLongitude(0);
+						}
+
+						double difference = location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation);
+						if(difference < 0)
+							difference = Math.floor(difference);
+						else if(difference > 0)
+							difference = Math.ceil(difference);
+						return (int) difference;
+					}
+				});
 			}
 		}
-		Collections.sort(proxiMe, new Comparator<Commentor>() {
-			private Context context;
-
-			public int compare(Commentor comment1, Commentor comment2) {
-				Location currentLocation = new Location("Location");
-				gpsLocation = new GPSLocation(context);
-				if (gpsLocation.getLocation() != null) {
-					currentLocation = gpsLocation.getLocation();
-				} else {
-					currentLocation.setLatitude(0);
-					currentLocation.setLongitude(0);
-				}
-
-
-				Location location1 = new Location("Location");
-				if (comment1.getaLocation() != null) {
-					location1.setLatitude(comment1.getaLocation()[0]);
-					location1.setLongitude(comment1.getaLocation()[1]);
-				} else {
-					location1.setLatitude(0);
-					location1.setLongitude(0);
-				}
-
-				Location location2 = new Location("Location");
-				if (comment2.getaLocation() != null) {
-					location2.setLatitude(comment2.getaLocation()[0]);
-					location2.setLongitude(comment2.getaLocation()[1]);
-				} else {
-					location2.setLatitude(0);
-					location2.setLongitude(0);
-				}
-
-				double difference = location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation);
-				if(difference < 0)
-					difference = Math.floor(difference);
-				else if(difference > 0)
-					difference = Math.ceil(difference);
-				return (int) difference;
-			}
-		});
-
-		//this.adapter.notifyDataSetChanged();
+		this.adapter.notifyDataSetChanged();
 	}
 
 	public void updateProxiLoc() {
@@ -225,41 +219,41 @@ public class TopLevelList {
 		for (Commentor c: topLevelList) {
 			if (!proxiLoc.contains(c)) {
 				proxiLoc.add(c);
+				Collections.sort(proxiLoc, new Comparator<Commentor>() {
+					public int compare(Commentor comment1, Commentor comment2) {
+						Location currentLocation = new Location("Location");
+						main = new GeoCommentActivity();
+						currentLocation.setLatitude(main.lat);
+						currentLocation.setLongitude(main.log);
+
+						Location location1 = new Location("Location");
+						if (comment1.getaLocation() != null) {
+							location1.setLatitude(comment1.getaLocation()[0]);
+							location1.setLongitude(comment1.getaLocation()[1]);
+						} else {
+							location1.setLatitude(0);
+							location1.setLongitude(0);
+						}
+
+						Location location2 = new Location("Location");
+						if (comment2.getaLocation() != null) {
+							location2.setLatitude(comment2.getaLocation()[0]);
+							location2.setLongitude(comment2.getaLocation()[1]);
+						} else {
+							location2.setLatitude(0);
+							location2.setLongitude(0);
+						}
+
+						double difference = location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation);
+						if(difference < 0)
+							difference = Math.floor(difference);
+						else if(difference > 0)
+							difference = Math.ceil(difference);
+						return (int) difference;
+					}
+				});
 			}
 		}
-		Collections.sort(proxiLoc, new Comparator<Commentor>() {
-			public int compare(Commentor comment1, Commentor comment2) {
-				Location currentLocation = new Location("Location");
-				main = new GeoCommentActivity();
-				currentLocation.setLatitude(main.modifiedLocation[0]);
-				currentLocation.setLongitude(main.modifiedLocation[1]);
-
-				Location location1 = new Location("Location");
-				if (comment1.getaLocation() != null) {
-					location1.setLatitude(comment1.getaLocation()[0]);
-					location1.setLongitude(comment1.getaLocation()[1]);
-				} else {
-					location1.setLatitude(0);
-					location1.setLongitude(0);
-				}
-
-				Location location2 = new Location("Location");
-				if (comment2.getaLocation() != null) {
-					location2.setLatitude(comment2.getaLocation()[0]);
-					location2.setLongitude(comment2.getaLocation()[1]);
-				} else {
-					location2.setLatitude(0);
-					location2.setLongitude(0);
-				}
-
-				double difference = location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation);
-				if(difference < 0)
-					difference = Math.floor(difference);
-				else if(difference > 0)
-					difference = Math.ceil(difference);
-				return (int) difference;
-			}
-		});
 		this.adapter.notifyDataSetChanged();
 	}
 

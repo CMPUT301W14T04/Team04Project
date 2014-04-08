@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies,
 either expressed or implied, of the FreeBSD Project.
-*/
+ */
 
 package com.example.geocomment;
 
@@ -94,7 +94,7 @@ import com.google.gson.reflect.TypeToken;
  */
 
 public class GeoCommentActivity extends Activity implements
-		OnItemClickListener, OnItemSelectedListener {
+OnItemClickListener, OnItemSelectedListener {
 
 	private GeoCommentActivityProduct geoCommentActivityProduct = new GeoCommentActivityProduct();
 	Gson gson;
@@ -112,7 +112,8 @@ public class GeoCommentActivity extends Activity implements
 	ListView commentListView;
 	ArrayList<Commentor> cacheList;
 	final Context context = this;
-	public double[] modifiedLocation;
+	public double lat;
+	public double log;
 
 	private void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
@@ -120,7 +121,7 @@ public class GeoCommentActivity extends Activity implements
 		gson = builder.create();
 	}
 
-	
+
 	/**
 	 * This function takes the last
 	 * comments gotten from elastic search and 
@@ -174,7 +175,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 	}
 
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -203,7 +204,7 @@ public class GeoCommentActivity extends Activity implements
 
 		userPre = new UserPreference();
 
-		
+
 		ElasticSearchOperations.searchALL(commentList, GeoCommentActivity.this);
 		Toast.makeText(this, "" + commentList.getList().size(),
 				Toast.LENGTH_SHORT).show();
@@ -219,9 +220,9 @@ public class GeoCommentActivity extends Activity implements
 			}
 
 		});
-		
+
 		load(Resource.FAVOURITE_LOAD);
-		
+
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -365,12 +366,12 @@ public class GeoCommentActivity extends Activity implements
 				e.printStackTrace();
 			}
 			return userInfo;
-			
-		/*
-		 * This function loads the saved favourites
-		 * so that the user can read them regardless
-		 * of network connectivity
-		 */
+
+			/*
+			 * This function loads the saved favourites
+			 * so that the user can read them regardless
+			 * of network connectivity
+			 */
 		case Resource.FAVOURITE_LOAD:
 			try {
 				fis = openFileInput(Resource.FAVOURITE_FILE);
@@ -382,7 +383,7 @@ public class GeoCommentActivity extends Activity implements
 				List<Commentor> listFav = gson.fromJson(fav, Type);
 
 				fis.close();
-		
+
 				favourites.load(listFav);
 			} catch (FileNotFoundException e) {
 				// TODOAuto-generated catch block
@@ -435,17 +436,17 @@ public class GeoCommentActivity extends Activity implements
 			try {
 				if(gson==null){
 					constructGson();
-					}
+				}
 				fos = openFileOutput(Resource.FAVOURITE_FILE,
 						Context.MODE_PRIVATE);
 
 				String fav = gson.toJson(favourites.returnFav()) + "\n";
 
 				fos.write(fav.getBytes());
-		
+
 
 				fos.close();
-			/*	if (internet.isConnectedToInternet()==true){
+				/*	if (internet.isConnectedToInternet()==true){
 					ArrayList<Commentor> replies=new ArrayList<Commentor>();
 					fos = openFileOutput(Resource.FAVOURITE_REPLIES,
 							Context.MODE_PRIVATE);
@@ -459,7 +460,7 @@ public class GeoCommentActivity extends Activity implements
 					fos.write(favReplies.getBytes());
 					fos.close();
 <<<<<<< HEAD
-					
+
 				}*/
 
 			} catch (FileNotFoundException e) {
@@ -513,7 +514,7 @@ public class GeoCommentActivity extends Activity implements
 		case 90:
 			if (data != null) {
 				profile = data.getParcelableExtra("profile");
-				
+
 				user.setUserName(profile.getUsername());
 
 				userPre = new UserPreference(user.getUserName(), user.getID(),
@@ -525,8 +526,8 @@ public class GeoCommentActivity extends Activity implements
 
 	}
 
-	
-	
+
+
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
@@ -545,7 +546,7 @@ public class GeoCommentActivity extends Activity implements
 			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			
+
 			/*
 			 * This option shows the comments that
 			 * the user has favourited
@@ -556,7 +557,7 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, favourites.returnFav());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			
+
 			/*
 			 * This option shows the user
 			 * all the comments sorted by date
@@ -575,7 +576,7 @@ public class GeoCommentActivity extends Activity implements
 			}
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			
+
 			/*
 			 * this option shows the user
 			 * all the comments sorted by picture
@@ -599,7 +600,7 @@ public class GeoCommentActivity extends Activity implements
 					R.layout.comment_row, commentList.getProxiMeList());
 			commentListView.setAdapter(adapter);
 			commentList.setAdapter(adapter);
-			
+
 			/*
 			 * this option shows the user
 			 * all the comments sorted by location
@@ -608,7 +609,7 @@ public class GeoCommentActivity extends Activity implements
 		} else if (parent.getItemAtPosition(pos).equals(
 				"Proximity to another location")) {
 			openDialogLocation();
-			//commentList.updateProxiLoc();
+			commentList.updateProxiLoc();
 			adapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_row, commentList.getProxiLocList());
 			commentListView.setAdapter(adapter);
@@ -616,7 +617,7 @@ public class GeoCommentActivity extends Activity implements
 		}
 
 	}
-	
+
 	private void openDialogLocation() {
 		LayoutInflater li = LayoutInflater.from(context);
 		View locationChange = li.inflate(R.layout.location_dialog, null);
@@ -639,25 +640,21 @@ public class GeoCommentActivity extends Activity implements
 				String stringLat = editLat.getText().toString();
 				String stringLong = editLog.getText().toString();
 				if(!stringLat.isEmpty() && !stringLong.isEmpty()){
-				double lat = Double.parseDouble(stringLat);
-				double log = Double.parseDouble(stringLong);
-
-					modifiedLocation[0] = log;
-					modifiedLocation[1] = lat;
-					Log.e("Change Latitude", ""+modifiedLocation[0] + "-" + modifiedLocation[1]);}
-				else
+					lat = Double.parseDouble(stringLat);
+					log = Double.parseDouble(stringLong);
+				} else {
 					Toast.makeText(getApplicationContext(), "error",
 							Toast.LENGTH_SHORT).show();	
-
+				}
 			}
 		});
 
 		alertDialogBuilder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
 		// create alert dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
 
@@ -724,7 +721,7 @@ public class GeoCommentActivity extends Activity implements
 	private void viewProfile(Commentor comment) {
 		Intent intent = new Intent(GeoCommentActivity.this, ProfileActivity.class);
 		Bundle bundle = new Bundle();
-		
+
 		bundle.putParcelable("user", comment.getUser());
 		intent.putExtras(bundle);
 		startActivity(intent);
