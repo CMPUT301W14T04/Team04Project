@@ -180,14 +180,12 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	public void testLocation(){
 		TopLevelList top = new TopLevelList();
 		top.AddTopLevel(comment1, 1);
-		top.AddTopLevel(comment2, 1);
 		top.AddTopLevel(comment3, 1);
 		top.AddTopLevel(comment4, 1);
 		top.AddTopLevel(comment5, 1);
 		
 		top.updateProxiMe();
-		assertEquals(comment1,top.getProxiMeList().get(4));
-		assertEquals(comment2,top.getProxiMeList().get(3));
+		assertEquals(comment1,top.getProxiMeList().get(3));
 		assertEquals(comment3,top.getProxiMeList().get(2));
 		assertEquals(comment4,top.getProxiMeList().get(1));
 		assertEquals(comment5,top.getProxiMeList().get(0));
