@@ -291,6 +291,11 @@ public class EditProfile extends Activity {
 		finish();
 		
 	}
+	
+	public void editCancel(View view)
+	{
+		finish();
+	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {

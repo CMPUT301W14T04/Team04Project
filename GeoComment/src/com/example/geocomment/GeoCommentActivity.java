@@ -515,7 +515,7 @@ public class GeoCommentActivity extends Activity implements
 				profile = data.getParcelableExtra("profile");
 				
 				user.setUserName(profile.getUsername());
-				Log.e("USERNAME CHANGES TO", profile.getUsername());
+
 				userPre = new UserPreference(user.getUserName(), user.getID(),
 						locationHistory,profile);
 				save(Resource.GENERAL_INFO_SAVE);

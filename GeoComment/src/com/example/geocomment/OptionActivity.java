@@ -269,10 +269,12 @@ public class OptionActivity extends Activity implements OnItemClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		if (requestCode == 1) {
-
+			if(data!=null){
 			profile = data.getParcelableExtra("profile1");
 //			Toast.makeText(getApplicationContext(), ""+profile.getSocial().size(), Toast.LENGTH_SHORT).show();
-			ElasticSearchOpertationUser.pushUserProfile(profile);
+			ElasticSearchOpertationUser.pushUserProfile(profile);}
+			else
+				Toast.makeText(getApplicationContext(), "Edit cancelled", Toast.LENGTH_SHORT).show();
 		}
 
 	}
