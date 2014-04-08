@@ -66,6 +66,11 @@ public class ElasticSearchOpertationUser {
 	
 	private static UserProfile profile;
 	
+	/**
+	 * Pushes the profile that the user created
+	 * 
+	 * @param profile
+	 */
 	public static void pushUserProfile(final UserProfile profile) {
 		if (GSON == null)
 			constructGson();
@@ -103,6 +108,13 @@ public class ElasticSearchOpertationUser {
 		thread.start();
 	}
 	
+	/**
+	 * Searches the profile
+	 * 
+	 * @param activity
+	 * @param ID
+	 * @return
+	 */
 	public static UserProfile searchProfile(final ProfileActivity activity, final String ID) {
 
 		if (GSON == null)

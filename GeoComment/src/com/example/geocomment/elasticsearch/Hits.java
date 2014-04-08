@@ -33,7 +33,8 @@ import java.util.Collection;
 
 /**
  * Represents part of a response from ElasticSearch.
- * Taken from https://github.com/rayzhangcl/ESDemo
+ * 
+ * Derived from https://github.com/rayzhangcl/ESDemo
  */
 public class Hits<T> {
     int total;

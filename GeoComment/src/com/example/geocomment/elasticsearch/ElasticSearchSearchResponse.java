@@ -34,7 +34,8 @@ import java.util.Collection;
 
 /**
  * Represents a search response from ElasticSearch.
- * Taken from https://github.com/rayzhangcl/ESDemo
+ * 
+ * Derived from https://github.com/rayzhangcl/ESDemo
  */
 public class ElasticSearchSearchResponse<T> {
     int took;

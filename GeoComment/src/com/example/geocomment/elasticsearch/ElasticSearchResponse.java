@@ -30,7 +30,7 @@ either expressed or implied, of the FreeBSD Project.
 package com.example.geocomment.elasticsearch;
 
 /**
- * Represents a response from ElasticSearch. Taken from
+ * Represents a response from ElasticSearch. Derived from
  * https://github.com/rayzhangcl/ESDemo
  */
 public class ElasticSearchResponse<T> {

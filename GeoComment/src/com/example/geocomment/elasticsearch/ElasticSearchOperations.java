@@ -59,10 +59,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * This Class handle the communication between the app and the sever using
+ * This Class handles the communication between the app and the sever using
  * Elasticsearch
  * 
- * Taken from https://github.com/zjullion/PicPosterComplete
+ * Derived from https://github.com/zjullion/PicPosterComplete
  * 
  */
 public class ElasticSearchOperations {
@@ -147,8 +147,7 @@ public class ElasticSearchOperations {
 			final GeoCommentActivity activity) {
 
 		ElasticSearchOperationsProduct.searchALL(model, activity);
-		
-//		Log.e("Finish Elastic", "Finish ElasticsearchSearcALl");
+
 	}
 
 	/**
