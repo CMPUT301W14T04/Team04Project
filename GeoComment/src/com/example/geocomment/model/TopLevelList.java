@@ -52,7 +52,6 @@ public class TopLevelList {
 	private List<Commentor> proxiMe;
 	private List<Commentor> proxiLoc;
 	private List<Commentor> nonPicture;
-	private List<Commentor> dateList;
 	GeoCommentActivity main;
 	GPSLocation gpsLocation;
 
@@ -62,7 +61,6 @@ public class TopLevelList {
 		this.nonPicture = new ArrayList<Commentor>();
 		this.proxiMe = new ArrayList<Commentor>();
 		this.proxiLoc = new ArrayList<Commentor>();
-		this.dateList = new ArrayList<Commentor>();
 		new ArrayList<Commentor>();
 	}
 
@@ -121,10 +119,6 @@ public class TopLevelList {
 		return Collections.unmodifiableList(topLevelList);
 	}
 
-	public List<Commentor> getDateList() {
-		return Collections.unmodifiableList(dateList);
-	}
-
 	public List<Commentor> getPictureList() {
 		// TODO Auto-generated method stub
 		return Collections.unmodifiableList(picture);
@@ -146,22 +140,6 @@ public class TopLevelList {
 
 	public Commentor getComment(int i) {
 		return topLevelList.get(i);
-	}
-
-	public void updateDate() {
-		// TODO Auto-generated method stub
-		Collections.sort(topLevelList, new Comparator<Commentor>() {
-			@Override
-			public int compare(Commentor comment1, Commentor comment2) {
-				return comment2.getDate().compareTo(comment1.getDate());
-			}
-		});
-		for (Commentor c: topLevelList) {
-			if (!dateList.contains(c)) {
-				dateList.add(c);
-			}
-		}
-		//this.adapter.notifyDataSetChanged();
 	}
 
 	public void updatePicture() {
@@ -230,7 +208,7 @@ public class TopLevelList {
 					location2.setLongitude(0);
 				}
 
-				double difference = location1.distanceTo(currentLocation) - location2.distanceTo(currentLocation);
+				double difference = location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation);
 				if(difference < 0)
 					difference = Math.floor(difference);
 				else if(difference > 0)
@@ -274,7 +252,7 @@ public class TopLevelList {
 					location2.setLongitude(0);
 				}
 
-				double difference = (location1.distanceTo(currentLocation) - location2.distanceTo(currentLocation));
+				double difference = location2.distanceTo(currentLocation) - location1.distanceTo(currentLocation);
 				if(difference < 0)
 					difference = Math.floor(difference);
 				else if(difference > 0)
