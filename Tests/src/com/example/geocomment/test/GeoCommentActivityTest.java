@@ -1,6 +1,33 @@
+/**
+Copyright (c) 2013, Guillermo Ramirez, Nadine Yushko, Tarek El Bohtimy, Yang Wang
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies,
+either expressed or implied, of the FreeBSD Project.
+*/
 package com.example.geocomment.test;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -29,6 +56,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	TopLevel comment4;
 	TopLevel comment5;
 	TopLevel comment6;
+
 	TopLevelList commentList= new TopLevelList();
 	User user = new User(null, "elbohtim", "1");
 	
@@ -54,7 +82,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		comment6= new TopLevel(user,timeStamp,null,"truck",null,"6", 0);
 	}
 	
-	/*
+	/**
 	 * Checks if there is an internet connection present
 	 */
 	
@@ -63,7 +91,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		assertEquals(true, internet.isConnectedToInternet() );
 	}
 	
-	/*
+	/**
 	 * Tests that the gpslocation is the correct gps location
 	 */
 	 
@@ -73,7 +101,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		assertEquals(53,(int)location.getLatitude());//numbers are too specific to get to test double
 	}
 	
-	/*
+	/**
 	 * Tests that the comments are returning the correct texts
 	 */
 	public void testComments(){
@@ -83,7 +111,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		assertEquals(timeStamp,comment.getDate());
 	}
 	
-	/*
+	/**
 	 * Test that the toplevellist model is taking in new comments and
 	 * putting them at the beginning of the list
 	 * and then clears the list and checks that it is empty
@@ -108,7 +136,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		}
 	
 	
-	/*
+	/**
 	 * Tests that a comment has been set to favourite
 	 * then sets more comments to be favourited then
 	 * returns a list of favourite comments
@@ -136,7 +164,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 	}
 	
 	
-	/*
+	/**
 	 * Tests that the comment text can be changed
 	 */
 	public void testEditComment(){
@@ -145,7 +173,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		
 	}
 	
-	/*
+	/**
 	 * Testing sort by proximity to me requirement
 	 * this.adapter in toplevelist fails test
 	 */
@@ -165,7 +193,7 @@ public class GeoCommentActivityTest extends ActivityInstrumentationTestCase2<Geo
 		assertEquals(comment5,top.getProxiMeList().get(0));
 	}
 	
-	/*
+	/**
 	 * Testing the dates sort
 	 * this.adapter in toplevellist fails test
 	 */
